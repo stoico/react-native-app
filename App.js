@@ -1,21 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, ScrollView } from "react-native";
+
+import FeedSuggestionBox from "./components/FeedSuggestionBox";
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <ScrollView style={styles.feedContainer}>
+        <FeedSuggestionBox name="Stefano" />
+        <FeedSuggestionBox name="Carmine" />
+        <FeedSuggestionBox name="Martina" />
+        <FeedSuggestionBox name="Rocco" />
+        <FeedSuggestionBox name="Angelo" />
+        <FeedSuggestionBox name="Marco" />
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  feedContainer: {
+    marginTop: 90,
+    padding: 8,
+    backgroundColor: "#E0E0E0",
+    borderRadius: 30
+  }
 });

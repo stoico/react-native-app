@@ -14,5 +14,11 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
   },
+  "packagerOpts": {
+    "assetExts": [
+      "ttf",
+      "otf"
+    ]
+  },
   "private": true
 }
