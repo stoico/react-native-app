@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Font, AppLoading } from "expo";
-import styled from "styled-components/native";
 
 export default class FeedSuggestionBox extends React.Component {
   constructor(props) {
