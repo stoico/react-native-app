@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ScrollView, View, Button } from "react-native";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { LinearGradient } from "expo";
 
 import FeedSuggestionBox from "./components/FeedSuggestionBox";
@@ -31,26 +31,38 @@ export default class App extends React.Component {
             alignContent: "center"
           }}
         >
-          <LinearGradient // colors={["rgba(224, 224, 224, 0)", "#E0E0E0"]}
-            colors={["black", "blue"]}
+          <LinearGradient
+            colors={["black", "blue"]} // colors={["rgba(224, 224, 224, 0)", "#E0E0E0"]}
             style={{
               height: 80,
               justifyContent: "center",
               alignContent: "center"
             }}
           >
-            <Button
+            {/* Button */}
+            <View
               style={{
                 flex: 1,
+                height: 60,
                 borderRadius: 35,
-                margin: "0 auto",
-                backgroundColor: "#2EA6FF"
+                justifyContent: "center",
+                alignContent: "center",
+                backgroundColor: "#2EA6FF",
+                color: "#F8F8F8"
               }}
               onPress={this.openFilmSearchSection.bind(this)}
-              title="Learn More"
-              color="white"
-              accessibilityLabel="Learn more about this purple button"
-            />
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignContent: "center",
+                  color: "#F8F8F8"
+                }}
+              >
+                Consiglia serie TV o film
+              </Text>
+            </View>
           </LinearGradient>
         </View>
       </View>
