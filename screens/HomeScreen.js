@@ -21,18 +21,18 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <ScrollView style={styles.feedContainer}>
-          <Button
+          {/* <Button
             title="Go to Details"
             onPress={() =>
               this.props.navigation.navigate("Film", {
                 filmID: Math.floor(Math.random() * 100)
               })
             }
-          />
-          <FeedSuggestionBox name="Stefano" />
-          <FeedSuggestionBox name="Carmine" />
-          <FeedSuggestionBox name="Martina" />
-          <FeedSuggestionBox name="Rocco" />
+          /> */}
+          <FeedSuggestionBox name="Stefano" filmTitle="You" />
+          <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
+          <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
+          <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
           <FeedSuggestionBox name="Angelo" />
           <FeedSuggestionBox name="Marco" />
           <FeedSuggestionBox name="Raffaella" />

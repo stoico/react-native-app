@@ -33,7 +33,15 @@ export default class FeedSuggestionBox extends React.Component {
             <Text style={styles.userNameText}>{this.props.name}</Text>
             <Text style={styles.userNameSuggestsText}> consiglia</Text>
           </View>
-          <View style={styles.filmSuggestedBox} />
+          <View style={styles.filmSuggestedBox}>
+            <Image
+              source={require("../assets/cover3.png")}
+              style={styles.filmCoverImage}
+            />
+            <Text style={styles.filmTitle}>
+              {this.props.filmTitle || "The Titled Film"}
+            </Text>
+          </View>
         </View>
       );
     }
@@ -82,6 +90,20 @@ const styles = StyleSheet.create({
   filmSuggestedBox: {
     backgroundColor: "white",
     borderRadius: 26,
-    height: 90
+    height: 90,
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  filmCoverImage: {
+    flex: 0.2,
+    backgroundColor: "#8CD2FD"
+  },
+  filmTitle: {
+    flex: 0.8,
+    paddingLeft: 12,
+    fontFamily: "Gilroy Extrabold",
+    color: "#505050",
+    fontSize: 24
   }
 });
