@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
     marginTop: 90,
     padding: 8,
     backgroundColor: "#E0E0E0",
-    borderRadius: 30,
-    zIndex: 3
+    borderRadius: 30
   },
   floatingPositionForButton: {
     flex: 1,
@@ -68,7 +67,8 @@ const styles = StyleSheet.create({
     bottom: 50,
     display: "flex",
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
+    zIndex: 1
   },
   gradientBehindButton: {
     height: 85,
