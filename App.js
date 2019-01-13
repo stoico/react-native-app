@@ -1,11 +1,12 @@
 import React from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, View, Button, Text } from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 import { LinearGradient } from "expo";
 
 import FeedSuggestionBox from "./components/FeedSuggestionBox";
 import SuggestionButton from "./components/SuggestionButton";
 
-export default class App extends React.Component {
+class HomeScreen extends React.Component {
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
   };
@@ -14,6 +15,10 @@ export default class App extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <ScrollView style={styles.feedContainer}>
+          <Button
+            title="Go to Details"
+            onPress={() => this.props.navigation.navigate("Film")}
+          />
           <FeedSuggestionBox name="Stefano" />
           <FeedSuggestionBox name="Carmine" />
           <FeedSuggestionBox name="Martina" />
@@ -23,12 +28,22 @@ export default class App extends React.Component {
         </ScrollView>
         <View style={styles.floatingPositionForButton}>
           <LinearGradient
-            colors={greyGradient}
             style={styles.gradientBehindButton}
+            colors={greyGradient}
           >
             <SuggestionButton />
           </LinearGradient>
         </View>
+      </View>
+    );
+  }
+}
+
+class FilmScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Details Screen</Text>
       </View>
     );
   }
@@ -81,3 +96,21 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
+
+const AppNavigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Film: FilmScreen
+  },
+  {
+    initialRoute: "Home"
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
