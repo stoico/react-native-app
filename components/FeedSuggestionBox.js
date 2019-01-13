@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Font, AppLoading } from "expo";
+import styled from "styled-components/native";
 
 export default class FeedSuggestionBox extends React.Component {
   constructor(props) {
@@ -47,7 +48,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F7F7",
     height: 148,
     marginBottom: 10,
-    padding: 10
+    padding: 10,
+    shadowOpacity: 1, // made up this
+    shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
+    shadowColor: "#D7D7D7",
+    shadowOffset: { width: 0, height: 2 }
   },
   feedUserSuggests: {
     flexDirection: "row",
