@@ -86,11 +86,3 @@ const styles = StyleSheet.create({
     height: 90
   }
 });
-
-// const BoxShadow = styled.div`
-//   box-shadow: 0 2px 19px -7px #d7d7d7;
-// `;
-
-// shadowOffset: { width: 0, height: 2  },
-// shadowColor: '#d7d7d7',
-//     shadowOpacity: 1.0,
