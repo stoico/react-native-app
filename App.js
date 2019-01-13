@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import { LinearGradient } from "expo";
 
 import FeedSuggestionBox from "./components/FeedSuggestionBox";
+import SuggestionButton from "./components/SuggestionButton";
 
 export default class App extends React.Component {
   openFilmSearchSection = () => {
@@ -31,14 +26,7 @@ export default class App extends React.Component {
             colors={greyGradient}
             style={styles.gradientBehindButton}
           >
-            <TouchableOpacity
-              style={styles.blueSuggestionButton}
-              onPress={this.openFilmSearchSection.bind(this)}
-            >
-              <Text style={styles.textOfBlueButton}>
-                Consiglia serie TV o film
-              </Text>
-            </TouchableOpacity>
+            <SuggestionButton />
           </LinearGradient>
         </View>
       </View>
