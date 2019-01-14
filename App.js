@@ -81,12 +81,6 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
-const hideNavigationBar = {
-  navigationOptions: {
-    header: null
-  }
-};
-
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
