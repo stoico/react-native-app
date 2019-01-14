@@ -5,11 +5,11 @@ import {
   View,
   Button,
   Text,
-  StatusBar,
-  ImageBackground
+  StatusBar
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 
+import HeaderSection from "../components/HeaderSection";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
 import SuggestionButton from "../components/SuggestionButton";
 
@@ -27,13 +27,6 @@ export default class HomeScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  static navigationOptions = {
-    title: "Consigliati",
-    headerStyle: { backgroundColor: "#2EA6FF" },
-    headerTintColor: "white",
-    headerTitleStyle: { fontWeight: "600" }
-  };
-
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
   };
@@ -45,61 +38,7 @@ export default class HomeScreen extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              width: "100%",
-              height: 800,
-              backgroundColor: "#2EA6FF",
-              zIndex: -1
-            }}
-          >
-            {/* Header container */}
-            <View
-              style={{
-                flex: 1,
-                height: 120,
-                justifyContent: "center",
-                alignContent: "center"
-              }}
-            >
-              <LinearGradient
-                colors={blueGradient}
-                style={styles.gradientBehindHeader}
-                locations={
-                  [0, 0.09, 0.5, 0.6, 1] // locations={[0, 0.2, 1]}
-                }
-              >
-                <ImageBackground
-                  source={require("../assets/header-pattern.png")}
-                  style={{
-                    flex: 1,
-                    width: "100%",
-                    height: 50,
-                    marginTop: 40,
-                    alignSelf: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Text
-                    style={
-                      {
-                        flex: 1,
-                        marginTop: 2,
-                        color: "white",
-                        fontFamily: "Gilroy Extrabold",
-                        fontSize: 23,
-                        alignSelf: "center"
-                      } // marginTop: 6,
-                    }
-                  >
-                    Consigliati
-                  </Text>
-                </ImageBackground>
-              </LinearGradient>
-            </View>
-          </View>
+          <HeaderSection pageTitle="Consigliati" />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               <Button
@@ -136,7 +75,6 @@ export default class HomeScreen extends React.Component {
 
 const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
 const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
-const blueGradient = ["#0075FF", "#2EA6FF", "#2EA6FF", "#E0E0E0", "#E0E0E0"];
 
 const styles = StyleSheet.create({
   screenContainer: {
