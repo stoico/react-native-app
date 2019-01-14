@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./screens/HomeScreen";
 import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
+import SuggestScreen from "./screens/SuggestScreen";
 
 // const AppNavigator = createStackNavigator(
 //   {
@@ -78,40 +79,38 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
-const navigationRoutes = {
-  Home: HomeScreen,
-  MyProfile: MyProfileScreen
-};
+const TabNavigator = createBottomTabNavigator(
+  { Home: HomeScreen, MyProfile: MyProfileScreen },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === "Home") {
+          iconName = `ios-albums`;
+          // Sometimes we want to add badges to some icons.
+          // You can check the implementation below.
+          IconComponent = HomeIconWithBadge;
+        } else if (routeName === "MyProfile") {
+          iconName = `ios-happy`;
+        }
 
-const TabNavigator = createBottomTabNavigator(navigationRoutes, {
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
-      const { routeName } = navigation.state;
-      let IconComponent = Ionicons;
-      let iconName;
-      if (routeName === "Home") {
-        iconName = `ios-albums`;
-        // Sometimes we want to add badges to some icons.
-        // You can check the implementation below.
-        IconComponent = HomeIconWithBadge;
-      } else if (routeName === "MyProfile") {
-        iconName = `ios-happy`;
+        // You can return any component that you like here!
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
       }
-
-      // You can return any component that you like here!
-      return <IconComponent name={iconName} size={25} color={tintColor} />;
-    }
-  }),
-  tabBarOptions: {
-    activeTintColor: "#2EA6FF",
-    inactiveTintColor: "#505050",
-    showLabel: true,
-    style: {
-      backgroundColor: "#FFFFFF",
-      borderTopColor: "#FFFFFF" // or transparent
+    }),
+    tabBarOptions: {
+      activeTintColor: "#2EA6FF",
+      inactiveTintColor: "#505050",
+      showLabel: true,
+      style: {
+        backgroundColor: "#FFFFFF",
+        borderTopColor: "#FFFFFF" // or transparent
+      }
     }
   }
-});
+);
 
 // class App extends React.Component {
 //   render() {

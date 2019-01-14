@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Font, AppLoading } from "expo";
 
+import { isAndroid, isiOS } from "../constants/Platform";
+
 export default class SuggestionButton extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +12,9 @@ export default class SuggestionButton extends React.Component {
 
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
+    if (isiOS) {
+      console.log("You're using an iOS device");
+    }
   };
 
   async componentDidMount() {

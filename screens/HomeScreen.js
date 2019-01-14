@@ -47,7 +47,11 @@ export default class HomeScreen extends React.Component {
               style={{ marginLeft: -30, marginTop: 15 }}
             />
             <Text
-              style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
+              style={{
+                flex: 1,
+                alignSelf: "center",
+                justifyContent: "center"
+              }}
             >
               Title
             </Text>

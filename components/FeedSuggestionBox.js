@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   filmSuggestedBox: {
     backgroundColor: "white",
-    borderRadius: 26,
+    borderRadius: 22,
     height: 90,
     overflow: "hidden",
     flexDirection: "row",
