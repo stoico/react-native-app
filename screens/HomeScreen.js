@@ -29,6 +29,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor="transparent" barStyle="light-content" />
         <View
           style={{
             position: "absolute",
@@ -40,36 +41,30 @@ export default class HomeScreen extends React.Component {
         >
           <LinearGradient
             colors={blueGradient}
-            style={styles.gradientBehindHeader}
-            // locations={[0, 0.2, 1]}
-            locations={[0, 0.1, 0.5, 0.6, 1]}
+            style={styles.gradientBehindHeader} // locations={[0, 0.2, 1]}
+            locations={[0, 0.09, 0.5, 0.6, 1]}
           >
             <Image
               source={require("../assets/header-pattern.png")}
               style={{ marginLeft: -30, marginTop: 15 }}
             />
             <Text
-              style={{
-                flex: 1,
-                alignSelf: "center",
-                justifyContent: "center"
-              }}
+              style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
             >
               -
             </Text>
           </LinearGradient>
         </View>
         <ScrollView style={styles.screenContainer}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <View style={styles.feedContainer}>
             {/* <Button
-            title="Go to Details"
-            onPress={() =>
-              this.props.navigation.navigate("Film", {
-                filmID: Math.floor(Math.random() * 100)
-              })
-            }
-          /> */}
+              title="Go to Details"
+              onPress={() =>
+                this.props.navigation.navigate("MyProfile", {
+                  filmID: Math.floor(Math.random() * 100)
+                })
+              }
+            /> */}
             <FeedSuggestionBox name="Stefano" filmTitle="You" />
             <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
             <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
@@ -77,6 +72,7 @@ export default class HomeScreen extends React.Component {
             <FeedSuggestionBox name="Angelo" />
             <FeedSuggestionBox name="Marco" />
             <FeedSuggestionBox name="Raffaella" />
+            <View style={styles.bottomSpacing} />
           </View>
         </ScrollView>
         <View style={styles.floatingPositionForButton}>
@@ -101,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   feedContainer: {
-    marginTop: 90,
+    marginTop: 82,
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30
@@ -130,5 +126,9 @@ const styles = StyleSheet.create({
     padding: 54,
     justifyContent: "center",
     alignContent: "center"
+  },
+  bottomSpacing: {
+    height: 85,
+    flex: 1
   }
 });
