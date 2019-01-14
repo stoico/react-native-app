@@ -33,7 +33,7 @@ export default class HomeScreen extends React.Component {
           style={{
             position: "absolute",
             top: 0,
-            height: 620,
+            height: 800,
             backgroundColor: "#2EA6FF",
             zIndex: -1
           }}
@@ -42,7 +42,7 @@ export default class HomeScreen extends React.Component {
             colors={blueGradient}
             style={styles.gradientBehindHeader}
             // locations={[0, 0.2, 1]}
-            locations={[0, 0.2, 1]}
+            locations={[0, 0.1, 0.5, 0.6, 1]}
           >
             <Image
               source={require("../assets/header-pattern.png")}
@@ -94,7 +94,7 @@ export default class HomeScreen extends React.Component {
 
 const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
 const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
-const blueGradient = ["#0075FF", "#2EA6FF", "#2EA6FF"];
+const blueGradient = ["#0075FF", "#2EA6FF", "#2EA6FF", "#E0E0E0", "#E0E0E0"];
 
 const styles = StyleSheet.create({
   screenContainer: {
