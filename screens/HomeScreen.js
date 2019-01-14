@@ -44,15 +44,31 @@ export default class HomeScreen extends React.Component {
               <Button
                 title="Go to Details"
                 onPress={() =>
-                  this.props.navigation.navigate("Suggest", {
+                  this.props.navigation.navigate("Film", {
                     filmID: Math.floor(Math.random() * 100)
                   })
                 }
               />
-              <FeedSuggestionBox name="Stefano" filmTitle="You" />
-              <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
-              <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
-              <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
+              <FeedSuggestionBox
+                name="Stefano"
+                filmTitle="You"
+                {...this.props}
+              />
+              <FeedSuggestionBox
+                name="Carmine"
+                filmTitle="Game Of Thrones"
+                {...this.props}
+              />
+              <FeedSuggestionBox
+                name="Martina"
+                filmTitle="Black Mirrors"
+                {...this.props}
+              />
+              <FeedSuggestionBox
+                name="Rocco"
+                filmTitle="Westworld"
+                {...this.props}
+              />
               <FeedSuggestionBox name="Angelo" />
               <FeedSuggestionBox name="Marco" />
               <FeedSuggestionBox name="Raffaella" />

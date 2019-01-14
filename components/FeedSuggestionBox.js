@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableWithoutFeedback
+} from "react-native";
 import { Font, AppLoading } from "expo";
 
 export default class FeedSuggestionBox extends React.Component {
@@ -33,15 +39,23 @@ export default class FeedSuggestionBox extends React.Component {
             <Text style={styles.userNameText}>{this.props.name}</Text>
             <Text style={styles.userNameSuggestsText}> consiglia</Text>
           </View>
-          <View style={styles.filmSuggestedBox}>
-            <Image
-              source={require("../assets/cover3.png")}
-              style={styles.filmCoverImage}
-            />
-            <Text style={styles.filmTitle}>
-              {this.props.filmTitle || "The Titled Film"}
-            </Text>
-          </View>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              this.props.navigation.navigate("Film", {
+                filmTitle: this.props.filmTitle
+              })
+            }
+          >
+            <View style={styles.filmSuggestedBox}>
+              <Image
+                source={require("../assets/cover3.png")}
+                style={styles.filmCoverImage}
+              />
+              <Text style={styles.filmTitle}>
+                {this.props.filmTitle || "The Titled Film"}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       );
     }
