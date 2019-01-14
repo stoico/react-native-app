@@ -46,7 +46,7 @@ export default class HomeScreen extends React.Component {
           >
             <Image
               source={require("../assets/header-pattern.png")}
-              style={{ marginLeft: -30, marginTop: 15 }}
+              style={{ marginLeft: -30, marginTop: -8 }}
             />
             <Text
               style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
