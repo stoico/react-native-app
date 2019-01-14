@@ -29,11 +29,11 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor="transparent" barStyle="light-content" />
         <View
           style={{
-            flex: 1,
-            height: 110,
+            position: "absolute",
+            top: 0,
+            height: 120,
             backgroundColor: "#2EA6FF",
             zIndex: -1
           }}
@@ -41,6 +41,7 @@ export default class HomeScreen extends React.Component {
           <LinearGradient
             colors={blueGradient}
             style={styles.gradientBehindHeader}
+            locations={[0, 1]}
           >
             <Image
               source={require("../assets/header-pattern.png")}
@@ -57,8 +58,10 @@ export default class HomeScreen extends React.Component {
             </Text>
           </LinearGradient>
         </View>
-        <ScrollView style={styles.feedContainer}>
-          {/* <Button
+        <ScrollView style={styles.screenContainer}>
+          <StatusBar backgroundColor="transparent" barStyle="light-content" />
+          <View style={styles.feedContainer}>
+            {/* <Button
             title="Go to Details"
             onPress={() =>
               this.props.navigation.navigate("Film", {
@@ -66,13 +69,14 @@ export default class HomeScreen extends React.Component {
               })
             }
           /> */}
-          <FeedSuggestionBox name="Stefano" filmTitle="You" />
-          <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
-          <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
-          <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
-          <FeedSuggestionBox name="Angelo" />
-          <FeedSuggestionBox name="Marco" />
-          <FeedSuggestionBox name="Raffaella" />
+            <FeedSuggestionBox name="Stefano" filmTitle="You" />
+            <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
+            <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
+            <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
+            <FeedSuggestionBox name="Angelo" />
+            <FeedSuggestionBox name="Marco" />
+            <FeedSuggestionBox name="Raffaella" />
+          </View>
         </ScrollView>
         <View style={styles.floatingPositionForButton}>
           <LinearGradient
@@ -92,8 +96,11 @@ const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
 const blueGradient = ["#0075FF", "#49FFFF"];
 
 const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1
+  },
   feedContainer: {
-    marginTop: 80,
+    marginTop: 90,
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30
