@@ -7,11 +7,13 @@ import {
   createBottomTabNavigator
 } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
+// import { Font, AppLoading } from "expo";
 
 import HomeScreen from "./screens/HomeScreen";
 import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import SuggestScreen from "./screens/SuggestScreen";
+import SuggestedScreen from "./screens/SuggestedScreen";
 
 // const AppNavigator = createStackNavigator(
 //   {
@@ -80,7 +82,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 };
 
 const TabNavigator = createBottomTabNavigator(
-  { Home: HomeScreen, MyProfile: MyProfileScreen },
+  { Home: { screen: HomeScreen }, MyProfile: { screen: MyProfileScreen } },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -107,7 +109,11 @@ const TabNavigator = createBottomTabNavigator(
       style: {
         backgroundColor: "#FFFFFF",
         borderTopColor: "#FFFFFF" // or transparent
-      }
+      },
+      upperCaseLabel: true
+      // labelStyle: {
+      //   fontFamily: "Gilroy Light"
+      // }
     }
   }
 );
@@ -117,5 +123,16 @@ const TabNavigator = createBottomTabNavigator(
 //     return <AppContainer />;
 //   }
 // }
+
+const HomeStack = createStackNavigator({
+  Home: { screen: HomeScreen },
+  Film: { screen: FilmScreen },
+  Suggest: { screen: SuggestScreen }
+});
+
+const ProfileStack = createStackNavigator({
+  MyProfile: { screen: MyProfileScreen },
+  Suggested: { screen: SuggestedScreen }
+});
 
 export default createAppContainer(TabNavigator);

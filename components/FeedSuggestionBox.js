@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 148,
     marginBottom: 10,
     padding: 10,
-    shadowOpacity: 1, // made up this
+    shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
     shadowColor: "#D7D7D7",
     shadowOffset: { width: 0, height: 2 }
@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
   },
   userNameText: {
     fontFamily: "Gilroy Extrabold",
-    color: "#505050",
+    color: "rgba(80, 80, 80, 0.8)",
     fontSize: 20,
     height: 36,
     lineHeight: 36
   },
   userNameSuggestsText: {
     fontFamily: "Gilroy Light",
-    color: "#505050",
+    color: "rgba(80, 80, 80, 0.8)", // or #505050
     fontSize: 12,
-    marginLeft: 5,
+    marginLeft: 3,
     marginTop: 1,
     height: 36,
     lineHeight: 36

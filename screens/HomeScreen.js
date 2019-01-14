@@ -5,16 +5,28 @@ import {
   View,
   Button,
   Text,
-  Image,
   StatusBar,
   ImageBackground
 } from "react-native";
-import { LinearGradient } from "expo";
+import { LinearGradient, Font, AppLoading } from "expo";
 
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
 import SuggestionButton from "../components/SuggestionButton";
 
 export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { fontLoaded: false };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+    });
+    this.setState({ fontLoaded: true });
+  }
+
   static navigationOptions = {
     title: "Consigliati",
     headerStyle: { backgroundColor: "#2EA6FF" },
@@ -27,64 +39,98 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor="transparent" barStyle="light-content" />
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            height: 800,
-            backgroundColor: "#2EA6FF",
-            zIndex: -1
-          }}
-        >
-          <LinearGradient
-            colors={blueGradient}
-            style={styles.gradientBehindHeader} // locations={[0, 0.2, 1]}
-            locations={[0, 0.09, 0.5, 0.6, 1]}
+    if (!this.state.fontLoaded) {
+      return <AppLoading />;
+    } else {
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar backgroundColor="transparent" barStyle="light-content" />
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              width: "100%",
+              height: 800,
+              backgroundColor: "#2EA6FF",
+              zIndex: -1
+            }}
           >
-            <Image
-              source={require("../assets/header-pattern.png")}
-              style={{ marginLeft: -30, marginTop: -8 }}
-            />
-            <Text
-              style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
+            {/* Header container */}
+            <View
+              style={{
+                flex: 1,
+                height: 120,
+                justifyContent: "center",
+                alignContent: "center"
+              }}
             >
-              -
-            </Text>
-          </LinearGradient>
-        </View>
-        <ScrollView style={styles.screenContainer}>
-          <View style={styles.feedContainer}>
-            {/* <Button
-              title="Go to Details"
-              onPress={() =>
-                this.props.navigation.navigate("MyProfile", {
-                  filmID: Math.floor(Math.random() * 100)
-                })
-              }
-            /> */}
-            <FeedSuggestionBox name="Stefano" filmTitle="You" />
-            <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
-            <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
-            <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
-            <FeedSuggestionBox name="Angelo" />
-            <FeedSuggestionBox name="Marco" />
-            <FeedSuggestionBox name="Raffaella" />
-            <View style={styles.bottomSpacing} />
+              <LinearGradient
+                colors={blueGradient}
+                style={styles.gradientBehindHeader}
+                locations={
+                  [0, 0.09, 0.5, 0.6, 1] // locations={[0, 0.2, 1]}
+                }
+              >
+                <ImageBackground
+                  source={require("../assets/header-pattern.png")}
+                  style={{
+                    flex: 1,
+                    width: "100%",
+                    height: 50,
+                    marginTop: 40,
+                    alignSelf: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Text
+                    style={
+                      {
+                        flex: 1,
+                        marginTop: 2,
+                        color: "white",
+                        fontFamily: "Gilroy Extrabold",
+                        fontSize: 23,
+                        alignSelf: "center"
+                      } // marginTop: 6,
+                    }
+                  >
+                    Consigliati
+                  </Text>
+                </ImageBackground>
+              </LinearGradient>
+            </View>
           </View>
-        </ScrollView>
-        <View style={styles.floatingPositionForButton}>
-          <LinearGradient
-            style={styles.gradientBehindButton}
-            colors={greyGradient}
-          >
-            <SuggestionButton />
-          </LinearGradient>
+          <ScrollView style={styles.screenContainer}>
+            <View style={styles.feedContainer}>
+              {/* <Button
+                title="Go to Details"
+                onPress={() =>
+                  this.props.navigation.navigate("MyProfile", {
+                    filmID: Math.floor(Math.random() * 100)
+                  })
+                }
+              /> */}
+              <FeedSuggestionBox name="Stefano" filmTitle="You" />
+              <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
+              <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
+              <FeedSuggestionBox name="Rocco" filmTitle="Westworld" />
+              <FeedSuggestionBox name="Angelo" />
+              <FeedSuggestionBox name="Marco" />
+              <FeedSuggestionBox name="Raffaella" />
+              <View style={styles.bottomSpacing} />
+            </View>
+          </ScrollView>
+          <View style={styles.floatingPositionForButton}>
+            <LinearGradient
+              style={styles.gradientBehindButton}
+              colors={greyGradient}
+            >
+              <SuggestionButton />
+            </LinearGradient>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 }
 
@@ -123,7 +169,6 @@ const styles = StyleSheet.create({
   },
   gradientBehindHeader: {
     flex: 1,
-    padding: 54,
     justifyContent: "center",
     alignContent: "center"
   },
