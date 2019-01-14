@@ -81,8 +81,50 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
+const hideNavigationBar = {
+  navigationOptions: {
+    header: null
+  }
+};
+
+const HomeStack = createStackNavigator({
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Film: {
+    screen: FilmScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Suggest: {
+    screen: SuggestScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
+
+const ProfileStack = createStackNavigator({
+  MyProfile: {
+    screen: MyProfileScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Suggested: {
+    screen: SuggestedScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
+
 const TabNavigator = createBottomTabNavigator(
-  { Home: { screen: HomeScreen }, MyProfile: { screen: MyProfileScreen } },
+  { Home: HomeStack, MyProfile: ProfileStack },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -105,12 +147,11 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: "#2EA6FF",
       inactiveTintColor: "#505050",
-      showLabel: true,
+      showLabel: false,
       style: {
         backgroundColor: "#FFFFFF",
         borderTopColor: "#FFFFFF" // or transparent
-      },
-      upperCaseLabel: true
+      }
       // labelStyle: {
       //   fontFamily: "Gilroy Light"
       // }
@@ -123,16 +164,5 @@ const TabNavigator = createBottomTabNavigator(
 //     return <AppContainer />;
 //   }
 // }
-
-const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen },
-  Film: { screen: FilmScreen },
-  Suggest: { screen: SuggestScreen }
-});
-
-const ProfileStack = createStackNavigator({
-  MyProfile: { screen: MyProfileScreen },
-  Suggested: { screen: SuggestedScreen }
-});
 
 export default createAppContainer(TabNavigator);

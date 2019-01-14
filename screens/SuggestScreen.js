@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TextInput, Text } from "react-native";
+import { View, Text } from "react-native";
 
 export default class SuggestScreen extends React.Component {
   static navigationOptions = {
@@ -20,18 +20,8 @@ export default class SuggestScreen extends React.Component {
 
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Input Screen</Text>
-        <TextInput
-          style={{
-            height: 40,
-            borderColor: "grey",
-            borderWidth: 2,
-            width: "60%"
-          }}
-          placeholder="Type here to translate!"
-          onChangeText={text => this.setState({ text })}
-        />
-        <Text>{this.state.text || " "}</Text>
+        <Text>Suggest Screen</Text>
+        <Text>{filmID}</Text>
       </View>
     );
   }

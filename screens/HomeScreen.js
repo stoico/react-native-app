@@ -102,14 +102,14 @@ export default class HomeScreen extends React.Component {
           </View>
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {/* <Button
+              <Button
                 title="Go to Details"
                 onPress={() =>
-                  this.props.navigation.navigate("MyProfile", {
+                  this.props.navigation.navigate("Suggest", {
                     filmID: Math.floor(Math.random() * 100)
                   })
                 }
-              /> */}
+              />
               <FeedSuggestionBox name="Stefano" filmTitle="You" />
               <FeedSuggestionBox name="Carmine" filmTitle="Game Of Thrones" />
               <FeedSuggestionBox name="Martina" filmTitle="Black Mirrors" />
