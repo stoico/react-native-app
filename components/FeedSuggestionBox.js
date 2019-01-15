@@ -25,6 +25,8 @@ export default class FeedSuggestionBox extends React.Component {
   }
 
   render() {
+    const filmTitle = this.props.filmTitle || "The Titled Film";
+
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
@@ -42,7 +44,7 @@ export default class FeedSuggestionBox extends React.Component {
           <TouchableWithoutFeedback
             onPress={() =>
               this.props.navigation.navigate("Film", {
-                filmTitle: this.props.filmTitle
+                filmTitle: filmTitle
               })
             }
           >
@@ -51,9 +53,7 @@ export default class FeedSuggestionBox extends React.Component {
                 source={require("../assets/cover3.png")}
                 style={styles.filmCoverImage}
               />
-              <Text style={styles.filmTitle}>
-                {this.props.filmTitle || "The Titled Film"}
-              </Text>
+              <Text style={styles.filmTitle}>{filmTitle}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

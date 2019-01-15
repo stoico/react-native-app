@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   filmTitleOutside: {
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
-    fontSize: 28,
+    fontSize: 30,
     alignSelf: "center",
     height: 45
   }
