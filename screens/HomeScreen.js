@@ -41,18 +41,18 @@ export default class HomeScreen extends React.Component {
           <HeaderSection pageTitle="Consigliati" />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              <Button
+              {/* <Button
                 title="Go to Details"
                 onPress={() =>
                   this.props.navigation.navigate("Film", {
                     filmID: Math.floor(Math.random() * 100)
                   })
                 }
-              />
+              /> */}
               <FeedSuggestionBox
                 name="Stefano"
                 filmTitle="You"
-                {...this.props}
+                navigation={this.props.navigation}
               />
               <FeedSuggestionBox
                 name="Carmine"
@@ -69,9 +69,9 @@ export default class HomeScreen extends React.Component {
                 filmTitle="Westworld"
                 {...this.props}
               />
-              <FeedSuggestionBox name="Angelo" />
-              <FeedSuggestionBox name="Marco" />
-              <FeedSuggestionBox name="Raffaella" />
+              <FeedSuggestionBox name="Angelo" {...this.props} />
+              <FeedSuggestionBox name="Marco" {...this.props} />
+              <FeedSuggestionBox name="Raffaella" {...this.props} />
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>

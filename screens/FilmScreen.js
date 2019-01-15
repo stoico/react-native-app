@@ -39,6 +39,8 @@ export default class FilmScreen extends React.Component {
           <ScrollView style={styles.screenContainer}>
             <View style={styles.filmContainer}>
               <View style={styles.feedSuggestionBox}>
+                <Text style={styles.filmTitleOutside}>{filmTitle}</Text>
+
                 <View style={styles.filmSuggestedBox}>
                   <Image
                     source={require("../assets/cover3.png")}
@@ -145,5 +147,12 @@ const styles = StyleSheet.create({
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
     fontSize: 26
+  },
+  filmTitleOutside: {
+    fontFamily: "Gilroy Extrabold",
+    color: "#505050",
+    fontSize: 28,
+    alignSelf: "center",
+    height: 45
   }
 });
