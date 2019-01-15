@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Font, AppLoading } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
 export default class SuggestedBox extends React.Component {
   constructor(props) {
@@ -20,17 +21,24 @@ export default class SuggestedBox extends React.Component {
 
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
-
+    // const randomNumber = Math.floor(Math.random() * 3);
+    // const coverPath = "../assets/cover2.png";
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
       return (
         <View style={styles.filmSuggestedBox}>
           <Image
-            source={require("../assets/cover3.png")}
+            source={require("../assets/cover2.png")}
             style={styles.filmCoverImage}
           />
           <Text style={styles.filmTitle}>{filmTitle}</Text>
+          <Ionicons
+            style={{ position: "absolute", top: 10, right: 20 }}
+            name="ios-more"
+            size={20}
+            color="rgba(50, 50, 50, 0.4)"
+          />
         </View>
       );
     }

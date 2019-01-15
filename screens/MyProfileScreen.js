@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Image,
   Text,
   StatusBar,
   ScrollView,
@@ -66,7 +65,10 @@ export default class MyProfileScreen extends React.Component {
                     </View>
                   </View>
                 </View>
-                <Text style={styles.filmTitle}>Consigliati da me</Text>
+
+                <View style={styles.categoryNameRounded}>
+                  <Text style={styles.categoryNameText}>Ho consigliato</Text>
+                </View>
                 <SuggestedBox filmTitle="Game of Thrones" />
                 <SuggestedBox filmTitle="Westworld" />
               </View>
@@ -110,7 +112,8 @@ const styles = StyleSheet.create({
   userContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    marginBottom: 30
   },
   userWhiteBox: {
     flex: 0.81,
@@ -138,5 +141,23 @@ const styles = StyleSheet.create({
     shadowRadius: 9, //     numbers, as I can't replicate Sketch parameters
     shadowColor: "rgba(46,166,255, 0.70)",
     shadowOffset: { width: 0, height: 4 }
+  },
+  categoryNameRounded: {
+    width: "auto",
+    backgroundColor: "#EAEAEA",
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginBottom: 8
+  },
+  categoryNameText: {
+    color: "rgba(80, 80, 80, 0.5)",
+    fontFamily: "Gilroy Extrabold",
+    fontSize: 14,
+    textTransform: "uppercase"
   }
 });
