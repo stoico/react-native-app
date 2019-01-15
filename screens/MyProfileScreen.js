@@ -39,10 +39,10 @@ export default class MyProfileScreen extends React.Component {
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <HeaderSection pageTitle="Profilo Personale" />
           <ScrollView style={styles.screenContainer}>
-            <View style={styles.filmContainer}>
-              <View style={styles.feedSuggestionBox}>
+            <View style={styles.outmostContainer}>
+              <View style={styles.profileContainer}>
                 <View style={styles.userContainer}>
-                  <View style={styles.userBox}>
+                  <View style={styles.userWhiteBox}>
                     <View style={styles.userAvatarFloating}>
                       <ImageBackground
                         source={require("../assets/profile-avatar-105.png")}
@@ -62,15 +62,7 @@ export default class MyProfileScreen extends React.Component {
                         paddingLeft: 15
                       }}
                     >
-                      <Text
-                        style={{
-                          color: "#505050",
-                          fontFamily: "Gilroy Extrabold",
-                          fontSize: 38
-                        }}
-                      >
-                        Carmine
-                      </Text>
+                      <Text style={styles.userNameBigText}>Carmine</Text>
                     </View>
                   </View>
                 </View>
@@ -91,14 +83,14 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1
   },
-  filmContainer: {
+  outmostContainer: {
     marginTop: 82,
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
     height: 650
   },
-  feedSuggestionBox: {
+  profileContainer: {
     flex: 1,
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
@@ -110,38 +102,17 @@ const styles = StyleSheet.create({
     shadowColor: "#D7D7D7",
     shadowOffset: { width: 0, height: 2 }
   },
-  feedUserSuggests: {
-    flexDirection: "row",
-    height: 36,
-    marginBottom: 6
-  },
-  userAvatar: {
-    width: 36,
-    height: 36,
-    marginRight: 8
-  },
-  userNameText: {
+  userNameBigText: {
+    color: "#505050",
     fontFamily: "Gilroy Extrabold",
-    color: "rgba(80, 80, 80, 0.8)",
-    fontSize: 20,
-    height: 36,
-    lineHeight: 36
-  },
-  userNameSuggestsText: {
-    fontFamily: "Gilroy Light",
-    color: "rgba(80, 80, 80, 0.8)", // or #505050
-    fontSize: 12,
-    marginLeft: 3,
-    marginTop: 1,
-    height: 36,
-    lineHeight: 36
+    fontSize: 38
   },
   userContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end"
   },
-  userBox: {
+  userWhiteBox: {
     flex: 0.81,
     flexDirection: "row",
     backgroundColor: "white",
@@ -167,23 +138,5 @@ const styles = StyleSheet.create({
     shadowRadius: 9, //     numbers, as I can't replicate Sketch parameters
     shadowColor: "rgba(46,166,255, 0.70)",
     shadowOffset: { width: 0, height: 4 }
-  },
-  filmCoverImageBig: {
-    flex: 0.4,
-    backgroundColor: "#8CD2FD",
-    height: "100%"
-  },
-  filmTitleBigContainer: {
-    flex: 0.6,
-    paddingLeft: 12,
-    flexDirection: "column",
-    alignItems: "flex-start",
-    height: "100%"
-  },
-  filmTitleBig: {
-    flex: 0.2,
-    fontFamily: "Gilroy Extrabold",
-    color: "#505050",
-    fontSize: 26
   }
 });
