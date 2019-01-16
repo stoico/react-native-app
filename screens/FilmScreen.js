@@ -64,7 +64,7 @@ export default class FilmScreen extends React.Component {
                   <Text style={styles.categoryNameText}>Trailer</Text>
                 </View>
                 <WebView
-                  style={{ flex: 1, borderRadius: 10, overflow: "hidden" }}
+                  style={{ flex: 1, borderRadius: 26, overflow: "hidden" }}
                   javaScriptEnabled={true}
                   scrollEnabled={false}
                   source={{
@@ -72,6 +72,19 @@ export default class FilmScreen extends React.Component {
                       "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
                   }}
                 />
+                <View style={styles.categoryNameRounded}>
+                  <Text style={styles.categoryNameText}>Storia</Text>
+                </View>
+                <Text
+                  style={{ color: "#505050", fontWeight: "500", padding: 4 }}
+                >
+                  In the mythical continent of Westeros, several powerful
+                  families fight for control of the Seven Kingdoms. As conflict
+                  erupts in the kingdoms of men, an ancient enemy rises once
+                  again to threaten them all. Meanwhile, the last heirs of a
+                  recently usurped dynasty plot to take back their homeland from
+                  across the Narrow Sea.
+                </Text>
               </View>
               <View style={styles.bottomSpacing} />
             </View>
@@ -91,7 +104,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 1050
+    height: 1400
   },
   bottomSpacing: {
     height: 85,
