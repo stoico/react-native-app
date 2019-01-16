@@ -24,6 +24,16 @@ export default class RankingSuggestionBox extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
+  // checkPodiumPlace() {
+  //   if (this.podiumCounter == 1) {
+  //     return true;
+  //   } else if (this.podiumCounter == 2) {
+  //     return true;
+  //   } else {
+
+  //   }
+  // }
+
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
 
@@ -39,7 +49,15 @@ export default class RankingSuggestionBox extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View style={styles.feedSuggestionBox}>
+        <View
+          style={[
+            styles.feedSuggestionBox,
+            {
+              backgroundColor:
+                this.props.podiumPlace === 1 ? "yellow" : "yellow"
+            }
+          ]}
+        >
           <View style={styles.feedUserSuggests}>
             <Text style={styles.numberOfFriendsRecommending}>
               {this.props.numberOfRecommendations} {friendsText}
@@ -58,7 +76,9 @@ export default class RankingSuggestionBox extends React.Component {
                 source={require("../assets/cover1.png")}
                 style={styles.filmCoverImage}
               />
-              <Text style={styles.filmTitle}>{filmTitle}</Text>
+              <Text style={styles.filmTitle}>
+                {filmTitle} {this.props.podiumPlace}
+              </Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

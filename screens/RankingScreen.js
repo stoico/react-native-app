@@ -1,22 +1,15 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Button,
-  Text,
-  StatusBar
-} from "react-native";
-import { LinearGradient, Font, AppLoading } from "expo";
+import { StyleSheet, ScrollView, View, Text, StatusBar } from "react-native";
+import { Font, AppLoading } from "expo";
 
 import HeaderSection from "../components/HeaderSection";
 import RankingSuggestionBox from "../components/RankingSuggestionBox";
-import SuggestionButton from "../components/SuggestionButton";
 
 export default class RankingScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+
+    this.state = { fontLoaded: false, podiumCounter: 0 };
   }
 
   async componentDidMount() {
@@ -26,6 +19,10 @@ export default class RankingScreen extends React.Component {
     });
     this.setState({ fontLoaded: true });
   }
+
+  incrementItem = () => {
+    this.setState({ podiumCounter: this.state.podiumCounter + 1 });
+  };
 
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
@@ -44,16 +41,19 @@ export default class RankingScreen extends React.Component {
               <RankingSuggestionBox
                 numberOfRecommendations={7}
                 filmTitle="You"
+                podiumPlace={this.state.podiumCounter}
                 navigation={this.props.navigation}
               />
               <RankingSuggestionBox
                 numberOfRecommendations={4}
                 filmTitle="Game Of Thrones"
+                podiumPlace={this.state.podiumCounter}
                 {...this.props}
               />
               <RankingSuggestionBox
                 numberOfRecommendations={3}
                 filmTitle="Black Mirrors"
+                podiumPlace={this.state.podiumCounter}
                 {...this.props}
               />
               <RankingSuggestionBox
@@ -81,9 +81,6 @@ export default class RankingScreen extends React.Component {
     }
   }
 }
-
-const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
-const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
 
 const styles = StyleSheet.create({
   screenContainer: {

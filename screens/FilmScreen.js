@@ -5,6 +5,7 @@ import {
   Text,
   StatusBar,
   ScrollView,
+  WebView,
   StyleSheet
 } from "react-native";
 import { Font, AppLoading } from "expo";
@@ -59,6 +60,14 @@ export default class FilmScreen extends React.Component {
                 <Text style={styles.filmTitle}>
                   Film ID: {JSON.stringify(filmTitle)}
                 </Text>
+                <WebView
+                  style={{ flex: 1, borderRadius: 10, overflow: "hidden" }}
+                  javaScriptEnabled={true}
+                  source={{
+                    uri:
+                      "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
+                  }}
+                />
               </View>
               <View style={styles.bottomSpacing} />
             </View>
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 650
+    height: 950
   },
   bottomSpacing: {
     height: 85,

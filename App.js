@@ -84,7 +84,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: FilmScreen,
     navigationOptions: {
       header: null
     }
