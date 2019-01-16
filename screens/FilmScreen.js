@@ -40,53 +40,47 @@ export default class FilmScreen extends React.Component {
           <ScrollView style={styles.screenContainer}>
             <View style={styles.filmContainer}>
               <View style={styles.feedSuggestionBox}>
-                <Text style={styles.filmTitleOutside}>{filmTitle}</Text>
-
-                <View style={styles.filmSuggestedBox}>
-                  <Image
-                    source={require("../assets/cover3.png")}
-                    style={styles.filmCoverImageBig}
-                  />
-                  <View style={styles.filmTitleBigContainer}>
-                    <Text style={styles.filmTitleBig}>{filmTitle}</Text>
-                    <Text style={styles.filmTitleBig}>
-                      {this.props.filmTitle || "The Titled Film"}
-                    </Text>
-                    <Text style={styles.filmTitleBig}>
-                      {this.props.filmTitle || "The Titled Film"}
-                    </Text>
-                  </View>
-                </View>
-                {/* <Text style={styles.filmTitle}>
-                  Film ID: {JSON.stringify(filmTitle)}
-                </Text> */}
-                <View style={styles.categoryNameRounded}>
-                  <Text style={styles.categoryNameText}>Trailer</Text>
-                </View>
-                <WebView
-                  style={{ flex: 1, borderRadius: 26, overflow: "hidden" }}
-                  javaScriptEnabled={true}
-                  scrollEnabled={false}
-                  source={{
-                    uri:
-                      "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
-                  }}
+                <Image
+                  source={require("../assets/backdrop.png")}
+                  style={{ borderRadius: 26, width: "100%" }}
                 />
-                <View style={styles.categoryNameRounded}>
-                  <Text style={styles.categoryNameText}>Storia</Text>
+                <View style={styles.filmSuggestedBox}>
+                  <Text style={styles.filmTitleOutside}>{filmTitle}</Text>
+                  <View style={styles.categoryNameRounded}>
+                    <Text style={styles.categoryNameText}>Consigliato da</Text>
+                  </View>
+                  <View style={styles.categoryNameRounded}>
+                    <Text style={styles.categoryNameText}>Trailer</Text>
+                  </View>
+                  <WebView
+                    style={{
+                      flex: 1,
+                      width: 340,
+                      borderRadius: 26,
+                      overflow: "hidden"
+                    }}
+                    javaScriptEnabled={true}
+                    scrollEnabled={false}
+                    source={{
+                      uri:
+                        "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
+                    }}
+                  />
+                  <View style={styles.categoryNameRounded}>
+                    <Text style={styles.categoryNameText}>Storia</Text>
+                  </View>
+                  <Text
+                    style={{ color: "#505050", fontWeight: "500", padding: 4 }}
+                  >
+                    In the mythical continent of Westeros, several powerful
+                    families fight for control of the Seven Kingdoms. As
+                    conflict erupts in the kingdoms of men, an ancient enemy
+                    rises once again to threaten them all. Meanwhile, the last
+                    heirs of a recently usurped dynasty plot to take back their
+                    homeland from across the Narrow Sea.
+                  </Text>
                 </View>
-                <Text
-                  style={{ color: "#505050", fontWeight: "500", padding: 4 }}
-                >
-                  In the mythical continent of Westeros, several powerful
-                  families fight for control of the Seven Kingdoms. As conflict
-                  erupts in the kingdoms of men, an ancient enemy rises once
-                  again to threaten them all. Meanwhile, the last heirs of a
-                  recently usurped dynasty plot to take back their homeland from
-                  across the Narrow Sea.
-                </Text>
               </View>
-              <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
         </View>
@@ -104,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 1400
+    height: 650
   },
   bottomSpacing: {
     height: 85,
@@ -151,9 +145,10 @@ const styles = StyleSheet.create({
   filmSuggestedBox: {
     backgroundColor: "white",
     borderRadius: 22,
-    height: 200,
+    marginTop: -42,
+    flex: 1,
     overflow: "hidden",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center"
   },
   filmCoverImageBig: {
@@ -177,9 +172,10 @@ const styles = StyleSheet.create({
   filmTitleOutside: {
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
-    fontSize: 30,
+    fontSize: 36,
     alignSelf: "center",
-    height: 45
+    height: 45,
+    marginTop: 5
   },
   categoryNameRounded: {
     width: "auto",
