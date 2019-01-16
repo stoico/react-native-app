@@ -57,12 +57,16 @@ export default class FilmScreen extends React.Component {
                     </Text>
                   </View>
                 </View>
-                <Text style={styles.filmTitle}>
+                {/* <Text style={styles.filmTitle}>
                   Film ID: {JSON.stringify(filmTitle)}
-                </Text>
+                </Text> */}
+                <View style={styles.categoryNameRounded}>
+                  <Text style={styles.categoryNameText}>Trailer</Text>
+                </View>
                 <WebView
                   style={{ flex: 1, borderRadius: 10, overflow: "hidden" }}
                   javaScriptEnabled={true}
+                  scrollEnabled={false}
                   source={{
                     uri:
                       "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 950
+    height: 1050
   },
   bottomSpacing: {
     height: 85,
@@ -163,5 +167,24 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: "center",
     height: 45
+  },
+  categoryNameRounded: {
+    width: "auto",
+    backgroundColor: "#EAEAEA",
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom: 8
+  },
+  categoryNameText: {
+    color: "rgba(80, 80, 80, 0.5)",
+    fontFamily: "Gilroy Extrabold",
+    fontSize: 14,
+    textTransform: "uppercase"
   }
 });
