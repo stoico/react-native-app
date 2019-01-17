@@ -46,7 +46,7 @@ export default class FilmScreen extends React.Component {
                 />
                 <View style={styles.tertiaryContainer}>
                   <Text style={styles.filmTitleOutside}>{filmTitle}</Text>
-                  <View style={styles.categoryNameRounded}>
+                  <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Consigliato da</Text>
                   </View>
 
@@ -59,7 +59,29 @@ export default class FilmScreen extends React.Component {
                     <Text style={styles.userNameText}>Stefano</Text>
                   </View>
 
-                  <View style={styles.categoryNameRounded}>
+                  <View style={styles.multipleCategoryContainer}>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Punteggio</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Durata</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Stagioni</Text>
+                    </View>
+
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Punteggio</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Durata</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>Stagioni</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Storia</Text>
                   </View>
                   <Text style={styles.plotParagraph}>
@@ -71,16 +93,11 @@ export default class FilmScreen extends React.Component {
                     homeland from across the Narrow Sea.
                   </Text>
 
-                  <View style={styles.categoryNameRounded}>
+                  <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
                   <WebView
-                    style={{
-                      height: 180,
-                      width: 340,
-                      borderRadius: 26,
-                      overflow: "hidden"
-                    }}
+                    style={styles.videoTrailer}
                     javaScriptEnabled={true}
                     scrollEnabled={false}
                     source={{
@@ -185,16 +202,35 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 5
   },
-  categoryNameRounded: {
+  multipleCategoryContainer: {
     width: "auto",
-    backgroundColor: "#EAEAEA",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 8
+  },
+  multipleCategoryRounded: {
+    backgroundColor: "#F2F2F2",
+    maxWidth: 99,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  centerCategoryNameRounded: {
+    width: "auto",
+    backgroundColor: "#F2F2F2",
+    minWidth: 99,
     padding: 5,
     paddingLeft: 10,
     paddingRight: 10,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
     marginTop: 30,
     marginBottom: 8
   },
@@ -213,5 +249,11 @@ const styles = StyleSheet.create({
     color: "#505050",
     fontWeight: "500",
     padding: 4
+  },
+  videoTrailer: {
+    height: 180,
+    width: 340,
+    borderRadius: 26,
+    overflow: "hidden"
   }
 });
