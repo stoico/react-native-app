@@ -69,16 +69,6 @@ export default class FilmScreen extends React.Component {
                     <View style={styles.multipleCategoryRounded}>
                       <Text style={styles.categoryNameText}>Stagioni</Text>
                     </View>
-
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Punteggio</Text>
-                    </View>
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Durata</Text>
-                    </View>
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Stagioni</Text>
-                    </View>
                   </View>
 
                   <View style={styles.centerCategoryNameRounded}>
@@ -213,7 +203,9 @@ const styles = StyleSheet.create({
   },
   multipleCategoryRounded: {
     backgroundColor: "#F2F2F2",
-    maxWidth: 99,
+    minWidth: 99,
+    marginLeft: 4,
+    marginRight: 4,
     padding: 5,
     paddingLeft: 10,
     paddingRight: 10,
