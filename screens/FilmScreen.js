@@ -49,6 +49,16 @@ export default class FilmScreen extends React.Component {
                   <View style={styles.categoryNameRounded}>
                     <Text style={styles.categoryNameText}>Consigliato da</Text>
                   </View>
+
+                  <View style={styles.feedUserSuggests}>
+                    <Image
+                      source={require("../assets/avatar.png")}
+                      resizeMode="contain"
+                      style={styles.userAvatar}
+                    />
+                    <Text style={styles.userNameText}>Stefano</Text>
+                  </View>
+
                   <View style={styles.categoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
@@ -119,7 +129,8 @@ const styles = StyleSheet.create({
   feedUserSuggests: {
     flexDirection: "row",
     height: 36,
-    marginBottom: 6
+    marginBottom: 6,
+    marginTop: 2
   },
   userAvatar: {
     width: 36,
@@ -187,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    marginTop: 20,
+    marginTop: 24,
     marginBottom: 8
   },
   categoryNameText: {
