@@ -24,16 +24,6 @@ export default class RankingSuggestionBox extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  // checkPodiumPlace() {
-  //   if (this.podiumCounter == 1) {
-  //     return true;
-  //   } else if (this.podiumCounter == 2) {
-  //     return true;
-  //   } else {
-
-  //   }
-  // }
-
   determineBackgroundColour() {
     if (this.props.podiumPlace === 1) {
       return "#F5DA33";

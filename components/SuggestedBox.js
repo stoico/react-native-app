@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 
+import { isiOS, isAndroid } from "../constants/Platform";
+
 export default class SuggestedBox extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,30 @@ export default class SuggestedBox extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
+  // Determine which icon to display depending on whether the app
+  // is run on an Android or iOS device
+  displayDeviceIcon() {
+    if (isiOS) {
+      return (
+        <Ionicons
+          style={styles.iconMore}
+          name="ios-more"
+          size={20}
+          color="rgba(50, 50, 50, 0.4)"
+        />
+      );
+    } else {
+      return (
+        <Ionicons
+          style={styles.iconMore}
+          name="md-more"
+          size={20}
+          color="rgba(50, 50, 50, 0.4)"
+        />
+      );
+    }
+  }
+
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
     // const randomNumber = Math.floor(Math.random() * 3);
@@ -33,12 +59,7 @@ export default class SuggestedBox extends React.Component {
         <View style={styles.filmSuggestedBox}>
           <Image source={require("../assets/cover2.png")} />
           <Text style={styles.filmTitle}>{filmTitle}</Text>
-          <Ionicons
-            style={styles.iconMore}
-            name="ios-more"
-            size={20}
-            color="rgba(50, 50, 50, 0.4)"
-          />
+          {this.displayDeviceIcon()}
         </View>
       );
     }
