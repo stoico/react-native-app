@@ -38,13 +38,13 @@ export default class FilmScreen extends React.Component {
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
           <HeaderSection pageTitle="Show" />
           <ScrollView style={styles.screenContainer}>
-            <View style={styles.filmContainer}>
-              <View style={styles.feedSuggestionBox}>
+            <View style={styles.primaryContainer}>
+              <View style={styles.secondaryContainer}>
                 <Image
                   source={require("../assets/backdrop.png")}
-                  style={{ borderRadius: 26, width: "100%" }}
+                  style={styles.backdropImage}
                 />
-                <View style={styles.filmSuggestedBox}>
+                <View style={styles.tertiaryContainer}>
                   <Text style={styles.filmTitleOutside}>{filmTitle}</Text>
                   <View style={styles.categoryNameRounded}>
                     <Text style={styles.categoryNameText}>Consigliato da</Text>
@@ -60,11 +60,23 @@ export default class FilmScreen extends React.Component {
                   </View>
 
                   <View style={styles.categoryNameRounded}>
+                    <Text style={styles.categoryNameText}>Storia</Text>
+                  </View>
+                  <Text style={styles.plotParagraph}>
+                    In the mythical continent of Westeros, several powerful
+                    families fight for control of the Seven Kingdoms. As
+                    conflict erupts in the kingdoms of men, an ancient enemy
+                    rises once again to threaten them all. Meanwhile, the last
+                    heirs of a recently usurped dynasty plot to take back their
+                    homeland from across the Narrow Sea.
+                  </Text>
+
+                  <View style={styles.categoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
                   <WebView
                     style={{
-                      flex: 1,
+                      height: 180,
                       width: 340,
                       borderRadius: 26,
                       overflow: "hidden"
@@ -76,19 +88,6 @@ export default class FilmScreen extends React.Component {
                         "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
                     }}
                   />
-                  <View style={styles.categoryNameRounded}>
-                    <Text style={styles.categoryNameText}>Storia</Text>
-                  </View>
-                  <Text
-                    style={{ color: "#505050", fontWeight: "500", padding: 4 }}
-                  >
-                    In the mythical continent of Westeros, several powerful
-                    families fight for control of the Seven Kingdoms. As
-                    conflict erupts in the kingdoms of men, an ancient enemy
-                    rises once again to threaten them all. Meanwhile, the last
-                    heirs of a recently usurped dynasty plot to take back their
-                    homeland from across the Narrow Sea.
-                  </Text>
                 </View>
               </View>
             </View>
@@ -103,28 +102,35 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1
   },
-  filmContainer: {
+  primaryContainer: {
     marginTop: 82,
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 650
-  },
-  bottomSpacing: {
-    height: 85,
     flex: 1
   },
-  feedSuggestionBox: {
+  secondaryContainer: {
     flex: 1,
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
-    height: 148,
     marginBottom: 10,
     padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
     shadowColor: "#D7D7D7",
     shadowOffset: { width: 0, height: 2 }
+  },
+  tertiaryContainer: {
+    backgroundColor: "white",
+    borderRadius: 22,
+    marginTop: -65,
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  bottomSpacing: {
+    height: 85,
+    flex: 1
   },
   feedUserSuggests: {
     flexDirection: "row",
@@ -152,15 +158,6 @@ const styles = StyleSheet.create({
     marginTop: 1,
     height: 36,
     lineHeight: 36
-  },
-  filmSuggestedBox: {
-    backgroundColor: "white",
-    borderRadius: 22,
-    marginTop: -42,
-    flex: 1,
-    overflow: "hidden",
-    flexDirection: "column",
-    alignItems: "center"
   },
   filmCoverImageBig: {
     flex: 0.4,
@@ -198,7 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    marginTop: 24,
+    marginTop: 30,
     marginBottom: 8
   },
   categoryNameText: {
@@ -206,5 +203,15 @@ const styles = StyleSheet.create({
     fontFamily: "Gilroy Extrabold",
     fontSize: 14,
     textTransform: "uppercase"
+  },
+  backdropImage: {
+    flex: 1,
+    borderRadius: 26,
+    width: "100%"
+  },
+  plotParagraph: {
+    color: "#505050",
+    fontWeight: "500",
+    padding: 4
   }
 });
