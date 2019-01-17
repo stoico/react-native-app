@@ -41,19 +41,19 @@ export default class RankingScreen extends React.Component {
               <RankingSuggestionBox
                 numberOfRecommendations={7}
                 filmTitle="You"
-                podiumPlace={this.state.podiumCounter}
+                podiumPlace={1}
                 navigation={this.props.navigation}
               />
               <RankingSuggestionBox
                 numberOfRecommendations={4}
                 filmTitle="Game Of Thrones"
-                podiumPlace={this.state.podiumCounter}
+                podiumPlace={2}
                 {...this.props}
               />
               <RankingSuggestionBox
                 numberOfRecommendations={3}
                 filmTitle="Black Mirrors"
-                podiumPlace={this.state.podiumCounter}
+                podiumPlace={3}
                 {...this.props}
               />
               <RankingSuggestionBox

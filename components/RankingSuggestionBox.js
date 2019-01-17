@@ -34,6 +34,25 @@ export default class RankingSuggestionBox extends React.Component {
   //   }
   // }
 
+  determineBackgroundColour() {
+    if (this.props.podiumPlace === 1) {
+      return "#F5DA33";
+    } else if (this.props.podiumPlace === 2) {
+      return "#D0D0D0";
+    } else if (this.props.podiumPlace === 3) {
+      return "#DF8741";
+    } else return "#F7F7F7";
+  }
+  determineMedalIcon() {
+    if (this.props.podiumPlace === 1) {
+      return "🥇";
+    } else if (this.props.podiumPlace === 2) {
+      return "🥈";
+    } else if (this.props.podiumPlace === 3) {
+      return "🥉";
+    } else return "";
+  }
+
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
 
@@ -52,12 +71,10 @@ export default class RankingSuggestionBox extends React.Component {
         <View
           style={[
             styles.feedSuggestionBox,
-            {
-              backgroundColor:
-                this.props.podiumPlace === 1 ? "yellow" : "yellow"
-            }
+            { backgroundColor: this.determineBackgroundColour() }
           ]}
         >
+          <Text style={styles.medalIcon}>{this.determineMedalIcon()}</Text>
           <View style={styles.feedUserSuggests}>
             <Text style={styles.numberOfFriendsRecommending}>
               {this.props.numberOfRecommendations} {friendsText}
@@ -145,5 +162,10 @@ const styles = StyleSheet.create({
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
     fontSize: 24
+  },
+  medalIcon: {
+    position: "absolute",
+    right: 20,
+    fontSize: 30
   }
 });
