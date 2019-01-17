@@ -106,7 +106,7 @@ const HomeStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   MyProfile: {
-    screen: FriendsListScreen,
+    screen: MyProfileScreen,
     navigationOptions: {
       header: null
     }

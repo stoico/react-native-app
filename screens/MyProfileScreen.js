@@ -62,6 +62,26 @@ export default class MyProfileScreen extends React.Component {
                       }}
                     >
                       <Text style={styles.userNameBigText}>Carmine</Text>
+                      <View
+                        style={{
+                          flex: 0.5,
+                          borderRadius: 40,
+                          width: 120,
+                          backgroundColor: "#2EA6FF",
+                          alignItems: "center",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "#fff",
+                            fontFamily: "Gilroy Extrabold",
+                            fontSize: 20
+                          }}
+                        >
+                          Amici
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
