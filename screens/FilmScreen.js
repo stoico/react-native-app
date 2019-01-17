@@ -71,6 +71,18 @@ export default class FilmScreen extends React.Component {
                     </View>
                   </View>
 
+                  <View style={styles.multipleCategoryContainer}>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>9.7</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>60 min</Text>
+                    </View>
+                    <View style={styles.multipleCategoryRounded}>
+                      <Text style={styles.categoryNameText}>3</Text>
+                    </View>
+                  </View>
+
                   <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Storia</Text>
                   </View>

@@ -13,6 +13,7 @@ import HomeScreen from "./screens/HomeScreen";
 import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import RankingScreen from "./screens/RankingScreen";
+import FriendsListScreen from "./screens/FriendsListScreen";
 import SuggestScreen from "./screens/SuggestScreen";
 import SuggestedScreen from "./screens/SuggestedScreen";
 
@@ -84,7 +85,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: FilmScreen,
+    screen: HomeScreen,
     navigationOptions: {
       header: null
     }
@@ -105,7 +106,7 @@ const HomeStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   MyProfile: {
-    screen: MyProfileScreen,
+    screen: FriendsListScreen,
     navigationOptions: {
       header: null
     }
