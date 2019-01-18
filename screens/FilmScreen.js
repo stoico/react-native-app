@@ -272,8 +272,9 @@ const styles = StyleSheet.create({
   },
   videoTrailer: {
     height: 180,
-    width: 340,
-    borderRadius: 26,
+    width: 320,
+    marginBottom: 8,
+    borderRadius: 20,
     overflow: "hidden"
   }
 });
