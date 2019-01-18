@@ -5,7 +5,8 @@ import {
   StatusBar,
   ScrollView,
   StyleSheet,
-  ImageBackground
+  ImageBackground,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Font, AppLoading } from "expo";
 
@@ -62,26 +63,34 @@ export default class MyProfileScreen extends React.Component {
                       }}
                     >
                       <Text style={styles.userNameBigText}>Carmine</Text>
-                      <View
-                        style={{
-                          flex: 0.5,
-                          borderRadius: 40,
-                          width: 120,
-                          backgroundColor: "#2EA6FF",
-                          alignItems: "center",
-                          justifyContent: "center"
-                        }}
+                      <TouchableWithoutFeedback
+                        onPress={() =>
+                          this.props.navigation.navigate("FriendsList")
+                        }
                       >
-                        <Text
+                        <View
                           style={{
-                            color: "#fff",
-                            fontFamily: "Gilroy Extrabold",
-                            fontSize: 20
+                            flex: 0.5,
+                            borderRadius: 40,
+                            width: 120,
+                            backgroundColor: "#2EA6FF",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderColor: "rgba(26,141,211, 0.3)",
+                            borderWidth: 1
                           }}
                         >
-                          Amici
-                        </Text>
-                      </View>
+                          <Text
+                            style={{
+                              color: "#fff",
+                              fontFamily: "Gilroy Extrabold",
+                              fontSize: 20
+                            }}
+                          >
+                            Amici
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     </View>
                   </View>
                 </View>

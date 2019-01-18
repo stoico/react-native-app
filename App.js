@@ -111,8 +111,8 @@ const ProfileStack = createStackNavigator({
       header: null
     }
   },
-  Suggested: {
-    screen: SuggestedScreen,
+  FriendsList: {
+    screen: FriendsListScreen,
     navigationOptions: {
       header: null
     }
