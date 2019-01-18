@@ -59,6 +59,18 @@ export default class FilmScreen extends React.Component {
                     <Text style={styles.userNameText}>Stefano</Text>
                   </View>
 
+                  <View style={styles.centerCategoryNameRounded}>
+                    <Text style={styles.categoryNameText}>Storia</Text>
+                  </View>
+                  <Text style={styles.plotParagraph}>
+                    In the mythical continent of Westeros, several powerful
+                    families fight for control of the Seven Kingdoms. As
+                    conflict erupts in the kingdoms of men, an ancient enemy
+                    rises once again to threaten them all. Meanwhile, the last
+                    heirs of a recently usurped dynasty plot to take back their
+                    homeland from across the Narrow Sea.
+                  </Text>
+
                   <View style={styles.multipleCategoryContainer}>
                     <View style={styles.multipleCategoryRounded}>
                       <Text style={styles.categoryNameText}>Punteggio</Text>
@@ -72,32 +84,21 @@ export default class FilmScreen extends React.Component {
                   </View>
 
                   <View style={styles.multipleCategoryContainer}>
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>9.7</Text>
+                    <View style={styles.multipleCategoryInfo}>
+                      <Text style={styles.categoryInfoText}>9.7</Text>
                     </View>
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>60 min</Text>
+                    <View style={styles.multipleCategoryInfo}>
+                      <Text style={styles.categoryInfoText}>60 min</Text>
                     </View>
-                    <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>3</Text>
+                    <View style={styles.multipleCategoryInfo}>
+                      <Text style={styles.categoryInfoText}>3</Text>
                     </View>
                   </View>
-
-                  <View style={styles.centerCategoryNameRounded}>
-                    <Text style={styles.categoryNameText}>Storia</Text>
-                  </View>
-                  <Text style={styles.plotParagraph}>
-                    In the mythical continent of Westeros, several powerful
-                    families fight for control of the Seven Kingdoms. As
-                    conflict erupts in the kingdoms of men, an ancient enemy
-                    rises once again to threaten them all. Meanwhile, the last
-                    heirs of a recently usurped dynasty plot to take back their
-                    homeland from across the Narrow Sea.
-                  </Text>
 
                   <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
+
                   <WebView
                     style={styles.videoTrailer}
                     javaScriptEnabled={true}
@@ -154,7 +155,6 @@ const styles = StyleSheet.create({
   feedUserSuggests: {
     flexDirection: "row",
     height: 36,
-    marginBottom: 6,
     marginTop: 2
   },
   userAvatar: {
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexWrap: "wrap",
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 24,
     marginBottom: 8
   },
   multipleCategoryRounded: {
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 24,
     marginBottom: 8
   },
   categoryNameText: {
@@ -243,6 +243,22 @@ const styles = StyleSheet.create({
     fontFamily: "Gilroy Extrabold",
     fontSize: 14,
     textTransform: "uppercase"
+  },
+  multipleCategoryInfo: {
+    marginTop: -32,
+    minWidth: 99,
+    marginLeft: 4,
+    marginRight: 4,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  categoryInfoText: {
+    color: "rgb(80, 80, 80)",
+    fontFamily: "Gilroy Extrabold",
+    fontSize: 22
   },
   backdropImage: {
     flex: 1,

@@ -148,7 +148,7 @@ const TabNavigator = createBottomTabNavigator(
           // You can check the implementation below.
           IconComponent = HomeIconWithBadge;
         } else if (routeName === "Ranking") {
-          iconName = `ios-podium`;
+          iconName = `ios-star`;
         } else if (routeName === "Profile") {
           iconName = `ios-happy`;
         }
@@ -160,7 +160,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: "#2EA6FF",
       inactiveTintColor: "rgba(80, 80, 80, 0.8)",
-      showLabel: true,
+      showLabel: false,
       style: {
         backgroundColor: "#FFFFFF",
         borderTopColor: "#FFFFFF" // or transparent
