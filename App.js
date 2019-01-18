@@ -104,6 +104,21 @@ const HomeStack = createStackNavigator({
   }
 });
 
+const RankingStack = createStackNavigator({
+  Ranking: {
+    screen: RankingScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Film: {
+    screen: FilmScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
+
 const ProfileStack = createStackNavigator({
   MyProfile: {
     screen: MyProfileScreen,
@@ -120,7 +135,7 @@ const ProfileStack = createStackNavigator({
 });
 
 const TabNavigator = createBottomTabNavigator(
-  { Home: HomeStack, MyProfile: ProfileStack },
+  { Home: HomeStack, Ranking: RankingStack, Profile: ProfileStack },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -132,7 +147,9 @@ const TabNavigator = createBottomTabNavigator(
           // Sometimes we want to add badges to some icons.
           // You can check the implementation below.
           IconComponent = HomeIconWithBadge;
-        } else if (routeName === "MyProfile") {
+        } else if (routeName === "Ranking") {
+          iconName = `ios-podium`;
+        } else if (routeName === "Profile") {
           iconName = `ios-happy`;
         }
 
@@ -143,7 +160,7 @@ const TabNavigator = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: "#2EA6FF",
       inactiveTintColor: "rgba(80, 80, 80, 0.8)",
-      showLabel: false,
+      showLabel: true,
       style: {
         backgroundColor: "#FFFFFF",
         borderTopColor: "#FFFFFF" // or transparent
