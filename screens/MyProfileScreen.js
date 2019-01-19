@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     height: 150,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
-    shadowColor: "#rgba(215,215,215, 0.5)",
+    shadowColor: "rgba(215,215,215, 0.5)",
     shadowOffset: { width: 0, height: 5 }
   },
   userAvatarFloating: {

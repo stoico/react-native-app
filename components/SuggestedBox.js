@@ -57,7 +57,10 @@ export default class SuggestedBox extends React.Component {
     } else {
       return (
         <View style={styles.filmSuggestedBox}>
-          <Image source={require("../assets/cover2.png")} />
+          <Image
+            source={require("../assets/cover2.png")}
+            style={styles.filmCoverImage}
+          />
           <Text style={styles.filmTitle}>{filmTitle}</Text>
           {this.displayDeviceIcon()}
         </View>

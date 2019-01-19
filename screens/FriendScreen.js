@@ -12,7 +12,7 @@ import { Font, AppLoading } from "expo";
 import HeaderSection from "../components/HeaderSection";
 import SuggestedBox from "../components/SuggestedBox";
 
-export default class MyProfileScreen extends React.Component {
+export default class FriendScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { fontLoaded: false };
@@ -67,7 +67,7 @@ export default class MyProfileScreen extends React.Component {
                 </View>
 
                 <View style={styles.categoryNameRounded}>
-                  <Text style={styles.categoryNameText}>Ho consigliato</Text>
+                  <Text style={styles.categoryNameText}>Ha consigliato</Text>
                 </View>
                 <SuggestedBox filmTitle="Game of Thrones" />
                 <SuggestedBox filmTitle="Westworld" />
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     height: 150,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
-    shadowColor: "#D7D7D7",
+    shadowColor: "rgba(215,215,215, 0.5)",
     shadowOffset: { width: 0, height: 5 }
   },
   userAvatarFloating: {

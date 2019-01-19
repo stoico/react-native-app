@@ -14,6 +14,7 @@ import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import RankingScreen from "./screens/RankingScreen";
 import FriendsListScreen from "./screens/FriendsListScreen";
+import FriendScreen from "./screens/FriendScreen";
 import SuggestScreen from "./screens/SuggestScreen";
 import SuggestedScreen from "./screens/SuggestedScreen";
 
