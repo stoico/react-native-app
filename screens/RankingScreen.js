@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, ScrollView, View, Text, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  DataSource
+} from "react-native";
 import { Font, AppLoading } from "expo";
 
 import HeaderSection from "../components/HeaderSection";
@@ -29,12 +36,25 @@ export default class RankingScreen extends React.Component {
   };
 
   render() {
-    const innerElems = DataSource.map((e, i) => {
-      if (i === DataSource.length - 1) {
-        // check if it's last elem, if so the no border style that you want
-        return <SearchResultBox filmTitle={this.state.text} />;
-      }
-      return <SearchResultBox filmTitle={this.state.text} />;
+    const data = [
+      { name: "You", timesRecommended: 7 },
+      { name: "You", timesRecommended: 5 },
+      { name: "You", timesRecommended: 3 },
+      { name: "You", timesRecommended: 2 },
+      { name: "You", timesRecommended: 1 }
+    ];
+
+    const itemsList = data.map((item, i) => {
+      i = i + 1;
+      return (
+        <RankingSuggestionBox
+          key={item.name + i.toString()} // each item must have a unique key prop
+          numberOfRecommendations={item.timesRecommended}
+          filmTitle={item.name}
+          podiumPlace={i}
+          navigation={this.props.navigation}
+        />
+      );
     });
 
     if (!this.state.fontLoaded) {
@@ -46,41 +66,7 @@ export default class RankingScreen extends React.Component {
           <HeaderSection pageTitle="Ranking" />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              <RankingSuggestionBox
-                numberOfRecommendations={7}
-                filmTitle="You"
-                podiumPlace={1}
-                navigation={this.props.navigation}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={4}
-                filmTitle="Game Of Thrones"
-                podiumPlace={2}
-                {...this.props}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={3}
-                filmTitle="Black Mirrors"
-                podiumPlace={3}
-                {...this.props}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={2}
-                filmTitle="Westworld"
-                {...this.props}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={1}
-                {...this.props}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={1}
-                {...this.props}
-              />
-              <RankingSuggestionBox
-                numberOfRecommendations={1}
-                {...this.props}
-              />
+              {itemsList}
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>

@@ -107,7 +107,7 @@ const HomeStack = createStackNavigator({
 
 const RankingStack = createStackNavigator({
   Ranking: {
-    screen: HomeScreen,
+    screen: RankingScreen,
     navigationOptions: {
       header: null
     }
