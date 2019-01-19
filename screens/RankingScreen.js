@@ -29,6 +29,14 @@ export default class RankingScreen extends React.Component {
   };
 
   render() {
+    const innerElems = DataSource.map((e, i) => {
+      if (i === DataSource.length - 1) {
+        // check if it's last elem, if so the no border style that you want
+        return <SearchResultBox filmTitle={this.state.text} />;
+      }
+      return <SearchResultBox filmTitle={this.state.text} />;
+    });
+
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {

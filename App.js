@@ -86,7 +86,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: SuggestScreen,
     navigationOptions: {
       header: null
     }
@@ -107,7 +107,7 @@ const HomeStack = createStackNavigator({
 
 const RankingStack = createStackNavigator({
   Ranking: {
-    screen: RankingScreen,
+    screen: HomeScreen,
     navigationOptions: {
       header: null
     }
