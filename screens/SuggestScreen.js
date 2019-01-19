@@ -31,13 +31,12 @@ export default class FriendScreen extends React.Component {
 
   // Determine which icon to display depending on whether the app
   // is run on an Android or iOS device
-  displaySearchResultBoxes() {
-    if (this.state.text === "You") {
+  displaySubHeading() {
+    if (this.state.text === "") {
       return (
-        <React.Fragment>
-          <SearchResultBox filmTitle={this.state.text} />
-          <SearchResultBox filmTitle="You 2" />
-        </React.Fragment>
+        <Text style={styles.subHeading}>
+          Seleziona uno show da consigliare ai tuoi amici
+        </Text>
       );
     }
   }
@@ -45,6 +44,35 @@ export default class FriendScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const filmTitle = navigation.getParam("filmTitle", "Temp film");
+
+    const data = [
+      { name: "You" },
+      { name: "Game of Thrones" },
+      { name: "Westworld" }
+    ];
+
+    const searchResultData = data.map((item, i) => {
+      if (this.state.text === "You") {
+        // Select the last child
+        if (i === data.length - 1) {
+          return (
+            <SearchResultBox
+              filmTitle={this.state.text}
+              lastChild={true}
+              key={item.name + i.toString()}
+            />
+          );
+        }
+        // All th elements that are not the last
+        return (
+          <SearchResultBox
+            filmTitle={i.name}
+            lastChild={false}
+            key={item.name + i.toString()}
+          />
+        );
+      }
+    });
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -57,9 +85,7 @@ export default class FriendScreen extends React.Component {
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
                 <View style={styles.userContainer} />
-                <Text style={styles.subHeading}>
-                  Seleziona uno show da consigliare ai tuoi amici
-                </Text>
+                {this.displaySubHeading()}
                 <TextInput
                   style={[
                     {
@@ -83,7 +109,18 @@ export default class FriendScreen extends React.Component {
                   onChangeText={text => this.setState({ text })}
                   value={this.state.text}
                 />
-                {this.displaySearchResultBoxes()}
+                <View
+                  style={{
+                    shadowOpacity: 1,
+                    shadowRadius: 8,
+                    shadowColor: "rgba(215,215,215, 0.5)",
+                    shadowOffset: { width: 0, height: 8 }
+                  }}
+                >
+                  {searchResultData}
+                </View>
+
+                {/* TODO: Add the 'Seleziona' button */}
               </View>
               <View style={styles.bottomSpacing} />
             </View>

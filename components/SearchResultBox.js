@@ -32,7 +32,12 @@ export default class SearchResultBox extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View style={styles.filmSuggestedBox}>
+        <View
+          style={[
+            styles.filmSuggestedBox,
+            this.props.lastChild ? styles.lastChild : null
+          ]}
+        >
           <Image
             source={require("../assets/search-result-image.png")}
             style={styles.filmCoverImage}
@@ -47,13 +52,16 @@ export default class SearchResultBox extends React.Component {
 const styles = StyleSheet.create({
   filmSuggestedBox: {
     backgroundColor: "white",
-    // borderRadius: 22,
-    height: 90,
+    height: 63,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E3E3E3"
+    borderTopWidth: 1,
+    borderTopColor: "#E3E3E3",
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    shadowColor: "#D7D7D7",
+    shadowOffset: { width: 0, height: 2 }
   },
   filmCoverImage: {
     flex: 0.2,
@@ -67,9 +75,8 @@ const styles = StyleSheet.create({
     color: "#505050",
     fontSize: 24
   },
-  iconMore: {
-    position: "absolute",
-    top: 10,
-    right: 20
+  lastChild: {
+    borderBottomRightRadius: 14,
+    borderBottomLeftRadius: 14
   }
 });
