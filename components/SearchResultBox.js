@@ -39,7 +39,7 @@ export default class SearchResultBox extends React.Component {
           ]}
         >
           <Image
-            source={require("../assets/search-result-image.png")}
+            source={require("../assets/search-result-cover.png")}
             style={styles.filmCoverImage}
           />
           <Text style={styles.filmTitle}>{filmTitle}</Text>

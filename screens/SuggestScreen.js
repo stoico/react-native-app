@@ -35,7 +35,7 @@ export default class FriendScreen extends React.Component {
     if (this.state.text === "") {
       return (
         <Text style={styles.subHeading}>
-          Seleziona uno show da consigliare ai tuoi amici
+          Cerca uno show da consigliare ai tuoi amici
         </Text>
       );
     }
@@ -52,7 +52,7 @@ export default class FriendScreen extends React.Component {
     ];
 
     const searchResultData = data.map((item, i) => {
-      if (this.state.text === "You") {
+      if (this.state.text.length >= 2) {
         // Select the last child
         if (i === data.length - 1) {
           return (
@@ -93,7 +93,8 @@ export default class FriendScreen extends React.Component {
                       borderTopLeftRadius: 14,
                       borderTopRightRadius: 14,
                       padding: 15,
-                      color: "#E0E0E0",
+                      // color: "#E0E0E0",
+                      color: "rgba(80, 80, 80, 0.8)",
                       width: "100%",
                       fontFamily: "Gilroy Extrabold",
                       backgroundColor: "#fff",
