@@ -109,6 +109,7 @@ export default class FilmScreen extends React.Component {
                   />
                 </View>
               </View>
+              <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
 
