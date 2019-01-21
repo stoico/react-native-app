@@ -26,16 +26,26 @@ export default class HeaderSection extends Component {
     console.log(this.props.navigation.state.routeName);
   }
 
-  // renderBackButton() {
-  //   let routeName = this.props.navigation.state.routeName;
-  //   const routesWithoutBackButton = ["Home", "Ranking", "MyProfile"];
+  renderBackButton() {
+    let routeName = this.props.navigation.state.routeName;
+    const routesWithoutBackButton = ["Home", "Ranking", "MyProfile"];
 
-  //   if (!routesWithoutBackButton.includes(routeName)) {
-  //     return (
-
-  //     );
-  //   }
-  // }
+    if (!routesWithoutBackButton.includes(routeName)) {
+      return (
+        <TouchableWithoutFeedback
+          onPress={() => this.props.navigation.goBack()}
+          style={styles.backButtonArea}
+        >
+          <Image
+            source={require("../../assets/back-button.png")}
+            style={styles.backButton}
+          />
+        </TouchableWithoutFeedback>
+      );
+    } else {
+      return <View />;
+    }
+  }
 
   render() {
     if (!this.state.fontLoaded) {
@@ -55,17 +65,7 @@ export default class HeaderSection extends Component {
                 source={require("../../assets/header-pattern.png")}
                 style={styles.headerPatternBackground}
               >
-                {/* {this.renderBackButton()} */}
-
-                <TouchableWithoutFeedback
-                  onPress={() => this.props.navigation.goBack()}
-                  style={styles.backButtonArea}
-                >
-                  <Image
-                    source={require("../../assets/back-button.png")}
-                    style={styles.backButton}
-                  />
-                </TouchableWithoutFeedback>
+                {this.renderBackButton()}
 
                 <Text style={styles.headerTitle}>{this.props.pageTitle}</Text>
                 {/* <View>Icon on the right </View> */}

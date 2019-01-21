@@ -1,18 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Font, AppLoading } from "expo";
-import { Ionicons } from "@expo/vector-icons";
 
-import { isAndroid, isiOS } from "../constants/Platform";
+import { isiOS } from "../constants/Platform";
 
-export default class SuggestionButton extends React.Component {
+export default class RecommendFilmButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = { fontLoaded: false };
   }
 
   openFilmSearchSection = () => {
-    console.log("\nJust testing the AGGIUNGI AMICO button\n");
+    console.log("\nJust testing the CONSIGLIALO button\n");
     if (isiOS) {
       console.log("You're using an iOS device");
     }
@@ -35,13 +34,7 @@ export default class SuggestionButton extends React.Component {
           style={styles.blueSuggestionButton}
           onPress={this.openFilmSearchSection.bind(this)}
         >
-          <Ionicons
-            style={styles.iconMore}
-            name="md-person-add"
-            size={24}
-            color="#fff"
-          />
-          <Text style={styles.textOfBlueButton}>Aggiungi amico</Text>
+          <Text style={styles.textOfBlueButton}>Consiglialo</Text>
         </TouchableOpacity>
       );
     }

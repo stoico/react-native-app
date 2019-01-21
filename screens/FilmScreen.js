@@ -3,14 +3,14 @@ import {
   View,
   Image,
   Text,
-  StatusBar,
   ScrollView,
   WebView,
   StyleSheet
 } from "react-native";
-import { Font, AppLoading } from "expo";
+import { Font, LinearGradient, AppLoading } from "expo";
 
 import Header from "../components/Header/Header";
+import RecommendFilmButton from "../components/RecommendFilmButton/";
 
 export default class FilmScreen extends React.Component {
   constructor(props) {
@@ -111,11 +111,22 @@ export default class FilmScreen extends React.Component {
               </View>
             </View>
           </ScrollView>
+
+          <View style={styles.floatingPositionForButton}>
+            <LinearGradient
+              style={styles.gradientBehindButton}
+              colors={greyGradient}
+            >
+              <RecommendFilmButton />
+            </LinearGradient>
+          </View>
         </View>
       );
     }
   }
 }
+
+const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
 
 const styles = StyleSheet.create({
   screenContainer: {
@@ -275,5 +286,29 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 20,
     overflow: "hidden"
+  },
+  floatingPositionForButton: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    zIndex: 1
+  },
+  gradientBehindButton: {
+    height: 85,
+    justifyContent: "center",
+    alignContent: "center",
+    paddingTop: 7,
+    paddingRight: 90,
+    paddingLeft: 90,
+    paddingBottom: 18
+  },
+  gradientBehindHeader: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center"
   }
 });
