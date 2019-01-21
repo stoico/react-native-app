@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  TouchableWithoutFeedback
+} from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 
 export default class HeaderSection extends Component {
@@ -55,9 +62,24 @@ export default class HeaderSection extends Component {
                   height: 50,
                   marginTop: 40,
                   alignSelf: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
+                  flexDirection: "row"
                 }}
               >
+                <TouchableWithoutFeedback
+                  onPress={() => this.props.navigation.goBack()}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    position: "absolute",
+                    top: 20
+                  }}
+                >
+                  <Image
+                    source={require("../assets/back-button.png")}
+                    style={styles.backButton}
+                  />
+                </TouchableWithoutFeedback>
                 <Text
                   style={
                     {
@@ -88,5 +110,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignContent: "center"
+  },
+  backButton: {
+    marginTop: 5,
+    marginLeft: 30,
+    width: 15,
+    height: 22
   }
 });

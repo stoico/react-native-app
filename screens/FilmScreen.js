@@ -36,7 +36,7 @@ export default class FilmScreen extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Show" />
+          <HeaderSection pageTitle="Show" navigation={this.props.navigation} />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.primaryContainer}>
               <View style={styles.secondaryContainer}>

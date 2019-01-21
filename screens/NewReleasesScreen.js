@@ -10,7 +10,7 @@ import {
 import { Font, AppLoading } from "expo";
 
 import HeaderSection from "../components/HeaderSection";
-import FeedSuggestionBox from "../components/FeedSuggestionBox";
+import NewReleasesBox from "../components/NewReleasesBox";
 
 export default class NewReleasesScreen extends React.Component {
   constructor(props) {
@@ -26,10 +26,6 @@ export default class NewReleasesScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  openFilmSearchSection = () => {
-    console.log("\nJust testing the button\n");
-  };
-
   render() {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -37,7 +33,10 @@ export default class NewReleasesScreen extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Consigliati" />
+          <HeaderSection
+            pageTitle="Nuove uscite"
+            navigation={this.props.navigation}
+          />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               {/* <Button
@@ -48,29 +47,16 @@ export default class NewReleasesScreen extends React.Component {
                   })
                 }
               /> */}
-              <FeedSuggestionBox
-                name="Stefano"
-                filmTitle="You"
+              <NewReleasesBox
+                dateReleased="12/07/2018"
                 navigation={this.props.navigation}
               />
-              <FeedSuggestionBox
-                name="Carmine"
-                filmTitle="Game Of Thrones"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Martina"
-                filmTitle="Black Mirrors"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Rocco"
-                filmTitle="Westworld"
-                {...this.props}
-              />
-              <FeedSuggestionBox name="Angelo" {...this.props} />
-              <FeedSuggestionBox name="Marco" {...this.props} />
-              <FeedSuggestionBox name="Raffaella" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>

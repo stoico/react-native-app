@@ -17,6 +17,7 @@ import FriendsListScreen from "./screens/FriendsListScreen";
 import FriendScreen from "./screens/FriendScreen";
 import SuggestScreen from "./screens/SuggestScreen";
 import SuggestedScreen from "./screens/SuggestedScreen";
+import NewReleasesScreen from "./screens/NewReleasesScreen";
 
 // const AppNavigator = createStackNavigator(
 //   {
@@ -107,7 +108,7 @@ const HomeStack = createStackNavigator({
 
 const RankingStack = createStackNavigator({
   Ranking: {
-    screen: RankingScreen,
+    screen: NewReleasesScreen,
     navigationOptions: {
       header: null
     }
