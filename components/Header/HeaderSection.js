@@ -19,8 +19,35 @@ export default class HeaderSection extends Component {
     await Font.loadAsync({
       "Gilroy Light": require("../../assets/fonts/gilroy-light.otf"),
       "Gilroy Extrabold": require("../../assets/fonts/gilroy-extrabold.otf")
-    });
+    }).catch(err => console.log(err));
     this.setState({ fontLoaded: true });
+
+    // This outputs the length of the stack containing the navigation screen that have been visited.
+    console.log(this.props.navigation.state.routeName);
+  }
+
+  renderBackButton() {
+    let routeName = this.props.navigation.state.routeName;
+    const routesWithoutBackButton = ["Home", "Ranking", "MyProfile"];
+
+    if (!routesWithoutBackButton.includes(routeName)) {
+      return (
+        <TouchableWithoutFeedback
+          onPress={() => this.props.navigation.goBack()}
+          style={{
+            height: 20,
+            width: 20,
+            position: "absolute",
+            top: 20
+          }}
+        >
+          <Image
+            source={require("../../assets/back-button.png")}
+            style={styles.backButton}
+          />
+        </TouchableWithoutFeedback>
+      );
+    }
   }
 
   render() {
@@ -38,15 +65,7 @@ export default class HeaderSection extends Component {
             zIndex: -1
           }}
         >
-          {/* Header container */}
-          <View
-            style={{
-              flex: 1,
-              height: 120,
-              justifyContent: "center",
-              alignContent: "center"
-            }}
-          >
+          <View style={styles.headerContainer}>
             <LinearGradient
               colors={blueGradient}
               style={styles.gradientBehindHeader}
@@ -56,35 +75,9 @@ export default class HeaderSection extends Component {
             >
               <ImageBackground
                 source={require("../../assets/header-pattern.png")}
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  height: 50,
-                  marginTop: 40,
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  flexDirection: "row"
-                }}
+                style={styles.headerPatternBackground}
               >
-                {/* This gives the length of the stack containing the navigation screen that have been visited. */}
-                {console.log(
-                  this.props.navigation.dangerouslyGetParent().state.routes
-                    .length
-                )}
-                <TouchableWithoutFeedback
-                  onPress={() => this.props.navigation.goBack()}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    position: "absolute",
-                    top: 20
-                  }}
-                >
-                  <Image
-                    source={require("../../assets/back-button.png")}
-                    style={styles.backButton}
-                  />
-                </TouchableWithoutFeedback>
+                {this.renderBackButton()}
 
                 <Text
                   style={
@@ -112,6 +105,21 @@ export default class HeaderSection extends Component {
 const blueGradient = ["#0075FF", "#2EA6FF", "#2EA6FF", "#E0E0E0", "#E0E0E0"];
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flex: 1,
+    height: 120,
+    justifyContent: "center",
+    alignContent: "center"
+  },
+  headerPatternBackground: {
+    flex: 1,
+    width: "100%",
+    height: 50,
+    marginTop: 40,
+    alignSelf: "center",
+    justifyContent: "center",
+    flexDirection: "row"
+  },
   gradientBehindHeader: {
     flex: 1,
     justifyContent: "center",
