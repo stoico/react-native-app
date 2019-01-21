@@ -2,10 +2,8 @@ import React from "react";
 import {
   View,
   Text,
-  StatusBar,
   ScrollView,
   StyleSheet,
-  ImageBackground,
   TextInput,
   TouchableWithoutFeedback
 } from "react-native";
@@ -42,7 +40,6 @@ export default class FriendScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const filmTitle = navigation.getParam("filmTitle", "Temp film");
 
     const data = [
       { name: "You" },
@@ -123,7 +120,6 @@ export default class FriendScreen extends React.Component {
 
                 {/* TODO: Add the 'Seleziona' button */}
               </View>
-              <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
         </View>
@@ -141,13 +137,12 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 650
+    height: 675
   },
   secondaryContainer: {
     flex: 1,
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
-    marginBottom: -25,
     padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters

@@ -26,45 +26,23 @@ export default class HeaderSection extends Component {
     console.log(this.props.navigation.state.routeName);
   }
 
-  renderBackButton() {
-    let routeName = this.props.navigation.state.routeName;
-    const routesWithoutBackButton = ["Home", "Ranking", "MyProfile"];
+  // renderBackButton() {
+  //   let routeName = this.props.navigation.state.routeName;
+  //   const routesWithoutBackButton = ["Home", "Ranking", "MyProfile"];
 
-    if (!routesWithoutBackButton.includes(routeName)) {
-      return (
-        <TouchableWithoutFeedback
-          onPress={() => this.props.navigation.goBack()}
-          style={{
-            height: 20,
-            width: 20,
-            position: "absolute",
-            top: 20
-          }}
-        >
-          <Image
-            source={require("../../assets/back-button.png")}
-            style={styles.backButton}
-          />
-        </TouchableWithoutFeedback>
-      );
-    }
-  }
+  //   if (!routesWithoutBackButton.includes(routeName)) {
+  //     return (
+
+  //     );
+  //   }
+  // }
 
   render() {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
       return (
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            width: "100%",
-            height: 800,
-            backgroundColor: "#2EA6FF",
-            zIndex: -1
-          }}
-        >
+        <View style={styles.outerContainer}>
           <View style={styles.headerContainer}>
             <LinearGradient
               colors={blueGradient}
@@ -77,22 +55,30 @@ export default class HeaderSection extends Component {
                 source={require("../../assets/header-pattern.png")}
                 style={styles.headerPatternBackground}
               >
-                {this.renderBackButton()}
+                {/* {this.renderBackButton()} */}
 
-                <Text
-                  style={
-                    {
-                      flex: 1,
-                      marginTop: 2,
-                      color: "white",
-                      fontFamily: "Gilroy Extrabold",
-                      fontSize: 23,
-                      alignSelf: "center"
-                    } // marginTop: 6,
-                  }
+                <TouchableWithoutFeedback
+                  onPress={() => this.props.navigation.goBack()}
+                  style={styles.backButtonArea}
                 >
-                  {this.props.pageTitle}
-                </Text>
+                  <Image
+                    source={require("../../assets/back-button.png")}
+                    style={styles.backButton}
+                  />
+                </TouchableWithoutFeedback>
+
+                <Text style={styles.headerTitle}>{this.props.pageTitle}</Text>
+                {/* <View>Icon on the right </View> */}
+
+                <TouchableWithoutFeedback
+                  onPress={() => this.props.navigation.goBack()}
+                  style={styles.backButtonArea}
+                >
+                  <Image
+                    source={require("../../assets/back-button.png")}
+                    style={styles.forGigglesButton}
+                  />
+                </TouchableWithoutFeedback>
               </ImageBackground>
             </LinearGradient>
           </View>
@@ -105,30 +91,59 @@ export default class HeaderSection extends Component {
 const blueGradient = ["#0075FF", "#2EA6FF", "#2EA6FF", "#E0E0E0", "#E0E0E0"];
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    height: 800,
+    backgroundColor: "#2EA6FF",
+    zIndex: -1
+  },
   headerContainer: {
     flex: 1,
     height: 120,
     justifyContent: "center",
     alignContent: "center"
   },
-  headerPatternBackground: {
+  gradientBehindHeader: {
     flex: 1,
+    justifyContent: "flex-start",
+    alignContent: "center"
+  },
+  headerPatternBackground: {
+    flex: 0.1,
     width: "100%",
     height: 50,
     marginTop: 40,
     alignSelf: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "space-around",
     flexDirection: "row"
   },
-  gradientBehindHeader: {
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center"
+  backButtonArea: {
+    flex: 0.2,
+    height: 20,
+    alignSelf: "flex-start"
   },
   backButton: {
-    marginTop: 5,
-    marginLeft: 30,
+    // marginTop: 2,
+    marginTop: 7,
     width: 15,
     height: 22
+  },
+  forGigglesButton: {
+    marginTop: 7,
+    width: 15,
+    height: 22,
+    transform: [{ rotate: "180deg" }]
+  },
+  headerTitle: {
+    flex: 0.6,
+    marginTop: 2,
+    color: "white",
+    fontFamily: "Gilroy Extrabold",
+    fontSize: 23,
+    textAlign: "center"
+    // marginTop: 6
   }
 });

@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
     height: 148,
-    marginBottom: 10,
     padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
