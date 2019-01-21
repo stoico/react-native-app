@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
+import Header from "../components/Header/Header";
 import SuggestedBox from "../components/SuggestedBox";
 
 export default class FriendScreen extends React.Component {
@@ -35,8 +35,8 @@ export default class FriendScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Profilo Personale" />
+          <Header pageTitle="Amico" navigation={this.props.navigation} />
+
           <ScrollView style={styles.screenContainer}>
             <View style={styles.outmostContainer}>
               <View style={styles.profileContainer}>

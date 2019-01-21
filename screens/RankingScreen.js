@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
+import Header from "../components/Header/Header";
 import RankingSuggestionBox from "../components/RankingSuggestionBox";
 
 export default class RankingScreen extends React.Component {
@@ -62,8 +62,8 @@ export default class RankingScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Ranking" />
+          <Header pageTitle="Ranking" navigation={this.props.navigation} />
+
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               {itemsList}

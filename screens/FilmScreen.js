@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
+import Header from "../components/Header/Header";
 
 export default class FilmScreen extends React.Component {
   constructor(props) {
@@ -35,8 +35,7 @@ export default class FilmScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Show" navigation={this.props.navigation} />
+          <Header pageTitle="Show" navigation={this.props.navigation} />
           <ScrollView style={styles.screenContainer}>
             <View style={styles.primaryContainer}>
               <View style={styles.secondaryContainer}>

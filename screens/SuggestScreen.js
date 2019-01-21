@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
-import SuggestedBox from "../components/SuggestedBox";
+import Header from "../components/Header/Header";
 import SearchResultBox from "../components/SearchResultBox";
 
 export default class FriendScreen extends React.Component {
@@ -79,33 +78,34 @@ export default class FriendScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Consiglia" />
+          <Header pageTitle="Consiglia" navigation={this.props.navigation} />
+
           <ScrollView style={styles.screenContainer}>
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
                 <View style={styles.userContainer} />
                 {this.displaySubHeading()}
                 <TextInput
-                  style={[
-                    {
-                      height: 63,
-                      borderTopLeftRadius: 14,
-                      borderTopRightRadius: 14,
-                      padding: 15,
-                      // color: "#E0E0E0",
-                      color: "rgba(80, 80, 80, 0.8)",
-                      width: "100%",
-                      fontFamily: "Gilroy Extrabold",
-                      backgroundColor: "#fff",
-                      fontSize: 20,
-                      shadowOpacity: 1,
-                      shadowRadius: 8,
-                      shadowColor: "rgba(215,215,215, 0.5)",
-                      shadowOffset: { width: 0, height: 5 }
-                    },
-                    this.state.text === "" ? styles.roundedCorners : null
-                  ]}
+                  style={
+                    [
+                      {
+                        height: 63,
+                        borderTopLeftRadius: 14,
+                        borderTopRightRadius: 14,
+                        padding: 15,
+                        color: "rgba(80, 80, 80, 0.8)",
+                        width: "100%",
+                        fontFamily: "Gilroy Extrabold",
+                        backgroundColor: "#fff",
+                        fontSize: 20,
+                        shadowOpacity: 1,
+                        shadowRadius: 8,
+                        shadowColor: "rgba(215,215,215, 0.5)",
+                        shadowOffset: { width: 0, height: 5 }
+                      },
+                      this.state.text === "" ? styles.roundedCorners : null
+                    ] // color: "#E0E0E0",
+                  }
                   placeholder="Film o serie TV"
                   onChangeText={text => this.setState({ text })}
                   value={this.state.text}

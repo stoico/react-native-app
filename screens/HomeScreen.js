@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
+import Header from "../components/Header/Header";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
 import SuggestionButton from "../components/SuggestionButton";
 
@@ -37,8 +37,8 @@ export default class HomeScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Consigliati" />
+          <Header pageTitle="Consigliati" navigation={this.props.navigation} />
+
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               {/* <Button

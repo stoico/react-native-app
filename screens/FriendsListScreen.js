@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 
-import HeaderSection from "../components/HeaderSection";
+import Header from "../components/Header/Header";
 import FriendBox from "../components/FriendBox";
 import AddFriendButton from "../components/AddFriendButton";
 
@@ -37,8 +37,8 @@ export default class FriendsListScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <StatusBar backgroundColor="transparent" barStyle="light-content" />
-          <HeaderSection pageTitle="Amici" />
+          <Header pageTitle="Amici" navigation={this.props.navigation} />
+
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               <FriendBox name="Stefano" />

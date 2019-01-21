@@ -17,8 +17,8 @@ export default class HeaderSection extends Component {
 
   async componentDidMount() {
     await Font.loadAsync({
-      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+      "Gilroy Light": require("../../assets/fonts/gilroy-light.otf"),
+      "Gilroy Extrabold": require("../../assets/fonts/gilroy-extrabold.otf")
     });
     this.setState({ fontLoaded: true });
   }
@@ -55,7 +55,7 @@ export default class HeaderSection extends Component {
               }
             >
               <ImageBackground
-                source={require("../assets/header-pattern.png")}
+                source={require("../../assets/header-pattern.png")}
                 style={{
                   flex: 1,
                   width: "100%",
@@ -66,6 +66,11 @@ export default class HeaderSection extends Component {
                   flexDirection: "row"
                 }}
               >
+                {/* This gives the length of the stack containing the navigation screen that have been visited. */}
+                {console.log(
+                  this.props.navigation.dangerouslyGetParent().state.routes
+                    .length
+                )}
                 <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}
                   style={{
@@ -76,10 +81,11 @@ export default class HeaderSection extends Component {
                   }}
                 >
                   <Image
-                    source={require("../assets/back-button.png")}
+                    source={require("../../assets/back-button.png")}
                     style={styles.backButton}
                   />
                 </TouchableWithoutFeedback>
+
                 <Text
                   style={
                     {
