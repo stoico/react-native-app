@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Button,
-  Text,
-  StatusBar
-} from "react-native";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Font, AppLoading } from "expo";
 
 import Header from "../components/Header/Header";
@@ -15,7 +8,19 @@ import NewReleasesBox from "../components/NewReleasesBox";
 export default class NewReleasesScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontHasLoaded: false, dataHasLoaded: false };
+
+    let uriAPI =
+      "https://api.themoviedb.org/3/movie/550?api_key=f521cf48d44225747ebbec6f1b76573a";
+
+    fetch(uriAPI)
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState({ dataHasLoaded: true, data: responseJSON });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async componentDidMount() {
@@ -23,11 +28,21 @@ export default class NewReleasesScreen extends React.Component {
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
     });
-    this.setState({ fontLoaded: true });
+    this.setState({ fontHasLoaded: true });
+  }
+
+  renderData() {
+    return (
+      <React.Fragment>
+        <Text>{this.state.data.original_title}</Text>
+        <Text>{this.state.data.release_date}</Text>
+        <Text>{this.state.data.tagline}</Text>
+      </React.Fragment>
+    );
   }
 
   render() {
-    if (!this.state.fontLoaded) {
+    if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
     } else {
       return (
@@ -36,14 +51,9 @@ export default class NewReleasesScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {/* <Button
-                title="Go to Details"
-                onPress={() =>
-                  this.props.navigation.navigate("Film", {
-                    filmID: Math.floor(Math.random() * 100)
-                  })
-                }
-              /> */}
+              {this.renderData()}
+
+              <Text>Whatevs</Text>
               <NewReleasesBox
                 dateReleased="12/07/2018"
                 navigation={this.props.navigation}
