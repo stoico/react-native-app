@@ -70,7 +70,9 @@ export default class HeaderSection extends Component {
                 <Text style={styles.headerTitle}>{this.props.pageTitle}</Text>
                 {/* <View>Icon on the right </View> */}
 
-                <TouchableWithoutFeedback
+                <View />
+
+                {/* <TouchableWithoutFeedback
                   onPress={() => this.props.navigation.goBack()}
                   style={styles.backButtonArea}
                 >
@@ -78,7 +80,7 @@ export default class HeaderSection extends Component {
                     source={require("../../assets/back-button.png")}
                     style={styles.forGigglesButton}
                   />
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
               </ImageBackground>
             </LinearGradient>
           </View>
