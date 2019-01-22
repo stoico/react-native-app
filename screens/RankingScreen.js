@@ -62,7 +62,10 @@ export default class RankingScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Header pageTitle="Ranking" navigation={this.props.navigation} />
+          <Header
+            pageTitle="I più consigliati"
+            navigation={this.props.navigation}
+          />
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>

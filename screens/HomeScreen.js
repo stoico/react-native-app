@@ -80,7 +80,7 @@ export default class HomeScreen extends React.Component {
               style={styles.gradientBehindButton}
               colors={greyGradient}
             >
-              <SuggestionButton />
+              <SuggestionButton navigation={this.props.navigation} />
             </LinearGradient>
           </View>
         </View>

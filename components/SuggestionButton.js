@@ -15,6 +15,8 @@ export default class SuggestionButton extends React.Component {
     if (isiOS) {
       console.log("You're using an iOS device");
     }
+
+    this.props.navigation.navigate("Suggest");
   };
 
   async componentDidMount() {
