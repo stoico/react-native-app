@@ -5,7 +5,8 @@ import {
   Text,
   ScrollView,
   WebView,
-  StyleSheet
+  StyleSheet,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Font, LinearGradient, AppLoading } from "expo";
 
@@ -15,7 +16,27 @@ import RecommendFilmButton from "../components/RecommendFilmButton/";
 export default class FilmScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = {
+      fontHasLoaded: false,
+      dataHasLoaded: false,
+      plotCollapsed: true
+    };
+
+    let uriAPI =
+      "https://api.themoviedb.org/3/movie/" +
+      this.props.navigation.getParam("filmID") +
+      "?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&append_to_response=videos";
+
+    fetch(uriAPI)
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.setState({ dataHasLoaded: true, data: responseJSON });
+        console.log("________________Film data ___________________");
+        console.log(responseJSON);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   async componentDidMount() {
@@ -23,14 +44,17 @@ export default class FilmScreen extends React.Component {
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
     });
-    this.setState({ fontLoaded: true });
+    this.setState({ fontHasLoaded: true });
   }
 
   render() {
     const { navigation } = this.props;
     const filmTitle = navigation.getParam("filmTitle", "Temp film");
+    const filmID = navigation.getParam("filmID");
 
-    if (!this.state.fontLoaded) {
+    const filmData = this.state.data;
+
+    if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
     } else {
       return (
@@ -40,7 +64,10 @@ export default class FilmScreen extends React.Component {
             <View style={styles.primaryContainer}>
               <View style={styles.secondaryContainer}>
                 <Image
-                  source={require("../assets/backdrop.png")}
+                  source={{
+                    uri:
+                      "https://image.tmdb.org/t/p/w300" + filmData.backdrop_path
+                  }}
                   style={styles.backdropImage}
                 />
                 <View style={styles.tertiaryContainer}>
@@ -61,18 +88,40 @@ export default class FilmScreen extends React.Component {
                   <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Storia</Text>
                   </View>
-                  <Text style={styles.plotParagraph}>
-                    In the mythical continent of Westeros, several powerful
-                    families fight for control of the Seven Kingdoms. As
-                    conflict erupts in the kingdoms of men, an ancient enemy
-                    rises once again to threaten them all. Meanwhile, the last
-                    heirs of a recently usurped dynasty plot to take back their
-                    homeland from across the Narrow Sea.
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      this.setState({
+                        plotCollapsed: !this.state.plotCollapsed
+                      })
+                    }
+                  >
+                    <Text
+                      style={[
+                        styles.plotParagraph,
+                        this.state.plotCollapsed
+                          ? { height: 130 }
+                          : { height: "auto" }
+                      ]}
+                    >
+                      {filmData.overview}
+                    </Text>
+                  </TouchableWithoutFeedback>
+
+                  <Text
+                    style={{
+                      textAlign: "left",
+                      width: "100%",
+                      marginTop: -6,
+                      paddingRight: 12,
+                      paddingLeft: 12
+                    }}
+                  >
+                    {this.state.plotCollapsed ? "..." : null}
                   </Text>
 
                   <View style={styles.multipleCategoryContainer}>
                     <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Punteggio</Text>
+                      <Text style={styles.categoryNameText}>Voto</Text>
                     </View>
                     <View style={styles.multipleCategoryRounded}>
                       <Text style={styles.categoryNameText}>Durata</Text>
@@ -84,10 +133,14 @@ export default class FilmScreen extends React.Component {
 
                   <View style={styles.multipleCategoryContainer}>
                     <View style={styles.multipleCategoryInfo}>
-                      <Text style={styles.categoryInfoText}>9.7</Text>
+                      <Text style={styles.categoryInfoText}>
+                        {filmData.vote_average}
+                      </Text>
                     </View>
                     <View style={styles.multipleCategoryInfo}>
-                      <Text style={styles.categoryInfoText}>60 min</Text>
+                      <Text style={styles.categoryInfoText}>
+                        {filmData.runtime}m
+                      </Text>
                     </View>
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>3</Text>
@@ -97,16 +150,19 @@ export default class FilmScreen extends React.Component {
                   <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
-
-                  <WebView
-                    style={styles.videoTrailer}
-                    javaScriptEnabled={true}
-                    scrollEnabled={false}
-                    source={{
-                      uri:
-                        "https://www.youtube.com/embed/T77PDm3e1iE?rel=0&autoplay=0&showinfo=0&controls=0"
-                    }}
-                  />
+                  {filmData.videos.results[0] && (
+                    <WebView
+                      style={styles.videoTrailer}
+                      javaScriptEnabled={true}
+                      scrollEnabled={false}
+                      source={{
+                        uri:
+                          "https://www.youtube.com/embed/" +
+                          filmData.videos.results[0].key +
+                          "?rel=0&autoplay=0&showinfo=0&controls=0"
+                      }}
+                    />
+                  )}
                 </View>
               </View>
               <View style={styles.bottomSpacing} />
@@ -212,8 +268,10 @@ const styles = StyleSheet.create({
     color: "#505050",
     fontSize: 36,
     alignSelf: "center",
-    height: 45,
-    marginTop: 5
+    textAlign: "center",
+    marginTop: 5,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   multipleCategoryContainer: {
     width: "auto",
@@ -274,12 +332,17 @@ const styles = StyleSheet.create({
   backdropImage: {
     flex: 1,
     borderRadius: 26,
-    width: "100%"
+    width: 339,
+    height: 180
   },
   plotParagraph: {
     color: "#505050",
     fontWeight: "500",
-    padding: 4
+    padding: 4,
+    fontSize: 16,
+    lineHeight: 20,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   videoTrailer: {
     height: 180,

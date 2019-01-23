@@ -42,7 +42,8 @@ export default class FeedSuggestionBox extends React.Component {
           <TouchableWithoutFeedback
             onPress={() =>
               this.props.navigation.navigate("Film", {
-                filmTitle: filmTitle
+                filmTitle: filmTitle,
+                filmID: this.props.id
               })
             }
           >

@@ -85,13 +85,6 @@ export default class NewReleasesScreen extends React.Component {
 
               {/* {this.renderData()} */}
 
-              {/* <NewReleasesBox dateReleased="12/07/2018" navigation={this.props.navigation} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} /> */}
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
