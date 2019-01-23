@@ -30,6 +30,8 @@ export default class FeedSuggestionBox extends React.Component {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
+      let pathTMDB = "https://image.tmdb.org/t/p/w154" + this.props.coverImage;
+
       return (
         <View style={styles.feedSuggestionBox}>
           <View style={styles.feedUserSuggests}>
@@ -45,10 +47,7 @@ export default class FeedSuggestionBox extends React.Component {
             }
           >
             <View style={styles.filmSuggestedBox}>
-              <Image
-                source={require("../assets/cover3.png")}
-                style={styles.filmCoverImage}
-              />
+              <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
               <Text style={styles.filmTitle}>{filmTitle}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -97,7 +96,9 @@ const styles = StyleSheet.create({
   },
   filmCoverImage: {
     flex: 0.2,
-    backgroundColor: "#8CD2FD"
+    backgroundColor: "#8CD2FD",
+    width: 65,
+    height: 90
   },
   filmTitle: {
     flex: 0.8,

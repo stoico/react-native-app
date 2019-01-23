@@ -11,7 +11,7 @@ export default class NewReleasesScreen extends React.Component {
     this.state = { fontHasLoaded: false, dataHasLoaded: false };
 
     let uriAPI =
-      "https://api.themoviedb.org/3/movie/550?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT";
+      "https://api.themoviedb.org/3/trending/all/day?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&page=1";
 
     fetch(uriAPI)
       .then(response => response.json())
@@ -31,14 +31,20 @@ export default class NewReleasesScreen extends React.Component {
     this.setState({ fontHasLoaded: true });
   }
 
-  renderData() {
-    return (
-      <React.Fragment>
-        <Text>{this.state.data.original_title}</Text>
-        <Text>{this.state.data.release_date}</Text>
-        <Text>{this.state.data.tagline}</Text>
-      </React.Fragment>
-    );
+  renderResponseData() {
+    let boxes;
+
+    this.state.data.results.forEach(function(value, index) {
+      boxes.push(
+        <NewReleasesBox
+          dateReleased={value.release_date}
+          filmTitle={value.title}
+          navigation={this.props.navigation}
+        />
+      );
+    });
+
+    return boxes;
   }
 
   render() {
@@ -47,22 +53,45 @@ export default class NewReleasesScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Header pageTitle="Nuove uscite" navigation={this.props.navigation} />
+          <Header pageTitle="Di tendenza" navigation={this.props.navigation} />
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {this.renderData()}
+              {this.state.data.results.map(result => {
+                if (result.title) {
+                  return (
+                    <NewReleasesBox
+                      dateReleased={result.release_date}
+                      filmTitle={result.title}
+                      coverImage={result.poster_path}
+                      id={result.id}
+                      key={result.id}
+                      navigation={this.props.navigation}
+                    />
+                  );
+                } else {
+                  return (
+                    <NewReleasesBox
+                      dateReleased={result.first_air_date}
+                      filmTitle={result.name}
+                      coverImage={result.poster_path}
+                      id={result.id}
+                      key={result.id}
+                      navigation={this.props.navigation}
+                    />
+                  );
+                }
+              })}
 
-              <NewReleasesBox
-                dateReleased="12/07/2018"
-                navigation={this.props.navigation}
-              />
+              {/* {this.renderData()} */}
+
+              {/* <NewReleasesBox dateReleased="12/07/2018" navigation={this.props.navigation} />
               <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
               <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
               <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
               <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
               <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
-              <NewReleasesBox dateReleased="12/07/2018" {...this.props} />
+              <NewReleasesBox dateReleased="12/07/2018" {...this.props} /> */}
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
