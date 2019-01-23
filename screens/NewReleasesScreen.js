@@ -11,7 +11,7 @@ export default class NewReleasesScreen extends React.Component {
     this.state = { fontHasLoaded: false, dataHasLoaded: false };
 
     let uriAPI =
-      "https://api.themoviedb.org/3/movie/550?api_key=f521cf48d44225747ebbec6f1b76573a";
+      "https://api.themoviedb.org/3/movie/550?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT";
 
     fetch(uriAPI)
       .then(response => response.json())
@@ -53,7 +53,6 @@ export default class NewReleasesScreen extends React.Component {
             <View style={styles.feedContainer}>
               {this.renderData()}
 
-              <Text>Whatevs</Text>
               <NewReleasesBox
                 dateReleased="12/07/2018"
                 navigation={this.props.navigation}
