@@ -66,7 +66,7 @@ export default class FilmScreen extends React.Component {
                 <Image
                   source={{
                     uri:
-                      "https://image.tmdb.org/t/p/w300" + filmData.backdrop_path
+                      "https://image.tmdb.org/t/p/w780" + filmData.backdrop_path
                   }}
                   style={styles.backdropImage}
                 />
@@ -85,39 +85,43 @@ export default class FilmScreen extends React.Component {
                     <Text style={styles.userNameText}>Stefano</Text>
                   </View>
 
-                  <View style={styles.centerCategoryNameRounded}>
-                    <Text style={styles.categoryNameText}>Storia</Text>
-                  </View>
-                  <TouchableWithoutFeedback
-                    onPress={() =>
-                      this.setState({
-                        plotCollapsed: !this.state.plotCollapsed
-                      })
-                    }
-                  >
-                    <Text
-                      style={[
-                        styles.plotParagraph,
-                        this.state.plotCollapsed
-                          ? { height: 130 }
-                          : { height: "auto" }
-                      ]}
-                    >
-                      {filmData.overview}
-                    </Text>
-                  </TouchableWithoutFeedback>
+                  {filmData.overview.length !== 0 && (
+                    <React.Fragment>
+                      <View style={styles.centerCategoryNameRounded}>
+                        <Text style={styles.categoryNameText}>Storia</Text>
+                      </View>
+                      <TouchableWithoutFeedback
+                        onPress={() =>
+                          this.setState({
+                            plotCollapsed: !this.state.plotCollapsed
+                          })
+                        }
+                      >
+                        <Text
+                          style={[
+                            styles.plotParagraph,
+                            this.state.plotCollapsed
+                              ? { height: 130 }
+                              : { height: "auto" }
+                          ]}
+                        >
+                          {filmData.overview}
+                        </Text>
+                      </TouchableWithoutFeedback>
 
-                  <Text
-                    style={{
-                      textAlign: "left",
-                      width: "100%",
-                      marginTop: -6,
-                      paddingRight: 12,
-                      paddingLeft: 12
-                    }}
-                  >
-                    {this.state.plotCollapsed ? "..." : null}
-                  </Text>
+                      <Text
+                        style={{
+                          textAlign: "left",
+                          width: "100%",
+                          marginTop: -6,
+                          paddingRight: 12,
+                          paddingLeft: 12
+                        }}
+                      >
+                        {this.state.plotCollapsed ? "..." : null}
+                      </Text>
+                    </React.Fragment>
+                  )}
 
                   <View style={styles.multipleCategoryContainer}>
                     <View style={styles.multipleCategoryRounded}>
@@ -135,11 +139,13 @@ export default class FilmScreen extends React.Component {
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>
                         {filmData.vote_average}
+                        <Text style={{ fontSize: 13 }}>/10</Text>
                       </Text>
                     </View>
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>
-                        {filmData.runtime}m
+                        {filmData.runtime}
+                        <Text style={{ fontSize: 13 }}>min</Text>
                       </Text>
                     </View>
                     <View style={styles.multipleCategoryInfo}>

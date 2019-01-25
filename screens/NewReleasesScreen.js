@@ -57,35 +57,35 @@ export default class NewReleasesScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {this.state.data.results.map(result => {
-                if (result.title) {
-                  return (
-                    <NewReleasesBox
-                      dateReleased={result.release_date}
-                      filmTitle={result.title}
-                      coverImage={result.poster_path}
-                      id={result.id}
-                      key={result.id}
-                      navigation={this.props.navigation}
-                    />
-                  );
-                } else {
-                  return (
-                    <NewReleasesBox
-                      dateReleased={result.first_air_date}
-                      filmTitle={result.name}
-                      coverImage={result.poster_path}
-                      id={result.id}
-                      key={result.id}
-                      navigation={this.props.navigation}
-                    />
-                  );
-                }
-              })}
+              <View style={styles.feedSuggestionBox}>
+                {this.state.data.results.map(result => {
+                  if (result.title) {
+                    return (
+                      <NewReleasesBox
+                        dateReleased={result.release_date}
+                        filmTitle={result.title}
+                        coverImage={result.poster_path}
+                        id={result.id}
+                        key={result.id}
+                        navigation={this.props.navigation}
+                      />
+                    );
+                  } else {
+                    return (
+                      <NewReleasesBox
+                        dateReleased={result.first_air_date}
+                        filmTitle={result.name}
+                        coverImage={result.poster_path}
+                        id={result.id}
+                        key={result.id}
+                        navigation={this.props.navigation}
+                      />
+                    );
+                  }
+                })}
 
-              {/* {this.renderData()} */}
-
-              <View style={styles.bottomSpacing} />
+                {/* {this.renderData()} */}
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -103,6 +103,17 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30
+  },
+  feedSuggestionBox: {
+    flex: 1,
+    borderRadius: 26,
+    backgroundColor: "#F7F7F7",
+    marginBottom: 10,
+    padding: 10,
+    shadowOpacity: 1, //    made up these
+    shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
+    shadowColor: "#D7D7D7",
+    shadowOffset: { width: 0, height: 2 }
   },
   floatingPositionForButton: {
     flex: 1,
