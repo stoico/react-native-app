@@ -1,5 +1,16 @@
 import React from "react";
 import { View, Text } from "react-native";
+import * as firebase from "firebase";
+
+const config = {
+  apiKey: "AIzaSyAzz9zugXLtDjPcD2Fi0UdnU1xClGAfy1g",
+  authDomain: "native-recommendation-app.firebaseapp.com",
+  databaseURL: "https://native-recommendation-app.firebaseio.com",
+  projectId: "native-recommendation-app",
+  storageBucket: "native-recommendation-app.appspot.com",
+  messagingSenderId: "56162003170"
+};
+firebase.initializeApp(config);
 
 import {
   createStackNavigator,

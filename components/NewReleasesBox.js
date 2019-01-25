@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   },
   filmTitle: {
-    flex: 0.8,
+    flex: 1,
     paddingLeft: 12,
+    paddingRight: 12,
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
     fontSize: 24
