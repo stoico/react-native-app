@@ -7,6 +7,7 @@ import {
   Text,
   StatusBar
 } from "react-native";
+import { database } from "../config/Firebase";
 import { LinearGradient, Font, AppLoading } from "expo";
 
 import Header from "../components/Header/Header";
@@ -16,7 +17,7 @@ import SuggestionButton from "../components/SuggestionButton";
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontLoaded: false, textFromFirebase: "" };
   }
 
   async componentDidMount() {
@@ -30,6 +31,22 @@ export default class HomeScreen extends React.Component {
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
   };
+
+  componentWillMount() {
+    // database.ref("/recommendation").push({ name: "Game of Thrones" });
+  }
+
+  renderFirebaseShit() {
+    const that = this;
+
+    database
+      .ref("/recommendation/-LXFT605loY4oxiR6QxG/name")
+      .once("value")
+      .then(function(snapshot) {
+        const didReadFromDatabase = snapshot.val();
+        that.setState({ textFromFirebase: didReadFromDatabase });
+      });
+  }
 
   render() {
     if (!this.state.fontLoaded) {
@@ -51,7 +68,7 @@ export default class HomeScreen extends React.Component {
               /> */}
               <FeedSuggestionBox
                 name="Stefano"
-                filmTitle="You"
+                filmTitle={this.state.textFromFirebase}
                 navigation={this.props.navigation}
               />
               <FeedSuggestionBox
