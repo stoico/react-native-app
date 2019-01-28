@@ -34,17 +34,21 @@ export default class HomeScreen extends React.Component {
 
   componentWillMount() {
     // database.ref("/recommendation").push({ name: "Game of Thrones" });
+    this.renderFirebaseShit();
   }
 
   renderFirebaseShit() {
     const that = this;
 
     database
-      .ref("/recommendation/-LXFT605loY4oxiR6QxG/name")
+      .ref("/recommendation/")
       .once("value")
       .then(function(snapshot) {
-        const didReadFromDatabase = snapshot.val();
-        that.setState({ textFromFirebase: didReadFromDatabase });
+        const didReadFromDatabase = Object.values(snapshot.val());
+        for (let obj of didReadFromDatabase) {
+          console.log(obj.name);
+        }
+        that.setState({ textFromFirebase: didReadFromDatabase[0].name });
       });
   }
 
