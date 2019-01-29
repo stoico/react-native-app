@@ -17,17 +17,92 @@ import Header from "../components/Header/Header";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
 import SuggestionButton from "../components/SuggestionButton";
 
-const captchaUrl = `https://my-firebase-hosting/captcha-page.html?appurl=${Linking.makeUrl(
+const captchaUrl = `https://native-recommendation-app.firebaseapp.com/captcha-page.html?appurl=${Linking.makeUrl(
   ""
 )}`;
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false, textFromFirebase: "", input: "" };
+    this.state = {
+      fontLoaded: false,
+      textFromFirebase: "",
+      input: "",
+      user: undefined,
+      phone: "",
+      confirmationResult: undefined,
+      code: ""
+    };
 
     firebase.auth().useDeviceLanguage();
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user });
+    });
   }
+
+  onPhoneChange = phone => {
+    this.setState({ phone });
+  };
+
+  onPhoneComplete = async () => {
+    let token = null;
+    const listener = ({ url }) => {
+      WebBrowser.dismissBrowser();
+      const tokenEncoded = Linking.parse(url).queryParams["token"];
+      if (tokenEncoded) token = decodeURIComponent(tokenEncoded);
+    };
+    Linking.addEventListener("url", listener);
+    await WebBrowser.openBrowserAsync(captchaUrl);
+    Linking.removeEventListener("url", listener);
+    if (token) {
+      const { phone } = this.state;
+      //fake firebase.auth.ApplicationVerifier
+      const captchaVerifier = {
+        type: "recaptcha",
+        verify: () => Promise.resolve(token)
+      };
+      try {
+        const confirmationResult = await firebase
+          .auth()
+          .signInWithPhoneNumber(phone, captchaVerifier);
+        this.setState({ confirmationResult });
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+  };
+
+  onCodeChange = code => {
+    this.setState({ code });
+  };
+
+  onSignIn = async () => {
+    const { confirmationResult, code } = this.state;
+    try {
+      await confirmationResult.confirm(code);
+    } catch (e) {
+      console.warn(e);
+    }
+    this.reset();
+  };
+
+  onSignOut = async () => {
+    try {
+      await firebase.auth().signOut();
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  reset = () => {
+    this.setState({
+      phone: "",
+      phoneCompleted: false,
+      confirmationResult: undefined,
+      code: ""
+    });
+  };
 
   async componentDidMount() {
     await Font.loadAsync({
@@ -61,6 +136,7 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  // My original attempt
   signUp() {
     let phoneNumber = this.state.input;
 
@@ -81,6 +157,48 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  renderSignUpBusiness() {
+    if (this.state.user)
+      return (
+        <React.Fragment>
+          <Text>You signed in</Text>
+          <Button onPress={this.onSignOut} title="Sign out" />
+        </React.Fragment>
+      );
+    if (!this.state.confirmationResult)
+      return (
+        <React.Fragment>
+          <TextInput
+            value={this.state.phone}
+            onChangeText={this.onPhoneChange}
+            keyboardType="phone-pad"
+            placeholder="Your phone"
+            style={{
+              height: 50,
+              padding: 15,
+              backgroundColor: "white",
+              borderColor: "grey",
+              borderWidth: 1,
+              borderRadius: 8
+            }}
+          />
+          <Button onPress={this.onPhoneComplete} title="Next" />
+        </React.Fragment>
+      );
+    else
+      return (
+        <React.Fragment>
+          <TextInput
+            value={this.state.code}
+            onChangeText={this.onCodeChange}
+            keyboardType="numeric"
+            placeholder="Code from SMS"
+          />
+          <Button onPress={this.onSignIn} title="Sign in" />
+        </React.Fragment>
+      );
+  }
+
   render() {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -91,7 +209,8 @@ export default class HomeScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              <TextInput
+              {this.renderSignUpBusiness()}
+              {/* <TextInput
                 style={{
                   height: 50,
                   padding: 15,
@@ -118,7 +237,7 @@ export default class HomeScreen extends React.Component {
                 }}
               >
                 Riceverai un SMS di conferma
-              </Text>
+              </Text> */}
               <FeedSuggestionBox
                 name="Stefano"
                 filmTitle={this.state.textFromFirebase}
