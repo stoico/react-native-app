@@ -5,19 +5,28 @@ import {
   View,
   Button,
   Text,
-  StatusBar
+  TextInput,
+  Alert
 } from "react-native";
 import { database } from "../config/Firebase";
+import firebase from "firebase";
 import { LinearGradient, Font, AppLoading } from "expo";
+import { Linking, WebBrowser } from "expo";
 
 import Header from "../components/Header/Header";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
 import SuggestionButton from "../components/SuggestionButton";
 
+const captchaUrl = `https://my-firebase-hosting/captcha-page.html?appurl=${Linking.makeUrl(
+  ""
+)}`;
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false, textFromFirebase: "" };
+    this.state = { fontLoaded: false, textFromFirebase: "", input: "" };
+
+    firebase.auth().useDeviceLanguage();
   }
 
   async componentDidMount() {
@@ -52,6 +61,26 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  signUp() {
+    let phoneNumber = this.state.input;
+
+    firebase
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, appVerifier)
+      .then(function(confirmationResult) {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        Alert.alert(confirmationResult);
+        console.log(confirmationResult);
+        window.confirmationResult = confirmationResult;
+      })
+      .catch(function(error) {
+        // Error; SMS not sent
+        // ...
+        console.log(error);
+      });
+  }
+
   render() {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -62,14 +91,34 @@ export default class HomeScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {/* <Button
-                title="Go to Details"
-                onPress={() =>
-                  this.props.navigation.navigate("Film", {
-                    filmID: Math.floor(Math.random() * 100)
-                  })
-                }
-              /> */}
+              <TextInput
+                style={{
+                  height: 50,
+                  padding: 15,
+                  backgroundColor: "white",
+                  borderColor: "grey",
+                  borderWidth: 1,
+                  borderRadius: 8
+                }}
+                placeholder="Phone number"
+                onChangeText={input => this.setState({ input })}
+                value={this.state.input}
+              />
+              <Button
+                onPress={this.signUp}
+                title="Sign Up"
+                color="#841584"
+                accessibilityLabel="Sign up to the app"
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 12,
+                  marginBottom: 20
+                }}
+              >
+                Riceverai un SMS di conferma
+              </Text>
               <FeedSuggestionBox
                 name="Stefano"
                 filmTitle={this.state.textFromFirebase}
