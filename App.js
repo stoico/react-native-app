@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 // import { Font, AppLoading } from "expo";
 
 import HomeScreen from "./screens/HomeScreen";
+import SignupScreen from "./screens/SignupScreen";
 import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import RankingScreen from "./screens/RankingScreen";
@@ -86,7 +87,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 const HomeStack = createStackNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: SignupScreen,
     navigationOptions: {
       header: null
     }

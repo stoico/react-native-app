@@ -104,7 +104,7 @@ export default class FriendScreen extends React.Component {
                     ] // color: "#E0E0E0",
                   }
                   placeholder="Film o serie TV"
-                  placeholderColor="rgba(80, 80, 80, 0.8)"
+                  // placeholderTextColor="rgba(80, 80, 80, 0.8)"
                   onChangeText={text => this.setState({ text })}
                   value={this.state.text}
                 />

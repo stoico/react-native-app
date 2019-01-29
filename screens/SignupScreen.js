@@ -6,7 +6,8 @@ import {
   Button,
   Text,
   TextInput,
-  Alert
+  Alert,
+  TouchableOpacity
 } from "react-native";
 import { database } from "../config/Firebase";
 import firebase from "firebase";
@@ -21,13 +22,12 @@ const captchaUrl = `https://native-recommendation-app.firebaseapp.com/captcha-pa
   ""
 )}`;
 
-export default class HomeScreen extends React.Component {
+export default class SignupScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       fontLoaded: false,
       textFromFirebase: "",
-      input: "",
       user: undefined,
       phone: "",
       confirmationResult: undefined,
@@ -112,51 +112,6 @@ export default class HomeScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  openFilmSearchSection = () => {
-    console.log("\nJust testing the button\n");
-  };
-
-  componentWillMount() {
-    // database.ref("/recommendation").push({ name: "Game of Thrones" });
-    this.renderFirebaseShit();
-  }
-
-  renderFirebaseShit() {
-    const that = this;
-
-    database
-      .ref("/recommendation/")
-      .once("value")
-      .then(function(snapshot) {
-        const didReadFromDatabase = Object.values(snapshot.val());
-        for (let obj of didReadFromDatabase) {
-          console.log(obj.name);
-        }
-        that.setState({ textFromFirebase: didReadFromDatabase[0].name });
-      });
-  }
-
-  // My original attempt
-  signUp() {
-    let phoneNumber = this.state.input;
-
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then(function(confirmationResult) {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        Alert.alert(confirmationResult);
-        console.log(confirmationResult);
-        window.confirmationResult = confirmationResult;
-      })
-      .catch(function(error) {
-        // Error; SMS not sent
-        // ...
-        console.log(error);
-      });
-  }
-
   renderSignUpBusiness() {
     if (this.state.user)
       return (
@@ -169,32 +124,70 @@ export default class HomeScreen extends React.Component {
       return (
         <React.Fragment>
           <TextInput
+            style={[
+              {
+                height: 63,
+                borderTopLeftRadius: 14,
+                borderTopRightRadius: 14,
+                padding: 15,
+                color: "rgba(80, 80, 80, 0.8)",
+                width: "100%",
+                fontFamily: "Gilroy Extrabold",
+                backgroundColor: "#fff",
+                fontSize: 20,
+                borderRadius: 14,
+                shadowOpacity: 1,
+                shadowRadius: 8,
+                shadowColor: "rgba(215,215,215, 0.5)",
+                shadowOffset: { width: 0, height: 5 }
+              }
+            ]}
+            keyboardType="phone-pad"
+            placeholder="Numero di cellulare"
             value={this.state.phone}
             onChangeText={this.onPhoneChange}
-            keyboardType="phone-pad"
-            placeholder="Your phone"
-            style={{
-              height: 50,
-              padding: 15,
-              backgroundColor: "white",
-              borderColor: "grey",
-              borderWidth: 1,
-              borderRadius: 8
-            }}
           />
-          <Button onPress={this.onPhoneComplete} title="Next" />
+          <TouchableOpacity
+            style={styles.blueSuggestionButton}
+            onPress={this.onPhoneComplete}
+          >
+            <Text style={styles.textOfBlueButton}>Avanti</Text>
+          </TouchableOpacity>
         </React.Fragment>
       );
     else
       return (
         <React.Fragment>
           <TextInput
+            style={[
+              {
+                height: 63,
+                borderTopLeftRadius: 14,
+                borderTopRightRadius: 14,
+                padding: 15,
+                color: "rgba(80, 80, 80, 0.8)",
+                width: "100%",
+                fontFamily: "Gilroy Extrabold",
+                backgroundColor: "#fff",
+                fontSize: 20,
+                borderRadius: 14,
+                shadowOpacity: 1,
+                shadowRadius: 8,
+                shadowColor: "rgba(215,215,215, 0.5)",
+                shadowOffset: { width: 0, height: 5 }
+              }
+            ]}
             value={this.state.code}
             onChangeText={this.onCodeChange}
             keyboardType="numeric"
-            placeholder="Code from SMS"
+            placeholder="Codice di conferma"
           />
-          <Button onPress={this.onSignIn} title="Sign in" />
+          <TouchableOpacity
+            style={styles.blueSuggestionButton}
+            onPress={this.onSignIn}
+          >
+            <Text style={styles.textOfBlueButton}>Sign in</Text>
+          </TouchableOpacity>
         </React.Fragment>
       );
   }
@@ -205,64 +198,81 @@ export default class HomeScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Header pageTitle="Consigliati" navigation={this.props.navigation} />
+          <Header pageTitle="Registrati" navigation={this.props.navigation} />
 
           <ScrollView style={styles.screenContainer}>
-            <View style={styles.feedContainer}>
-              {this.renderSignUpBusiness()}
+            <View style={styles.outmostContainer}>
+              <View style={styles.secondaryContainer}>
+                <Text style={styles.subHeading}>
+                  Scambia consigli tra amici su serie TV e film
+                </Text>
 
-              <FeedSuggestionBox
-                name="Stefano"
-                filmTitle={this.state.textFromFirebase}
-                navigation={this.props.navigation}
-              />
-              <FeedSuggestionBox
-                name="Carmine"
-                filmTitle="Game Of Thrones"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Martina"
-                filmTitle="Black Mirrors"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Rocco"
-                filmTitle="Westworld"
-                {...this.props}
-              />
-              <FeedSuggestionBox name="Angelo" {...this.props} />
-              <FeedSuggestionBox name="Marco" {...this.props} />
-              <FeedSuggestionBox name="Raffaella" {...this.props} />
-              <View style={styles.bottomSpacing} />
+                {this.renderSignUpBusiness()}
+
+                <View style={styles.bottomSpacing} />
+              </View>
             </View>
           </ScrollView>
-          <View style={styles.floatingPositionForButton}>
-            <LinearGradient
-              style={styles.gradientBehindButton}
-              colors={greyGradient}
-            >
-              <SuggestionButton navigation={this.props.navigation} />
-            </LinearGradient>
-          </View>
         </View>
       );
     }
   }
 }
 
-const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
-const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
-
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1
   },
-  feedContainer: {
+  outmostContainer: {
     marginTop: 82,
     padding: 8,
     backgroundColor: "#E0E0E0",
-    borderRadius: 30
+    borderRadius: 30,
+    height: 675
+  },
+  secondaryContainer: {
+    flex: 1,
+    borderRadius: 26,
+    backgroundColor: "#F7F7F7",
+    padding: 10,
+    shadowOpacity: 1, //    made up these
+    shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
+    shadowColor: "#D7D7D7",
+    shadowOffset: { width: 0, height: 2 }
+  },
+  subHeading: {
+    marginTop: 55,
+    marginBottom: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
+    textAlign: "center",
+    color: "#2EA6FF",
+    fontFamily: "Gilroy Extrabold",
+    fontSize: 26
+  },
+  blueSuggestionButton: {
+    flex: 0.18,
+    width: 200,
+    marginTop: 18,
+    alignSelf: "center",
+    borderRadius: 35,
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: "#2EA6FF",
+    borderColor: "rgba(26, 141, 211, 0.30)",
+    borderWidth: 1,
+    elevation: 4,
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    shadowColor: "#2EA6FF",
+    shadowOffset: { width: 0, height: 4 }
+  },
+  textOfBlueButton: {
+    fontFamily: "Gilroy Extrabold",
+    justifyContent: "center",
+    alignSelf: "center",
+    color: "#F8F8F8",
+    fontSize: 20
   },
   floatingPositionForButton: {
     flex: 1,
