@@ -157,48 +157,6 @@ export default class HomeScreen extends React.Component {
       });
   }
 
-  renderSignUpBusiness() {
-    if (this.state.user)
-      return (
-        <React.Fragment>
-          <Text>You signed in</Text>
-          <Button onPress={this.onSignOut} title="Sign out" />
-        </React.Fragment>
-      );
-    if (!this.state.confirmationResult)
-      return (
-        <React.Fragment>
-          <TextInput
-            value={this.state.phone}
-            onChangeText={this.onPhoneChange}
-            keyboardType="phone-pad"
-            placeholder="Your phone"
-            style={{
-              height: 50,
-              padding: 15,
-              backgroundColor: "white",
-              borderColor: "grey",
-              borderWidth: 1,
-              borderRadius: 8
-            }}
-          />
-          <Button onPress={this.onPhoneComplete} title="Next" />
-        </React.Fragment>
-      );
-    else
-      return (
-        <React.Fragment>
-          <TextInput
-            value={this.state.code}
-            onChangeText={this.onCodeChange}
-            keyboardType="numeric"
-            placeholder="Code from SMS"
-          />
-          <Button onPress={this.onSignIn} title="Sign in" />
-        </React.Fragment>
-      );
-  }
-
   render() {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -209,8 +167,6 @@ export default class HomeScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {this.renderSignUpBusiness()}
-
               <FeedSuggestionBox
                 name="Stefano"
                 filmTitle={this.state.textFromFirebase}
