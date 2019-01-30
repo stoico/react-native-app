@@ -85,7 +85,7 @@ export default class FilmScreen extends React.Component {
                     <Text style={styles.userNameText}>Stefano</Text>
                   </View>
 
-                  {filmData.overview.length !== 0 && (
+                  {filmData.overview && filmData.overview.length !== 0 && (
                     <React.Fragment>
                       <View style={styles.centerCategoryNameRounded}>
                         <Text style={styles.categoryNameText}>Storia</Text>
@@ -156,7 +156,7 @@ export default class FilmScreen extends React.Component {
                   <View style={styles.centerCategoryNameRounded}>
                     <Text style={styles.categoryNameText}>Trailer</Text>
                   </View>
-                  {filmData.videos.results[0] && (
+                  {filmData.videos && filmData.videos.results[0] && (
                     <WebView
                       style={styles.videoTrailer}
                       javaScriptEnabled={true}

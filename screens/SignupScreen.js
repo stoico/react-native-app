@@ -172,13 +172,8 @@ export default class SignupScreen extends React.Component {
           {/* Form Container */}
           <View
             style={{
-              borderTopLeftRadius: 14,
-              borderTopRightRadius: 14,
-              color: "rgba(80, 80, 80, 0.8)",
               width: "100%",
-              fontFamily: "Gilroy Extrabold",
               backgroundColor: "#fff",
-              fontSize: 20,
               borderRadius: 14,
               shadowOpacity: 1,
               shadowRadius: 8,
@@ -191,10 +186,7 @@ export default class SignupScreen extends React.Component {
                 flexDirection: "row",
                 height: 63,
                 padding: 10,
-                color: "rgba(80, 80, 80, 0.8)",
                 width: "100%",
-                fontFamily: "Gilroy Extrabold",
-                fontSize: 20,
                 borderBottomColor: "#E3E3E3",
                 borderBottomWidth: 1
               }}
@@ -234,10 +226,7 @@ export default class SignupScreen extends React.Component {
                 flexDirection: "row",
                 height: 63,
                 padding: 10,
-                color: "rgba(80, 80, 80, 0.8)",
                 width: "100%",
-                fontFamily: "Gilroy Extrabold",
-                fontSize: 20,
                 borderBottomColor: "#E3E3E3",
                 borderBottomWidth: 1
               }}
@@ -307,13 +296,8 @@ export default class SignupScreen extends React.Component {
         <React.Fragment>
           <View
             style={{
-              borderTopLeftRadius: 14,
-              borderTopRightRadius: 14,
-              color: "rgba(80, 80, 80, 0.8)",
               width: "100%",
-              fontFamily: "Gilroy Extrabold",
               backgroundColor: "#fff",
-              fontSize: 20,
               borderRadius: 14,
               shadowOpacity: 1,
               shadowRadius: 8,
@@ -326,10 +310,7 @@ export default class SignupScreen extends React.Component {
                 flexDirection: "row",
                 height: 63,
                 padding: 10,
-                color: "rgba(80, 80, 80, 0.8)",
                 width: "100%",
-                fontFamily: "Gilroy Extrabold",
-                fontSize: 20,
                 borderBottomColor: "#E3E3E3",
                 borderBottomWidth: 1
               }}
@@ -377,7 +358,7 @@ export default class SignupScreen extends React.Component {
             style={styles.blueSuggestionButton}
             onPress={this.onSignIn}
           >
-            <Text style={styles.textOfBlueButton}>Sign in</Text>
+            <Text style={styles.textOfBlueButton}>Conferma</Text>
           </TouchableOpacity>
         </React.Fragment>
       );

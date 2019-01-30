@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Font, AppLoading } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
 import Header from "../components/Header/Header";
 import SearchResultBox from "../components/SearchResultBox";
@@ -21,7 +22,8 @@ export default class FriendScreen extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontLoaded: true });
   }
@@ -82,32 +84,62 @@ export default class FriendScreen extends React.Component {
               <View style={styles.secondaryContainer}>
                 <View style={styles.userContainer} />
                 {this.displaySubHeading()}
-                <TextInput
-                  style={
-                    [
-                      {
-                        height: 63,
-                        borderTopLeftRadius: 14,
-                        borderTopRightRadius: 14,
-                        padding: 15,
-                        color: "rgba(80, 80, 80, 0.8)",
-                        width: "100%",
-                        fontFamily: "Gilroy Extrabold",
-                        backgroundColor: "#fff",
-                        fontSize: 20,
-                        shadowOpacity: 1,
-                        shadowRadius: 8,
-                        shadowColor: "rgba(215,215,215, 0.5)",
-                        shadowOffset: { width: 0, height: 5 }
-                      },
-                      this.state.text === "" ? styles.roundedCorners : null
-                    ] // color: "#E0E0E0",
-                  }
-                  placeholder="Film o serie TV"
-                  // placeholderTextColor="rgba(80, 80, 80, 0.8)"
-                  onChangeText={text => this.setState({ text })}
-                  value={this.state.text}
-                />
+
+                <View
+                  style={[
+                    {
+                      borderTopLeftRadius: 14,
+                      borderTopRightRadius: 14,
+                      color: "rgba(80, 80, 80, 0.8)",
+                      width: "100%",
+                      fontFamily: "Gilroy Extrabold",
+                      backgroundColor: "#fff",
+                      fontSize: 20,
+                      shadowOpacity: 1,
+                      shadowRadius: 8,
+                      shadowColor: "rgba(215,215,215, 0.5)",
+                      shadowOffset: { width: 0, height: 5 }
+                    },
+                    this.state.text === "" ? styles.roundedCorners : null
+                  ]}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      height: 63,
+                      padding: 10,
+                      width: "100%",
+                      fontSize: 20
+                    }}
+                  >
+                    <TextInput
+                      style={
+                        {
+                          flex: 0.8,
+                          paddingLeft: 15,
+                          color: "rgba(80, 80, 80, 0.8)",
+                          fontFamily: "Gilroy Extrabold",
+                          fontSize: 20
+                        }
+
+                        // color: "#E0E0E0",
+                      }
+                      placeholder="Film o serie TV"
+                      // placeholderTextColor="rgba(80, 80, 80, 0.8)"
+                      onChangeText={text => this.setState({ text })}
+                      value={this.state.text}
+                    />
+                    <View
+                      style={{
+                        flex: 0.2,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <Ionicons name="ios-search" size={24} color="#E0E0E0" />
+                    </View>
+                  </View>
+                </View>
                 <View
                   style={{
                     shadowOpacity: 1,
