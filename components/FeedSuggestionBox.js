@@ -19,7 +19,8 @@ export default class FeedSuggestionBox extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontLoaded: true });
   }
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   userNameText: {
-    fontFamily: "Gilroy Extrabold",
-    color: "rgba(80, 80, 80, 0.8)",
+    fontFamily: "Gilroy Bold",
+    color: "rgba(80, 80, 80, 0.9)",
     fontSize: 20,
     height: 36,
     lineHeight: 36

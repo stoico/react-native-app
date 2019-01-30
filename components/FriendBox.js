@@ -21,7 +21,8 @@ export default class FriendBox extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontLoaded: true });
   }
@@ -93,39 +94,11 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   userNameText: {
-    fontFamily: "Gilroy Extrabold",
-    color: "rgba(80, 80, 80, 0.8)",
+    fontFamily: "Gilroy Bold",
+    color: "rgba(80, 80, 80, 0.9)",
     fontSize: 20,
     height: 36,
     lineHeight: 36
-  },
-  userNameSuggestsText: {
-    fontFamily: "Gilroy Light",
-    color: "rgba(80, 80, 80, 0.8)", // or #505050
-    fontSize: 12,
-    marginLeft: 3,
-    marginTop: 1,
-    height: 36,
-    lineHeight: 36
-  },
-  filmSuggestedBox: {
-    backgroundColor: "white",
-    borderRadius: 22,
-    height: 90,
-    overflow: "hidden",
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  filmCoverImage: {
-    flex: 0.2,
-    backgroundColor: "#8CD2FD"
-  },
-  filmTitle: {
-    flex: 0.8,
-    paddingLeft: 12,
-    fontFamily: "Gilroy Extrabold",
-    color: "#505050",
-    fontSize: 24
   },
   iconMore: {
     position: "absolute",

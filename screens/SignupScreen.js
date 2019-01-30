@@ -17,8 +17,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { AsYouType, parsePhoneNumberFromString } from "libphonenumber-js";
 
 import Header from "../components/Header/Header";
-import FeedSuggestionBox from "../components/FeedSuggestionBox";
-import SuggestionButton from "../components/SuggestionButton";
 
 const captchaUrl = `https://native-recommendation-app.firebaseapp.com/captcha-page.html?appurl=${Linking.makeUrl(
   ""
