@@ -13,6 +13,7 @@ import { database } from "../config/Firebase";
 import firebase from "firebase";
 import { LinearGradient, Font, AppLoading } from "expo";
 import { Linking, WebBrowser } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
 import Header from "../components/Header/Header";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
@@ -28,6 +29,7 @@ export default class SignupScreen extends React.Component {
     this.state = {
       fontLoaded: false,
       textFromFirebase: "",
+      userName: "",
       user: undefined,
       phone: "",
       confirmationResult: undefined,
@@ -43,6 +45,14 @@ export default class SignupScreen extends React.Component {
 
   onPhoneChange = phone => {
     this.setState({ phone });
+  };
+
+  onPhoneFocus = () => {
+    this.setState({ phone: "+39 " });
+  };
+
+  onNameChange = userName => {
+    this.setState({ userName });
   };
 
   onPhoneComplete = async () => {
@@ -123,30 +133,109 @@ export default class SignupScreen extends React.Component {
     if (!this.state.confirmationResult)
       return (
         <React.Fragment>
-          <TextInput
-            style={[
-              {
+          {/* Form Container */}
+          <View
+            style={{
+              borderTopLeftRadius: 14,
+              borderTopRightRadius: 14,
+              color: "rgba(80, 80, 80, 0.8)",
+              width: "100%",
+              fontFamily: "Gilroy Extrabold",
+              backgroundColor: "#fff",
+              fontSize: 20,
+              borderRadius: 14,
+              shadowOpacity: 1,
+              shadowRadius: 8,
+              shadowColor: "rgba(215,215,215, 0.5)",
+              shadowOffset: { width: 0, height: 5 }
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
                 height: 63,
-                borderTopLeftRadius: 14,
-                borderTopRightRadius: 14,
-                padding: 15,
+                padding: 10,
                 color: "rgba(80, 80, 80, 0.8)",
                 width: "100%",
                 fontFamily: "Gilroy Extrabold",
-                backgroundColor: "#fff",
                 fontSize: 20,
-                borderRadius: 14,
-                shadowOpacity: 1,
-                shadowRadius: 8,
-                shadowColor: "rgba(215,215,215, 0.5)",
-                shadowOffset: { width: 0, height: 5 }
-              }
-            ]}
-            keyboardType="phone-pad"
-            placeholder="Numero di cellulare"
-            value={this.state.phone}
-            onChangeText={this.onPhoneChange}
-          />
+                borderBottomColor: "#E3E3E3",
+                borderBottomWidth: 1
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 0.8,
+                  paddingLeft: 15,
+                  color: "rgba(80, 80, 80, 0.8)",
+                  fontFamily: "Gilroy Extrabold",
+                  fontSize: 20
+                }}
+                keyboardType="default"
+                placeholder="Nome"
+                value={this.state.userName}
+                onChangeText={this.onNameChange}
+              />
+              <View
+                style={{
+                  flex: 0.2,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Ionicons name="md-contact" size={24} color="#E0E0E0" />
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                height: 63,
+                padding: 10,
+                color: "rgba(80, 80, 80, 0.8)",
+                width: "100%",
+                fontFamily: "Gilroy Extrabold",
+                fontSize: 20,
+                borderBottomColor: "#E3E3E3",
+                borderBottomWidth: 1
+              }}
+            >
+              <TextInput
+                style={{
+                  flex: 0.8,
+                  paddingLeft: 15,
+                  color: "rgba(80, 80, 80, 0.8)",
+                  fontFamily: "Gilroy Extrabold",
+                  fontSize: 20
+                }}
+                keyboardType="phone-pad"
+                placeholder="Numero di cellulare"
+                value={this.state.phone}
+                onChangeText={this.onPhoneChange}
+                onFocus={this.onPhoneFocus}
+              />
+              <View
+                style={{
+                  flex: 0.2,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Ionicons name="md-phone-portrait" size={24} color="#E0E0E0" />
+              </View>
+            </View>
+          </View>
+
+          <Text
+            style={{
+              color: "rgba(80, 80, 80, 0.4)",
+              textAlign: "center",
+              padding: 10,
+              fontSize: 12
+            }}
+          >
+            Riceverai un SMS di verifica
+          </Text>
+
           <TouchableOpacity
             style={styles.blueSuggestionButton}
             onPress={this.onPhoneComplete}
@@ -180,7 +269,7 @@ export default class SignupScreen extends React.Component {
             value={this.state.code}
             onChangeText={this.onCodeChange}
             keyboardType="numeric"
-            placeholder="Codice di conferma"
+            placeholder="Codice SMS di conferma"
           />
           <TouchableOpacity
             style={styles.blueSuggestionButton}
@@ -198,7 +287,7 @@ export default class SignupScreen extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Header pageTitle="Registrati" navigation={this.props.navigation} />
+          <Header pageTitle="Benvenuto" navigation={this.props.navigation} />
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.outmostContainer}>
@@ -208,8 +297,6 @@ export default class SignupScreen extends React.Component {
                 </Text>
 
                 {this.renderSignUpBusiness()}
-
-                <View style={styles.bottomSpacing} />
               </View>
             </View>
           </ScrollView>
@@ -251,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: 26
   },
   blueSuggestionButton: {
-    flex: 0.18,
+    minHeight: 60,
     width: 200,
     marginTop: 18,
     alignSelf: "center",
@@ -273,33 +360,5 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "#F8F8F8",
     fontSize: 20
-  },
-  floatingPositionForButton: {
-    flex: 1,
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-    zIndex: 1
-  },
-  gradientBehindButton: {
-    height: 85,
-    justifyContent: "center",
-    alignContent: "center",
-    paddingTop: 7,
-    paddingRight: 36,
-    paddingLeft: 36,
-    paddingBottom: 18
-  },
-  gradientBehindHeader: {
-    flex: 1,
-    justifyContent: "center",
-    alignContent: "center"
-  },
-  bottomSpacing: {
-    height: 85,
-    flex: 1
   }
 });
