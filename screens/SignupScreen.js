@@ -14,6 +14,7 @@ import firebase from "firebase";
 import { LinearGradient, Font, AppLoading } from "expo";
 import { Linking, WebBrowser } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import { AsYouType, parsePhoneNumberFromString } from "libphonenumber-js";
 
 import Header from "../components/Header/Header";
 import FeedSuggestionBox from "../components/FeedSuggestionBox";
@@ -30,10 +31,13 @@ export default class SignupScreen extends React.Component {
       fontLoaded: false,
       textFromFirebase: "",
       userName: "",
+      isUserNameValid: false,
       user: undefined,
       phone: "",
+      isPhoneValid: false,
       confirmationResult: undefined,
-      code: ""
+      code: "",
+      isCodeValid: false
     };
 
     firebase.auth().useDeviceLanguage();
@@ -44,15 +48,43 @@ export default class SignupScreen extends React.Component {
   }
 
   onPhoneChange = phone => {
-    this.setState({ phone });
+    // Use the libphonenumber to format the phone number e.g. add spaces between sets of numbers
+    const phoneNumberFormatted = new AsYouType().input(phone);
+
+    this.setState({
+      phone: phoneNumberFormatted
+    });
+
+    // BUG - TO FIX:
+    // When 'phone' is passed to parsePhoneNumberFromString
+    // instead of 'this.state.phone', the isValid function
+    // is not triggered at the right point
+    const phoneNumber = parsePhoneNumberFromString(this.state.phone);
+    if (phoneNumber) {
+      if (phoneNumber.isValid()) {
+        this.setState({
+          isPhoneValid: true
+        });
+      } else {
+        this.setState({
+          isPhoneValid: false
+        });
+      }
+    }
   };
 
   onPhoneFocus = () => {
-    this.setState({ phone: "+39 " });
+    this.setState({ phone: "+39" });
   };
 
   onNameChange = userName => {
     this.setState({ userName });
+
+    if (userName.length > 2) {
+      this.setState({ isUserNameValid: true });
+    } else {
+      this.setState({ isUserNameValid: false });
+    }
   };
 
   onPhoneComplete = async () => {
@@ -85,6 +117,12 @@ export default class SignupScreen extends React.Component {
 
   onCodeChange = code => {
     this.setState({ code });
+
+    if (code.length === 6) {
+      this.setState({ isCodeValid: true });
+    } else {
+      this.setState({ isCodeValid: false });
+    }
   };
 
   onSignIn = async () => {
@@ -164,13 +202,16 @@ export default class SignupScreen extends React.Component {
               }}
             >
               <TextInput
-                style={{
-                  flex: 0.8,
-                  paddingLeft: 15,
-                  color: "rgba(80, 80, 80, 0.8)",
-                  fontFamily: "Gilroy Extrabold",
-                  fontSize: 20
-                }}
+                style={[
+                  {
+                    flex: 0.8,
+                    paddingLeft: 15,
+                    color: "rgba(80, 80, 80, 0.8)",
+                    fontFamily: "Gilroy Extrabold",
+                    fontSize: 20
+                  },
+                  this.state.isUserNameValid ? { color: "#8CD635" } : null
+                ]}
                 keyboardType="default"
                 placeholder="Nome"
                 value={this.state.userName}
@@ -183,7 +224,11 @@ export default class SignupScreen extends React.Component {
                   justifyContent: "center"
                 }}
               >
-                <Ionicons name="md-contact" size={24} color="#E0E0E0" />
+                {this.state.isUserNameValid ? (
+                  <Ionicons name="md-contact" size={24} color="#8CD635" />
+                ) : (
+                  <Ionicons name="md-contact" size={24} color="#E0E0E0" />
+                )}
               </View>
             </View>
             <View
@@ -200,13 +245,16 @@ export default class SignupScreen extends React.Component {
               }}
             >
               <TextInput
-                style={{
-                  flex: 0.8,
-                  paddingLeft: 15,
-                  color: "rgba(80, 80, 80, 0.8)",
-                  fontFamily: "Gilroy Extrabold",
-                  fontSize: 20
-                }}
+                style={[
+                  {
+                    flex: 0.8,
+                    paddingLeft: 15,
+                    color: "rgba(80, 80, 80, 0.8)",
+                    fontFamily: "Gilroy Extrabold",
+                    fontSize: 20
+                  },
+                  this.state.isPhoneValid ? { color: "#8CD635" } : null
+                ]}
                 keyboardType="phone-pad"
                 placeholder="Numero di cellulare"
                 value={this.state.phone}
@@ -220,7 +268,19 @@ export default class SignupScreen extends React.Component {
                   justifyContent: "center"
                 }}
               >
-                <Ionicons name="md-phone-portrait" size={24} color="#E0E0E0" />
+                {this.state.isPhoneValid ? (
+                  <Ionicons
+                    name="md-phone-portrait"
+                    size={24}
+                    color="#8CD635"
+                  />
+                ) : (
+                  <Ionicons
+                    name="md-phone-portrait"
+                    size={24}
+                    color="#E0E0E0"
+                  />
+                )}
               </View>
             </View>
           </View>
@@ -233,7 +293,7 @@ export default class SignupScreen extends React.Component {
               fontSize: 12
             }}
           >
-            Riceverai un SMS di verifica
+            Riceverai un codice via SMS di verifica
           </Text>
 
           <TouchableOpacity
@@ -247,30 +307,74 @@ export default class SignupScreen extends React.Component {
     else
       return (
         <React.Fragment>
-          <TextInput
-            style={[
-              {
+          <View
+            style={{
+              borderTopLeftRadius: 14,
+              borderTopRightRadius: 14,
+              color: "rgba(80, 80, 80, 0.8)",
+              width: "100%",
+              fontFamily: "Gilroy Extrabold",
+              backgroundColor: "#fff",
+              fontSize: 20,
+              borderRadius: 14,
+              shadowOpacity: 1,
+              shadowRadius: 8,
+              shadowColor: "rgba(215,215,215, 0.5)",
+              shadowOffset: { width: 0, height: 5 }
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
                 height: 63,
-                borderTopLeftRadius: 14,
-                borderTopRightRadius: 14,
-                padding: 15,
+                padding: 10,
                 color: "rgba(80, 80, 80, 0.8)",
                 width: "100%",
                 fontFamily: "Gilroy Extrabold",
-                backgroundColor: "#fff",
                 fontSize: 20,
-                borderRadius: 14,
-                shadowOpacity: 1,
-                shadowRadius: 8,
-                shadowColor: "rgba(215,215,215, 0.5)",
-                shadowOffset: { width: 0, height: 5 }
-              }
-            ]}
-            value={this.state.code}
-            onChangeText={this.onCodeChange}
-            keyboardType="numeric"
-            placeholder="Codice SMS di conferma"
-          />
+                borderBottomColor: "#E3E3E3",
+                borderBottomWidth: 1
+              }}
+            >
+              <TextInput
+                style={[
+                  {
+                    flex: 0.8,
+                    paddingLeft: 15,
+                    color: "rgba(80, 80, 80, 0.8)",
+                    fontFamily: "Gilroy Extrabold",
+                    fontSize: 20
+                  },
+                  this.state.isCodeValid ? { color: "#8CD635" } : null
+                ]}
+                value={this.state.code}
+                onChangeText={this.onCodeChange}
+                keyboardType="numeric"
+                placeholder="Codice SMS di conferma"
+              />
+              <View
+                style={{
+                  flex: 0.2,
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                {this.state.isCodeValid ? (
+                  <Ionicons
+                    name="ios-checkmark-circle"
+                    size={24}
+                    color="#8CD635"
+                  />
+                ) : (
+                  <Ionicons
+                    name="ios-checkmark-circle"
+                    size={24}
+                    color="#E0E0E0"
+                  />
+                )}
+              </View>
+            </View>
+          </View>
           <TouchableOpacity
             style={styles.blueSuggestionButton}
             onPress={this.onSignIn}
