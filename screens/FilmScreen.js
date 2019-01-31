@@ -42,7 +42,8 @@ export default class FilmScreen extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontHasLoaded: true });
   }
@@ -131,7 +132,7 @@ export default class FilmScreen extends React.Component {
                       <Text style={styles.categoryNameText}>Durata</Text>
                     </View>
                     <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Stagioni</Text>
+                      <Text style={styles.categoryNameText}>Rilascio</Text>
                     </View>
                   </View>
 
@@ -149,7 +150,11 @@ export default class FilmScreen extends React.Component {
                       </Text>
                     </View>
                     <View style={styles.multipleCategoryInfo}>
-                      <Text style={styles.categoryInfoText}>3</Text>
+                      <Text style={styles.categoryInfoText}>
+                        <Text style={{ fontSize: 18 }}>
+                          {filmData.release_date}
+                        </Text>
+                      </Text>
                     </View>
                   </View>
 
@@ -236,8 +241,8 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   userNameText: {
-    fontFamily: "Gilroy Extrabold",
-    color: "rgba(80, 80, 80, 0.8)",
+    fontFamily: "Gilroy Bold",
+    color: "rgba(80, 80, 80, 0.9)",
     fontSize: 20,
     height: 36,
     lineHeight: 36
