@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Font, LinearGradient, AppLoading } from "expo";
+import moment from "moment";
 
 import Header from "../components/Header/Header";
 import RecommendFilmButton from "../components/RecommendFilmButton/";
@@ -58,6 +59,12 @@ export default class FilmScreen extends React.Component {
     if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
     } else {
+      moment.locale("it");
+
+      const dateToFormat = moment(filmData.release_date).format("MMM YYYY");
+      console.log(dateToFormat);
+      const formattedReleaseDate = dateToFormat;
+      console.log(formattedReleaseDate);
       return (
         <View style={{ flex: 1 }}>
           <Header pageTitle="Show" navigation={this.props.navigation} />
