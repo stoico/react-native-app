@@ -38,7 +38,7 @@ export default class FeedSuggestionBox extends React.Component {
             onPress={() =>
               this.props.navigation.navigate("Film", {
                 filmTitle: filmTitle,
-                filmID: this.props.id
+                filmID: this.props.filmID
               })
             }
           >

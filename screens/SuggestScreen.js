@@ -16,7 +16,12 @@ import SearchResultBox from "../components/SearchResultBox";
 export default class FriendScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false, text: "", subHeadingVisible: true };
+    this.state = {
+      fontLoaded: false,
+      text: "",
+      subHeadingVisible: true,
+      dataHasLoaded: false
+    };
   }
 
   async componentDidMount() {
@@ -26,6 +31,41 @@ export default class FriendScreen extends React.Component {
       "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontLoaded: true });
+  }
+
+  onTextChange = text => {
+    this.setState({ text });
+
+    let uriAPI =
+      "https://api.themoviedb.org/3/search/multi?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&page=1&query=" +
+      text;
+
+    if (text.length >= 2) {
+      fetch(uriAPI)
+        .then(response => response.json())
+        .then(responseJSON => {
+          this.setState({ dataHasLoaded: true, dataFromAPI: responseJSON });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+
+  renderResponseData() {
+    let boxes;
+
+    this.state.dataFromAPI.results.forEach(function(value, index) {
+      boxes.push(
+        <NewReleasesBox
+          dateReleased={value.release_date}
+          filmTitle={value.title}
+          navigation={this.props.navigation}
+        />
+      );
+    });
+
+    return boxes;
   }
 
   // Determine which icon to display depending on whether the app
@@ -43,34 +83,86 @@ export default class FriendScreen extends React.Component {
   render() {
     const { navigation } = this.props;
 
-    const data = [
-      { name: "You" },
-      { name: "Game of Thrones" },
-      { name: "Westworld" }
-    ];
+    let searchResultData;
+    // (
+    //   <SearchResultBox
+    //     filmID="  "
+    //     filmPosterPath="  "
+    //     filmTitle="  "
+    //     lastChild={true}
+    //     key="loading"
+    //   />
+    // );
 
-    const searchResultData = data.map((item, i) => {
-      if (this.state.text.length >= 2) {
-        // Select the last child
-        if (i === data.length - 1) {
-          return (
-            <SearchResultBox
-              filmTitle={this.state.text}
-              lastChild={true}
-              key={item.name + i.toString()}
-            />
-          );
-        }
-        // All th elements that are not the last
-        return (
-          <SearchResultBox
-            filmTitle={i.name}
-            lastChild={false}
-            key={item.name + i.toString()}
-          />
-        );
-      }
-    });
+    const maxNumberOfResults = 8;
+    if (this.state.text.length >= 2 && this.state.dataFromAPI) {
+      let dataResultsArrayLength = this.state.dataFromAPI.results.length;
+      searchResultData = this.state.dataFromAPI.results
+        .slice(0, maxNumberOfResults)
+        .map((item, index) => {
+          if (
+            item &&
+            (item.media_type === "tv" || item.media_type === "movie")
+          ) {
+            // Select the last child
+            if (
+              index + 1 === dataResultsArrayLength ||
+              index + 1 === maxNumberOfResults
+            ) {
+              // If it's a tv series
+              if (item.name) {
+                return (
+                  <SearchResultBox
+                    filmID={item.id}
+                    filmPosterPath={item.poster_path}
+                    filmTitle={item.name}
+                    lastChild={true}
+                    key={item.name + index.toString()}
+                    navigation={this.props.navigation}
+                  />
+                );
+              } else {
+                // Or else a film
+                return (
+                  <SearchResultBox
+                    filmID={item.id}
+                    filmPosterPath={item.poster_path}
+                    filmTitle={item.title}
+                    lastChild={true}
+                    key={item.name + index.toString()}
+                    navigation={this.props.navigation}
+                  />
+                );
+              }
+            }
+            // All th elements that are not the last
+            if (item.name) {
+              return (
+                <SearchResultBox
+                  filmID={item.id}
+                  filmPosterPath={item.poster_path}
+                  filmTitle={item.name}
+                  lastChild={false}
+                  key={item.name + index.toString()}
+                  navigation={this.props.navigation}
+                />
+              );
+            } else {
+              // Or else a film
+              return (
+                <SearchResultBox
+                  filmID={item.id}
+                  filmPosterPath={item.poster_path}
+                  filmTitle={item.title}
+                  lastChild={false}
+                  key={item.name + index.toString()}
+                  navigation={this.props.navigation}
+                />
+              );
+            }
+          }
+        });
+    }
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -126,7 +218,7 @@ export default class FriendScreen extends React.Component {
                       }
                       placeholder="Film o serie TV"
                       // placeholderTextColor="rgba(80, 80, 80, 0.8)"
-                      onChangeText={text => this.setState({ text })}
+                      onChangeText={this.onTextChange}
                       value={this.state.text}
                     />
                     <View
@@ -148,7 +240,7 @@ export default class FriendScreen extends React.Component {
                     shadowOffset: { width: 0, height: 8 }
                   }}
                 >
-                  {searchResultData}
+                  {searchResultData ? searchResultData : null}
                 </View>
 
                 {/* TODO: Add the 'Seleziona' button */}
@@ -170,7 +262,7 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 675
+    minHeight: 675
   },
   secondaryContainer: {
     flex: 1,

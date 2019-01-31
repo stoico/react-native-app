@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableWithoutFeedback
+} from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -23,6 +29,8 @@ export default class SearchResultBox extends React.Component {
 
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
+    let pathTMDB =
+      "https://image.tmdb.org/t/p/w154" + this.props.filmPosterPath;
     // const randomNumber = Math.floor(Math.random() * 3);
     // const coverPath = "../assets/cover2.png";
 
@@ -32,18 +40,26 @@ export default class SearchResultBox extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View
-          style={[
-            styles.filmSuggestedBox,
-            this.props.lastChild ? styles.lastChild : null
-          ]}
-        >
-          <Image
-            source={require("../assets/search-result-cover.png")}
-            style={styles.filmCoverImage}
-          />
-          <Text style={styles.filmTitle}>{filmTitle}</Text>
-        </View>
+        <React.Fragment>
+          <TouchableWithoutFeedback
+            onPress={() =>
+              this.props.navigation.navigate("Film", {
+                filmTitle: filmTitle,
+                filmID: this.props.filmID
+              })
+            }
+          >
+            <View
+              style={[
+                styles.filmSuggestedBox,
+                this.props.lastChild ? styles.lastChild : null
+              ]}
+            >
+              <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
+              <Text style={styles.filmTitle}>{filmTitle}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </React.Fragment>
       );
     }
   }
@@ -71,9 +87,10 @@ const styles = StyleSheet.create({
   filmTitle: {
     flex: 0.8,
     paddingLeft: 12,
+    paddingRight: 12,
     fontFamily: "Gilroy Extrabold",
     color: "#505050",
-    fontSize: 24
+    fontSize: 22
   },
   lastChild: {
     borderBottomRightRadius: 14,

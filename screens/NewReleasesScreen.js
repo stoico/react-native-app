@@ -65,7 +65,7 @@ export default class NewReleasesScreen extends React.Component {
                         dateReleased={result.release_date}
                         filmTitle={result.title}
                         coverImage={result.poster_path}
-                        id={result.id}
+                        filmID={result.id}
                         key={result.id}
                         navigation={this.props.navigation}
                       />
@@ -76,7 +76,7 @@ export default class NewReleasesScreen extends React.Component {
                         dateReleased={result.first_air_date}
                         filmTitle={result.name}
                         coverImage={result.poster_path}
-                        id={result.id}
+                        filmID={result.id}
                         key={result.id}
                         navigation={this.props.navigation}
                       />
