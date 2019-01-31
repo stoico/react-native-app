@@ -9,7 +9,8 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Font, LinearGradient, AppLoading } from "expo";
-import moment from "moment";
+import dayjs from "dayjs";
+import it from "dayjs/locale/it";
 
 import Header from "../components/Header/Header";
 import RecommendFilmButton from "../components/RecommendFilmButton/";
@@ -59,12 +60,11 @@ export default class FilmScreen extends React.Component {
     if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
     } else {
-      moment.locale("it");
+      dayjs.locale("it-italian", it);
 
-      const dateToFormat = moment(filmData.release_date).format("MMM YYYY");
-      console.log(dateToFormat);
-      const formattedReleaseDate = dateToFormat;
-      console.log(formattedReleaseDate);
+      const formattedReleaseDate = dayjs(filmData.release_date).format(
+        "MMM YYYY"
+      );
       return (
         <View style={{ flex: 1 }}>
           <Header pageTitle="Show" navigation={this.props.navigation} />
@@ -139,7 +139,7 @@ export default class FilmScreen extends React.Component {
                       <Text style={styles.categoryNameText}>Durata</Text>
                     </View>
                     <View style={styles.multipleCategoryRounded}>
-                      <Text style={styles.categoryNameText}>Rilascio</Text>
+                      <Text style={styles.categoryNameText}>Uscita</Text>
                     </View>
                   </View>
 
@@ -159,7 +159,7 @@ export default class FilmScreen extends React.Component {
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>
                         <Text style={{ fontSize: 18 }}>
-                          {filmData.release_date}
+                          {formattedReleaseDate}
                         </Text>
                       </Text>
                     </View>
