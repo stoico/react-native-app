@@ -24,10 +24,18 @@ export default class FilmScreen extends React.Component {
       plotCollapsed: true
     };
 
+    const filmID = this.props.navigation.getParam("filmID");
+    const mediaType = this.props.navigation.getParam("mediaType");
+
+    // Check whether it's a film or tv series
     let uriAPI =
-      "https://api.themoviedb.org/3/movie/" +
-      this.props.navigation.getParam("filmID") +
+      "https://api.themoviedb.org/3/" +
+      mediaType +
+      "/" +
+      filmID +
       "?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&append_to_response=videos";
+
+    console.log(uriAPI);
 
     fetch(uriAPI)
       .then(response => response.json())
@@ -158,7 +166,7 @@ export default class FilmScreen extends React.Component {
                     </View>
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>
-                        <Text style={{ fontSize: 18 }}>
+                        <Text style={{ fontSize: 14 }}>
                           {formattedReleaseDate}
                         </Text>
                       </Text>

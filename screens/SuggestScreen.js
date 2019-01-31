@@ -52,21 +52,9 @@ export default class FriendScreen extends React.Component {
     }
   };
 
-  renderResponseData() {
-    let boxes;
-
-    this.state.dataFromAPI.results.forEach(function(value, index) {
-      boxes.push(
-        <NewReleasesBox
-          dateReleased={value.release_date}
-          filmTitle={value.title}
-          navigation={this.props.navigation}
-        />
-      );
-    });
-
-    return boxes;
-  }
+  onClearInput = () => {
+    this.setState({ text: "" });
+  };
 
   // Determine which icon to display depending on whether the app
   // is run on an Android or iOS device
@@ -116,6 +104,7 @@ export default class FriendScreen extends React.Component {
                     filmID={item.id}
                     filmPosterPath={item.poster_path}
                     filmTitle={item.name}
+                    mediaType={item.media_type}
                     lastChild={true}
                     key={item.name + index.toString()}
                     navigation={this.props.navigation}
@@ -128,6 +117,7 @@ export default class FriendScreen extends React.Component {
                     filmID={item.id}
                     filmPosterPath={item.poster_path}
                     filmTitle={item.title}
+                    mediaType={item.media_type}
                     lastChild={true}
                     key={item.name + index.toString()}
                     navigation={this.props.navigation}
@@ -142,6 +132,7 @@ export default class FriendScreen extends React.Component {
                   filmID={item.id}
                   filmPosterPath={item.poster_path}
                   filmTitle={item.name}
+                  mediaType={item.media_type}
                   lastChild={false}
                   key={item.name + index.toString()}
                   navigation={this.props.navigation}
@@ -154,6 +145,7 @@ export default class FriendScreen extends React.Component {
                   filmID={item.id}
                   filmPosterPath={item.poster_path}
                   filmTitle={item.title}
+                  mediaType={item.media_type}
                   lastChild={false}
                   key={item.name + index.toString()}
                   navigation={this.props.navigation}
@@ -171,7 +163,10 @@ export default class FriendScreen extends React.Component {
         <View style={{ flex: 1 }}>
           <Header pageTitle="Consiglia" navigation={this.props.navigation} />
 
-          <ScrollView style={styles.screenContainer}>
+          <ScrollView
+            style={styles.screenContainer}
+            keyboardDismissMode="on-drag"
+          >
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
                 <View style={styles.userContainer} />
@@ -216,8 +211,7 @@ export default class FriendScreen extends React.Component {
 
                         // color: "#E0E0E0",
                       }
-                      placeholder="Film o serie TV"
-                      // placeholderTextColor="rgba(80, 80, 80, 0.8)"
+                      placeholder="Film o serie TV" // placeholderTextColor="rgba(80, 80, 80, 0.8)"
                       onChangeText={this.onTextChange}
                       value={this.state.text}
                     />
@@ -228,7 +222,17 @@ export default class FriendScreen extends React.Component {
                         justifyContent: "center"
                       }}
                     >
-                      <Ionicons name="ios-search" size={24} color="#E0E0E0" />
+                      {this.state.text.length >= 2 ? (
+                        <TouchableWithoutFeedback onPress={this.onClearInput}>
+                          <Ionicons
+                            name="md-close-circle"
+                            size={24}
+                            color="#E0E0E0"
+                          />
+                        </TouchableWithoutFeedback>
+                      ) : (
+                        <Ionicons name="md-search" size={24} color="#E0E0E0" />
+                      )}
                     </View>
                   </View>
                 </View>

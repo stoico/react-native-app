@@ -16,6 +16,7 @@ export default class NewReleasesScreen extends React.Component {
     fetch(uriAPI)
       .then(response => response.json())
       .then(responseJSON => {
+        console.log(responseJSON);
         this.setState({ dataHasLoaded: true, data: responseJSON });
       })
       .catch(error => {
@@ -66,6 +67,7 @@ export default class NewReleasesScreen extends React.Component {
                         filmTitle={result.title}
                         coverImage={result.poster_path}
                         filmID={result.id}
+                        mediaType="movie"
                         key={result.id}
                         navigation={this.props.navigation}
                       />
@@ -77,6 +79,7 @@ export default class NewReleasesScreen extends React.Component {
                         filmTitle={result.name}
                         coverImage={result.poster_path}
                         filmID={result.id}
+                        mediaType="tv"
                         key={result.id}
                         navigation={this.props.navigation}
                       />

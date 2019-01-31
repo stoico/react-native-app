@@ -45,7 +45,8 @@ export default class SearchResultBox extends React.Component {
             onPress={() =>
               this.props.navigation.navigate("Film", {
                 filmTitle: filmTitle,
-                filmID: this.props.filmID
+                filmID: this.props.filmID,
+                mediaType: this.props.mediaType
               })
             }
           >

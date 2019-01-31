@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import {
   createStackNavigator,
+  createSwitchNavigator,
   createAppContainer,
   createBottomTabNavigator
 } from "react-navigation";
@@ -85,9 +86,18 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
+const AuthenticationStack = createStackNavigator({
+  Signup: {
+    screen: SignupScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+});
+
 const HomeStack = createStackNavigator({
   Home: {
-    screen: SuggestScreen,
+    screen: HomeScreen,
     navigationOptions: {
       header: null
     }
