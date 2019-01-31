@@ -200,7 +200,9 @@ export default class SignupScreen extends React.Component {
                     fontFamily: "Gilroy Extrabold",
                     fontSize: 20
                   },
-                  this.state.isUserNameValid ? { color: "#8CD635" } : null
+                  this.state.isUserNameValid
+                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    : null
                 ]}
                 keyboardType="default"
                 placeholder="Nome"
@@ -215,7 +217,11 @@ export default class SignupScreen extends React.Component {
                 }}
               >
                 {this.state.isUserNameValid ? (
-                  <Ionicons name="md-contact" size={24} color="#8CD635" />
+                  <Ionicons
+                    name="ios-checkmark-circle"
+                    size={24}
+                    color="#8CD635"
+                  />
                 ) : (
                   <Ionicons name="md-contact" size={24} color="#E0E0E0" />
                 )}
@@ -240,7 +246,9 @@ export default class SignupScreen extends React.Component {
                     fontFamily: "Gilroy Extrabold",
                     fontSize: 20
                   },
-                  this.state.isPhoneValid ? { color: "#8CD635" } : null
+                  this.state.isPhoneValid
+                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    : null
                 ]}
                 keyboardType="phone-pad"
                 placeholder="Numero di cellulare"
@@ -257,7 +265,7 @@ export default class SignupScreen extends React.Component {
               >
                 {this.state.isPhoneValid ? (
                   <Ionicons
-                    name="md-phone-portrait"
+                    name="ios-checkmark-circle"
                     size={24}
                     color="#8CD635"
                   />
@@ -324,7 +332,9 @@ export default class SignupScreen extends React.Component {
                     fontFamily: "Gilroy Extrabold",
                     fontSize: 20
                   },
-                  this.state.isCodeValid ? { color: "#8CD635" } : null
+                  this.state.isCodeValid
+                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    : null
                 ]}
                 value={this.state.code}
                 onChangeText={this.onCodeChange}
