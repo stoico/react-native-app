@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.8.0",
     "expo": "^32.0.0",
     "firebase": "^5.8.1",
     "libphonenumber-js": "^1.7.8",
