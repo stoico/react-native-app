@@ -89,6 +89,7 @@ export default class NewReleasesScreen extends React.Component {
                         // each child of an iterator needs a unique key
                         key={result.id}
                         useNativeDriver={true}
+                        delay={80 * index}
                       >
                         <NewReleasesBox
                           dateReleased={result.first_air_date}
