@@ -86,7 +86,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
-const AuthenticationStack = createStackNavigator({
+const OnboardingStack = createStackNavigator({
   Signup: {
     screen: SignupScreen,
     navigationOptions: {
@@ -146,7 +146,7 @@ const ProfileStack = createStackNavigator({
   }
 });
 
-const TabNavigator = createBottomTabNavigator(
+const ContentNavigator = createBottomTabNavigator(
   { Home: HomeStack, Ranking: RankingStack, Profile: ProfileStack },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -190,4 +190,13 @@ const TabNavigator = createBottomTabNavigator(
 //   }
 // }
 
-export default createAppContainer(TabNavigator);
+const MainNavigator = createSwitchNavigator({
+  Onboarding: {
+    screen: OnboardingStack
+  },
+  Content: {
+    screen: ContentNavigator
+  }
+});
+
+export default createAppContainer(MainNavigator);

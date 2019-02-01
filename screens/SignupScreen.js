@@ -379,15 +379,20 @@ export default class SignupScreen extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#E0E0E0" }}>
           <Header pageTitle="Benvenuto" navigation={this.props.navigation} />
 
-          <ScrollView style={styles.screenContainer}>
+          <ScrollView
+            style={styles.screenContainer}
+            keyboardDismissMode="on-drag"
+          >
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
-                <Text style={styles.subHeading}>
-                  Scambia consigli tra amici su serie TV e film
-                </Text>
+                {!this.state.isUserNameValid ? (
+                  <Text style={styles.subHeading}>
+                    Scambia consigli tra amici su serie TV e film
+                  </Text>
+                ) : null}
 
                 {this.renderSignUpBusiness()}
               </View>
