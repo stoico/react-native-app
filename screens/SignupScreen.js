@@ -31,8 +31,8 @@ export default class SignupScreen extends React.Component {
     this.state = {
       fontLoaded: false,
       textFromFirebase: "",
-      userName: "",
-      isUserNameValid: false,
+      chosenName: "",
+      isChosenNameValid: false,
       user: undefined,
       phone: "",
       isPhoneValid: false,
@@ -47,6 +47,14 @@ export default class SignupScreen extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ user });
     });
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+    });
+    this.setState({ fontLoaded: true });
   }
 
   onPhoneChange = phone => {
@@ -77,13 +85,13 @@ export default class SignupScreen extends React.Component {
     this.setState({ phone: "+39" });
   };
 
-  onNameChange = userName => {
-    this.setState({ userName });
+  onNameChange = chosenName => {
+    this.setState({ chosenName });
 
-    if (userName.length > 2) {
-      this.setState({ isUserNameValid: true });
+    if (chosenName.length > 2) {
+      this.setState({ isChosenNameValid: true });
     } else {
-      this.setState({ isUserNameValid: false });
+      this.setState({ isChosenNameValid: false });
     }
   };
 
@@ -136,8 +144,22 @@ export default class SignupScreen extends React.Component {
       console.warn(e);
     }
     this.reset();
+    if (this.state.user) {
+      this.writeUserData(this.state.user.uid, this.state.chosenName);
+    }
     this.props.navigation.navigate("Content");
   };
+
+  // save the user's profile into Firebase so we can list users,
+  // use them in Security and Firebase Rules, and show profiles
+  writeUserData(userID, name) {
+    firebase
+      .database()
+      .ref("users/" + userID)
+      .set({
+        name: name
+      });
+  }
 
   onSignOut = async () => {
     try {
@@ -155,14 +177,6 @@ export default class SignupScreen extends React.Component {
       code: ""
     });
   };
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
-    });
-    this.setState({ fontLoaded: true });
-  }
 
   renderSignUpBusiness() {
     if (this.state.user)
@@ -209,7 +223,7 @@ export default class SignupScreen extends React.Component {
                     fontFamily: "Gilroy Extrabold",
                     fontSize: 20
                   },
-                  this.state.isUserNameValid
+                  this.state.isChosenNameValid
                     ? {
                         color: "rgba(80, 80, 80, 0.8)"
                       }
@@ -217,7 +231,7 @@ export default class SignupScreen extends React.Component {
                 ]}
                 keyboardType="default"
                 placeholder="Nome"
-                value={this.state.userName}
+                value={this.state.chosenName}
                 onChangeText={this.onNameChange}
               />
               <View
@@ -227,7 +241,7 @@ export default class SignupScreen extends React.Component {
                   justifyContent: "center"
                 }}
               >
-                {this.state.isUserNameValid ? (
+                {this.state.isChosenNameValid ? (
                   <Ionicons
                     name="ios-checkmark-circle"
                     size={24}
@@ -306,7 +320,7 @@ export default class SignupScreen extends React.Component {
 
           <Animatable.View
             animation={
-              this.state.isPhoneValid && this.state.isUserNameValid
+              this.state.isPhoneValid && this.state.isChosenNameValid
                 ? "pulse"
                 : null
             }
