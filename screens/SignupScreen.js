@@ -388,7 +388,7 @@ export default class SignupScreen extends React.Component {
           >
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
-                {!this.state.isUserNameValid ? (
+                {this.state.phone.length < 12 ? (
                   <Text style={styles.subHeading}>
                     Scambia consigli tra amici su serie TV e film
                   </Text>

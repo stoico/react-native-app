@@ -89,7 +89,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 
 const OnboardingStack = createStackNavigator({
   Onboard: {
-    screen: OnboardScreen,
+    screen: SignupScreen,
     navigationOptions: {
       header: null
     }
