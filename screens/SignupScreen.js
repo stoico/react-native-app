@@ -7,7 +7,9 @@ import {
   Text,
   TextInput,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  LayoutAnimation,
+  ActivityIndicator
 } from "react-native";
 import { database } from "../config/Firebase";
 import firebase from "firebase";
@@ -67,6 +69,8 @@ export default class SignupScreen extends React.Component {
         this.setState({ isPhoneValid: false });
       }
     }
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   onPhoneFocus = () => {
@@ -109,9 +113,9 @@ export default class SignupScreen extends React.Component {
       } catch (e) {
         console.warn(e);
       }
-    }
 
-    this.setState({ codeHeading: true });
+      this.setState({ codeHeading: true });
+    }
   };
 
   onCodeChange = code => {
@@ -132,6 +136,7 @@ export default class SignupScreen extends React.Component {
       console.warn(e);
     }
     this.reset();
+    this.props.navigation.navigate("Content");
   };
 
   onSignOut = async () => {
@@ -171,8 +176,7 @@ export default class SignupScreen extends React.Component {
       return (
         <React.Fragment>
           {/* Form Container */}
-          <Animatable.View // animation={this.state.phone.length > 12 ? "slideIn" : null}
-            duration={1000}
+          <View
             style={{
               width: "100%",
               backgroundColor: "#fff",
@@ -180,7 +184,10 @@ export default class SignupScreen extends React.Component {
               shadowOpacity: 1,
               shadowRadius: 8,
               shadowColor: "rgba(215,215,215, 0.5)",
-              shadowOffset: { width: 0, height: 5 }
+              shadowOffset: {
+                width: 0,
+                height: 5
+              }
             }}
           >
             <View
@@ -203,7 +210,9 @@ export default class SignupScreen extends React.Component {
                     fontSize: 20
                   },
                   this.state.isUserNameValid
-                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    ? {
+                        color: "rgba(80, 80, 80, 0.8)"
+                      }
                     : null
                 ]}
                 keyboardType="default"
@@ -249,7 +258,9 @@ export default class SignupScreen extends React.Component {
                     fontSize: 20
                   },
                   this.state.isPhoneValid
-                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    ? {
+                        color: "rgba(80, 80, 80, 0.8)"
+                      }
                     : null
                 ]}
                 keyboardType="phone-pad"
@@ -280,7 +291,7 @@ export default class SignupScreen extends React.Component {
                 )}
               </View>
             </View>
-          </Animatable.View>
+          </View>
 
           <Text
             style={{
@@ -322,7 +333,10 @@ export default class SignupScreen extends React.Component {
               shadowOpacity: 1,
               shadowRadius: 8,
               shadowColor: "rgba(215,215,215, 0.5)",
-              shadowOffset: { width: 0, height: 5 }
+              shadowOffset: {
+                width: 0,
+                height: 5
+              }
             }}
           >
             <View
@@ -345,7 +359,9 @@ export default class SignupScreen extends React.Component {
                     fontSize: 20
                   },
                   this.state.isCodeValid
-                    ? { color: "rgba(80, 80, 80, 0.8)" }
+                    ? {
+                        color: "rgba(80, 80, 80, 0.8)"
+                      }
                     : null
                 ]}
                 value={this.state.code}
@@ -397,7 +413,12 @@ export default class SignupScreen extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View style={{ flex: 1, backgroundColor: "#E0E0E0" }}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#E0E0E0"
+          }}
+        >
           <Header pageTitle="Benvenuto" navigation={this.props.navigation} />
 
           <ScrollView
@@ -406,21 +427,16 @@ export default class SignupScreen extends React.Component {
           >
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
-                {this.state.phone.length < 12 ? (
+                {!this.state.isPhoneValid ? (
                   <Animatable.Text
                     duration={1000}
-                    animation={
-                      this.state.phone.length === 11 ? "fadeOut" : null
-                    }
+                    animation={this.state.isPhoneValid ? "fadeOut" : null}
                     style={styles.subHeading}
                   >
-                    Scambia consigli tra amici su serie TV e film
+                    {this.state.codeHeading
+                      ? "Codice di conferma che hai ricevuto via SMS"
+                      : "Scambia consigli tra amici su serie TV e film"}
                   </Animatable.Text>
-                ) : null}
-                {this.state.codeHeading ? (
-                  <Text style={styles.subHeading}>
-                    Codice di conferma che hai ricevuto via SMS
-                  </Text>
                 ) : null}
                 {this.renderSignUpBusiness()}
                 <View style={{ marginTop: 30 }} />
