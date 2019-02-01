@@ -20,6 +20,8 @@ export default class MyProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { fontLoaded: false };
+
+    this.getChosenName();
   }
 
   async componentDidMount() {
@@ -27,7 +29,7 @@ export default class MyProfileScreen extends React.Component {
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
     });
-    this.setState({ fontLoaded: true });
+    this.setState({ fontLoaded: true, chosenName: "" });
   }
 
   onSignOut = async () => {
@@ -37,6 +39,19 @@ export default class MyProfileScreen extends React.Component {
       console.warn(e);
     }
   };
+
+  getChosenName() {
+    //Get the current userID
+    var userId = firebase.auth().currentUser.uid;
+    //Get the user data
+    return firebase
+      .database()
+      .ref("/users/" + userId)
+      .once("value")
+      .then(snapshot => {
+        this.setState({ chosenName: snapshot.val().name });
+      });
+  }
 
   render() {
     const { navigation } = this.props;
@@ -76,7 +91,9 @@ export default class MyProfileScreen extends React.Component {
                         paddingLeft: 15
                       }}
                     >
-                      <Text style={styles.userNameBigText}>Carmine</Text>
+                      <Text style={styles.userNameBigText}>
+                        {this.state.chosenName}
+                      </Text>
                       <TouchableWithoutFeedback
                         onPress={() =>
                           this.props.navigation.navigate("FriendsList")
