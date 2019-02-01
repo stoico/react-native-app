@@ -28,7 +28,13 @@ export default class HeaderSection extends Component {
 
   renderBackButton() {
     let routeName = this.props.navigation.state.routeName;
-    const routesWithoutBackButton = ["Home", "Ranking", "MyProfile", "Signup"];
+    const routesWithoutBackButton = [
+      "Home",
+      "Ranking",
+      "MyProfile",
+      "Signup",
+      "Onboard"
+    ];
 
     if (!routesWithoutBackButton.includes(routeName)) {
       return (

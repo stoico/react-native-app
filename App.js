@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import HomeScreen from "./screens/HomeScreen";
 import SignupScreen from "./screens/SignupScreen";
+import OnboardScreen from "./screens/OnboardScreen";
 import FilmScreen from "./screens/FilmScreen";
 import MyProfileScreen from "./screens/MyProfileScreen";
 import RankingScreen from "./screens/RankingScreen";
@@ -87,6 +88,12 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
 };
 
 const OnboardingStack = createStackNavigator({
+  Onboard: {
+    screen: OnboardScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   Signup: {
     screen: SignupScreen,
     navigationOptions: {

@@ -395,6 +395,11 @@ export default class SignupScreen extends React.Component {
                 ) : null}
 
                 {this.renderSignUpBusiness()}
+                <View style={{ marginTop: 30 }} />
+                <Button
+                  title="Go to Content"
+                  onPress={() => this.props.navigation.navigate("Content")}
+                />
               </View>
             </View>
           </ScrollView>
