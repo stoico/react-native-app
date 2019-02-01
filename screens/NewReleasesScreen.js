@@ -60,7 +60,7 @@ export default class NewReleasesScreen extends React.Component {
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
               <View style={styles.feedSuggestionBox}>
-                {this.state.data.results.map(result => {
+                {this.state.data.results.map((result, index) => {
                   if (result.title) {
                     return (
                       <Animatable.View
@@ -69,6 +69,7 @@ export default class NewReleasesScreen extends React.Component {
                         // each child of an iterator needs a unique key
                         key={result.id}
                         useNativeDriver={true}
+                        delay={80 * index}
                       >
                         <NewReleasesBox
                           dateReleased={result.release_date}
