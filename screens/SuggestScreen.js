@@ -5,7 +5,8 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  LayoutAnimation
 } from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
@@ -50,6 +51,8 @@ export default class FriendScreen extends React.Component {
           console.error(error);
         });
     }
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   onClearInput = () => {
@@ -187,7 +190,7 @@ export default class FriendScreen extends React.Component {
                       shadowColor: "rgba(215,215,215, 0.5)",
                       shadowOffset: { width: 0, height: 5 }
                     },
-                    this.state.text === "" ? styles.roundedCorners : null
+                    this.state.text.length < 2 ? styles.roundedCorners : null
                   ]}
                 >
                   <View
