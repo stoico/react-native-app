@@ -64,7 +64,7 @@ export default class NewReleasesScreen extends React.Component {
                   if (result.title) {
                     return (
                       <Animatable.View
-                        duration={1200}
+                        duration={250}
                         animation="fadeInUp"
                         // each child of an iterator needs a unique key
                         key={result.id}
@@ -83,7 +83,7 @@ export default class NewReleasesScreen extends React.Component {
                   } else {
                     return (
                       <Animatable.View
-                        duration={1200}
+                        duration={250}
                         animation="fadeInUp"
                         // each child of an iterator needs a unique key
                         key={result.id}
