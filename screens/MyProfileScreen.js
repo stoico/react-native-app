@@ -6,8 +6,11 @@ import {
   ScrollView,
   StyleSheet,
   ImageBackground,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from "react-native";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 import { Font, AppLoading } from "expo";
 
 import Header from "../components/Header/Header";
@@ -26,6 +29,14 @@ export default class MyProfileScreen extends React.Component {
     });
     this.setState({ fontLoaded: true });
   }
+
+  onSignOut = async () => {
+    try {
+      await firebase.auth().signOut();
+    } catch (e) {
+      console.warn(e);
+    }
+  };
 
   render() {
     const { navigation } = this.props;
@@ -97,7 +108,7 @@ export default class MyProfileScreen extends React.Component {
                     </View>
                   </View>
                 </View>
-
+                <Button onPress={this.onSignOut} title="Sign out" />
                 <View style={styles.categoryNameRounded}>
                   <Text style={styles.categoryNameText}>Ho consigliato</Text>
                 </View>
