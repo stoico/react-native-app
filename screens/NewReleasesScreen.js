@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Font, AppLoading } from "expo";
+import * as Animatable from "react-native-animatable";
 
 import Header from "../components/Header/Header";
 import NewReleasesBox from "../components/NewReleasesBox";
@@ -62,27 +63,31 @@ export default class NewReleasesScreen extends React.Component {
                 {this.state.data.results.map(result => {
                   if (result.title) {
                     return (
-                      <NewReleasesBox
-                        dateReleased={result.release_date}
-                        filmTitle={result.title}
-                        coverImage={result.poster_path}
-                        filmID={result.id}
-                        mediaType="movie"
-                        key={result.id}
-                        navigation={this.props.navigation}
-                      />
+                      <Animatable.View duration={1200} animation="fadeInUp">
+                        <NewReleasesBox
+                          dateReleased={result.release_date}
+                          filmTitle={result.title}
+                          coverImage={result.poster_path}
+                          filmID={result.id}
+                          mediaType="movie"
+                          key={result.id}
+                          navigation={this.props.navigation}
+                        />
+                      </Animatable.View>
                     );
                   } else {
                     return (
-                      <NewReleasesBox
-                        dateReleased={result.first_air_date}
-                        filmTitle={result.name}
-                        coverImage={result.poster_path}
-                        filmID={result.id}
-                        mediaType="tv"
-                        key={result.id}
-                        navigation={this.props.navigation}
-                      />
+                      <Animatable.View duration={1200} animation="fadeInUp">
+                        <NewReleasesBox
+                          dateReleased={result.first_air_date}
+                          filmTitle={result.name}
+                          coverImage={result.poster_path}
+                          filmID={result.id}
+                          mediaType="tv"
+                          key={result.id}
+                          navigation={this.props.navigation}
+                        />
+                      </Animatable.View>
                     );
                   }
                 })}

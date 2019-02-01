@@ -15,6 +15,7 @@ import { LinearGradient, Font, AppLoading } from "expo";
 import { Linking, WebBrowser } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { AsYouType, parsePhoneNumberFromString } from "libphonenumber-js";
+import * as Animatable from "react-native-animatable";
 
 import Header from "../components/Header/Header";
 
@@ -35,7 +36,8 @@ export default class SignupScreen extends React.Component {
       isPhoneValid: false,
       confirmationResult: undefined,
       code: "",
-      isCodeValid: false
+      isCodeValid: false,
+      codeHeading: false
     };
 
     firebase.auth().useDeviceLanguage();
@@ -60,13 +62,9 @@ export default class SignupScreen extends React.Component {
     const phoneNumber = parsePhoneNumberFromString(this.state.phone);
     if (phoneNumber) {
       if (phoneNumber.isValid()) {
-        this.setState({
-          isPhoneValid: true
-        });
+        this.setState({ isPhoneValid: true });
       } else {
-        this.setState({
-          isPhoneValid: false
-        });
+        this.setState({ isPhoneValid: false });
       }
     }
   };
@@ -106,11 +104,14 @@ export default class SignupScreen extends React.Component {
         const confirmationResult = await firebase
           .auth()
           .signInWithPhoneNumber(phone, captchaVerifier);
+
         this.setState({ confirmationResult });
       } catch (e) {
         console.warn(e);
       }
     }
+
+    this.setState({ codeHeading: true });
   };
 
   onCodeChange = code => {
@@ -170,7 +171,8 @@ export default class SignupScreen extends React.Component {
       return (
         <React.Fragment>
           {/* Form Container */}
-          <View
+          <Animatable.View // animation={this.state.phone.length > 12 ? "slideIn" : null}
+            duration={1000}
             style={{
               width: "100%",
               backgroundColor: "#fff",
@@ -278,7 +280,7 @@ export default class SignupScreen extends React.Component {
                 )}
               </View>
             </View>
-          </View>
+          </Animatable.View>
 
           <Text
             style={{
@@ -291,12 +293,22 @@ export default class SignupScreen extends React.Component {
             Riceverai un codice via SMS di verifica
           </Text>
 
-          <TouchableOpacity
-            style={styles.blueSuggestionButton}
-            onPress={this.onPhoneComplete}
+          <Animatable.View
+            animation={
+              this.state.isPhoneValid && this.state.isUserNameValid
+                ? "pulse"
+                : null
+            }
+            iterationCount={3}
+            duration={800}
           >
-            <Text style={styles.textOfBlueButton}>Avanti</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.blueSuggestionButton}
+              onPress={this.onPhoneComplete}
+            >
+              <Text style={styles.textOfBlueButton}>Avanti</Text>
+            </TouchableOpacity>
+          </Animatable.View>
         </React.Fragment>
       );
     else
@@ -364,12 +376,18 @@ export default class SignupScreen extends React.Component {
               </View>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.blueSuggestionButton}
-            onPress={this.onSignIn}
+          <Animatable.View
+            animation={this.state.isCodeValid ? "pulse" : null}
+            iterationCount={3}
+            duration={800}
           >
-            <Text style={styles.textOfBlueButton}>Conferma</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.blueSuggestionButton}
+              onPress={this.onSignIn}
+            >
+              <Text style={styles.textOfBlueButton}>Conferma</Text>
+            </TouchableOpacity>
+          </Animatable.View>
         </React.Fragment>
       );
   }
@@ -389,11 +407,21 @@ export default class SignupScreen extends React.Component {
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
                 {this.state.phone.length < 12 ? (
-                  <Text style={styles.subHeading}>
+                  <Animatable.Text
+                    duration={1000}
+                    animation={
+                      this.state.phone.length === 11 ? "fadeOut" : null
+                    }
+                    style={styles.subHeading}
+                  >
                     Scambia consigli tra amici su serie TV e film
+                  </Animatable.Text>
+                ) : null}
+                {this.state.codeHeading ? (
+                  <Text style={styles.subHeading}>
+                    Codice di conferma che hai ricevuto via SMS
                   </Text>
                 ) : null}
-
                 {this.renderSignUpBusiness()}
                 <View style={{ marginTop: 30 }} />
                 <Button

@@ -41,69 +41,6 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  onPhoneChange = phone => {
-    this.setState({ phone });
-  };
-
-  onPhoneComplete = async () => {
-    let token = null;
-    const listener = ({ url }) => {
-      WebBrowser.dismissBrowser();
-      const tokenEncoded = Linking.parse(url).queryParams["token"];
-      if (tokenEncoded) token = decodeURIComponent(tokenEncoded);
-    };
-    Linking.addEventListener("url", listener);
-    await WebBrowser.openBrowserAsync(captchaUrl);
-    Linking.removeEventListener("url", listener);
-    if (token) {
-      const { phone } = this.state;
-      //fake firebase.auth.ApplicationVerifier
-      const captchaVerifier = {
-        type: "recaptcha",
-        verify: () => Promise.resolve(token)
-      };
-      try {
-        const confirmationResult = await firebase
-          .auth()
-          .signInWithPhoneNumber(phone, captchaVerifier);
-        this.setState({ confirmationResult });
-      } catch (e) {
-        console.warn(e);
-      }
-    }
-  };
-
-  onCodeChange = code => {
-    this.setState({ code });
-  };
-
-  onSignIn = async () => {
-    const { confirmationResult, code } = this.state;
-    try {
-      await confirmationResult.confirm(code);
-    } catch (e) {
-      console.warn(e);
-    }
-    this.reset();
-  };
-
-  onSignOut = async () => {
-    try {
-      await firebase.auth().signOut();
-    } catch (e) {
-      console.warn(e);
-    }
-  };
-
-  reset = () => {
-    this.setState({
-      phone: "",
-      phoneCompleted: false,
-      confirmationResult: undefined,
-      code: ""
-    });
-  };
-
   async componentDidMount() {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
@@ -133,27 +70,6 @@ export default class HomeScreen extends React.Component {
           console.log(obj.name);
         }
         that.setState({ textFromFirebase: didReadFromDatabase[0].name });
-      });
-  }
-
-  // My original attempt
-  signUp() {
-    let phoneNumber = this.state.input;
-
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then(function(confirmationResult) {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        Alert.alert(confirmationResult);
-        console.log(confirmationResult);
-        window.confirmationResult = confirmationResult;
-      })
-      .catch(function(error) {
-        // Error; SMS not sent
-        // ...
-        console.log(error);
       });
   }
 
