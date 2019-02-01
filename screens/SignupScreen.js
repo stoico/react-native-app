@@ -310,6 +310,7 @@ export default class SignupScreen extends React.Component {
                 ? "pulse"
                 : null
             }
+            useNativeDriver={true}
             iterationCount={3}
             duration={800}
           >
@@ -396,6 +397,7 @@ export default class SignupScreen extends React.Component {
             animation={this.state.isCodeValid ? "pulse" : null}
             iterationCount={3}
             duration={800}
+            useNativeDriver={true}
           >
             <TouchableOpacity
               style={styles.blueSuggestionButton}
@@ -429,9 +431,10 @@ export default class SignupScreen extends React.Component {
               <View style={styles.secondaryContainer}>
                 {!this.state.isPhoneValid ? (
                   <Animatable.Text
-                    duration={1000}
+                    duration={100}
                     animation={this.state.isPhoneValid ? "fadeOut" : null}
                     style={styles.subHeading}
+                    useNativeDriver={true}
                   >
                     {this.state.codeHeading
                       ? "Codice di conferma che hai ricevuto via SMS"
