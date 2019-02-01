@@ -68,6 +68,7 @@ export default class NewReleasesScreen extends React.Component {
                         animation="fadeInUp"
                         // each child of an iterator needs a unique key
                         key={result.id}
+                        useNativeDriver={true}
                       >
                         <NewReleasesBox
                           dateReleased={result.release_date}
@@ -84,7 +85,9 @@ export default class NewReleasesScreen extends React.Component {
                       <Animatable.View
                         duration={1200}
                         animation="fadeInUp"
+                        // each child of an iterator needs a unique key
                         key={result.id}
+                        useNativeDriver={true}
                       >
                         <NewReleasesBox
                           dateReleased={result.first_air_date}
