@@ -63,28 +63,35 @@ export default class NewReleasesScreen extends React.Component {
                 {this.state.data.results.map(result => {
                   if (result.title) {
                     return (
-                      <Animatable.View duration={1200} animation="fadeInUp">
+                      <Animatable.View
+                        duration={1200}
+                        animation="fadeInUp"
+                        // each child of an iterator needs a unique key
+                        key={result.id}
+                      >
                         <NewReleasesBox
                           dateReleased={result.release_date}
                           filmTitle={result.title}
                           coverImage={result.poster_path}
                           filmID={result.id}
                           mediaType="movie"
-                          key={result.id}
                           navigation={this.props.navigation}
                         />
                       </Animatable.View>
                     );
                   } else {
                     return (
-                      <Animatable.View duration={1200} animation="fadeInUp">
+                      <Animatable.View
+                        duration={1200}
+                        animation="fadeInUp"
+                        key={result.id}
+                      >
                         <NewReleasesBox
                           dateReleased={result.first_air_date}
                           filmTitle={result.name}
                           coverImage={result.poster_path}
                           filmID={result.id}
                           mediaType="tv"
-                          key={result.id}
                           navigation={this.props.navigation}
                         />
                       </Animatable.View>
