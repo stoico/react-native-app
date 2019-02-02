@@ -19,9 +19,10 @@ import SuggestedBox from "../components/SuggestedBox";
 export default class MyProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontLoaded: false, recommendations: null };
 
     this.getChosenName();
+    this.getUserRecommendations();
   }
 
   async componentDidMount() {
@@ -50,6 +51,24 @@ export default class MyProfileScreen extends React.Component {
       .once("value")
       .then(snapshot => {
         this.setState({ chosenName: snapshot.val().name });
+      });
+  }
+
+  getUserRecommendations() {
+    //Get the current userID
+    var userId = firebase.auth().currentUser.uid;
+
+    database
+      .ref("/recommendations/" + userId)
+      .once("value")
+      .then(snapshot => {
+        const didReadFromDatabase = Object.values(snapshot.val());
+        for (let obj of didReadFromDatabase) {
+          this.setState({
+            recommendations: { showID: obj.showID, showTitle: obj.showTitle }
+          });
+          console.log(this.state.recommendations);
+        }
       });
   }
 
