@@ -55,7 +55,8 @@ export default class FilmScreen extends React.Component {
     await Font.loadAsync({
       "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
-      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf"),
+      "Gilroy Medium": require("../assets/fonts/gilroy-medium.ttf")
     });
     this.setState({ fontHasLoaded: true });
   }
@@ -369,7 +370,7 @@ const styles = StyleSheet.create({
   },
   plotParagraph: {
     color: "#505050",
-    fontWeight: "500",
+    fontFamily: "Gilroy Medium",
     padding: 4,
     fontSize: 16,
     lineHeight: 20,
