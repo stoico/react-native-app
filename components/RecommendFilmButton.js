@@ -1,19 +1,29 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Font, AppLoading } from "expo";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 
 import { isiOS } from "../constants/Platform";
 
 export default class RecommendFilmButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontLoaded: false, user: null };
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user });
+    });
   }
 
   openFilmSearchSection = () => {
-    console.log("\nJust testing the CONSIGLIALO button\n");
-    if (isiOS) {
-      console.log("You're using an iOS device");
+    if (this.state.user) {
+      this.saveRecommendation(
+        this.state.user.uid,
+        this.props.filmID,
+        this.props.filmTitle,
+        this.props.posterPath
+      );
     }
   };
 
@@ -23,6 +33,42 @@ export default class RecommendFilmButton extends React.Component {
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
     });
     this.setState({ fontLoaded: true });
+  }
+
+  saveRecommendation(userID, filmID, title, posterPath) {
+    const thisDateTime = Date.now();
+    let isAlreadyInDatabase = false;
+
+    firebase
+      .database()
+      .ref("recommendations/" + userID)
+      .orderByChild("showID")
+      .equalTo(filmID)
+      .once("value")
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          console.log("exists");
+          //TO FIX. Learn about callbacks and promises
+          //This is called after the below code if (isAlreadyInDatabase)
+          isAlreadyInDatabase = true;
+          console.log(isAlreadyInDatabase);
+        }
+      });
+
+    console.log(isAlreadyInDatabase);
+
+    if (!isAlreadyInDatabase) {
+      firebase
+        .database()
+        .ref("recommendations/" + userID)
+        .push()
+        .set({
+          date: thisDateTime,
+          showID: filmID,
+          showTitle: title,
+          showPosterPath: posterPath
+        });
+    }
   }
 
   render() {
