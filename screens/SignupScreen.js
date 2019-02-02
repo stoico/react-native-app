@@ -145,14 +145,14 @@ export default class SignupScreen extends React.Component {
     }
     this.reset();
     if (this.state.user) {
-      this.writeUserData(this.state.user.uid, this.state.chosenName);
+      this.saveChosenName(this.state.user.uid, this.state.chosenName);
     }
     this.props.navigation.navigate("Content");
   };
 
   // save the user's profile into Firebase so we can list users,
   // use them in Security and Firebase Rules, and show profiles
-  writeUserData(userID, name) {
+  saveChosenName(userID, name) {
     firebase
       .database()
       .ref("users/" + userID)
