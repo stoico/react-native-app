@@ -165,6 +165,7 @@ export default class OnboardScreen extends React.Component {
           <ScrollView
             style={styles.screenContainer}
             keyboardDismissMode="on-drag"
+            keyboardShouldPersistTaps="handled"
           >
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
