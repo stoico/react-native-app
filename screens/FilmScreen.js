@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import { Font, LinearGradient, AppLoading } from "expo";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 import dayjs from "dayjs";
 import it from "dayjs/locale/it";
 
@@ -63,11 +65,11 @@ export default class FilmScreen extends React.Component {
     const filmTitle = navigation.getParam("filmTitle", "Temp film");
     const filmID = navigation.getParam("filmID");
 
-    const filmData = this.state.data;
-
     if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
     } else {
+      const filmData = this.state.data;
+      const filmPosterPath = filmData.poster_path;
       dayjs.locale("it-italian", it);
 
       const formattedReleaseDate = dayjs(filmData.release_date).format(
@@ -200,7 +202,11 @@ export default class FilmScreen extends React.Component {
               style={styles.gradientBehindButton}
               colors={greyGradient}
             >
-              <RecommendFilmButton />
+              <RecommendFilmButton
+                filmID={filmID}
+                filmTitle={filmTitle}
+                posterPath={filmPosterPath}
+              />
             </LinearGradient>
           </View>
         </View>
