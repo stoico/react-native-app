@@ -68,7 +68,7 @@ export default class HeaderSection extends Component {
               }
             >
               <ImageBackground
-                source={require("../../assets/header-pattern.png")}
+                source={require("../../assets/pattern.png")}
                 style={styles.headerPatternBackground}
               >
                 {this.renderBackButton()}
