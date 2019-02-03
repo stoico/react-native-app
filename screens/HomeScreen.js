@@ -26,7 +26,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       fontLoaded: false,
-      textFromFirebase: "",
+      textFromFirebase: [],
       input: "",
       user: undefined,
       phone: "",
@@ -59,18 +59,43 @@ export default class HomeScreen extends React.Component {
   }
 
   renderFirebaseShit() {
-    const that = this;
-
     database
-      .ref("/recommendation/")
+      .ref("/recommendations/2whqtiH4MNU4fMtlmtHwvjvq9ji2/")
       .once("value")
-      .then(function(snapshot) {
+      .then(snapshot => {
         const didReadFromDatabase = Object.values(snapshot.val());
         for (let obj of didReadFromDatabase) {
-          console.log(obj.name);
+          const newRecommendation = {
+            filmTitle: obj.showTitle,
+            filmID: obj.showID,
+            filmPoster: obj.showPosterPath
+          };
+          this.setState({
+            textFromFirebase: [
+              ...this.state.textFromFirebase,
+              newRecommendation
+            ]
+          });
         }
-        that.setState({ textFromFirebase: didReadFromDatabase[0].name });
       });
+  }
+
+  renderFeedSuggestionBox() {
+    if (this.state.textFromFirebase) {
+      console.log("Trigger render");
+      this.state.textFromFirebase.map(value => {
+        return (
+          <FeedSuggestionBox
+            name="Carmine"
+            filmTitle={value.name}
+            filmID={value.filmID}
+            filmPoster={value.filmPoster}
+            mediaType="movie"
+            navigation={this.props.navigation}
+          />
+        );
+      });
+    }
   }
 
   render() {
@@ -83,9 +108,21 @@ export default class HomeScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
+              {this.state.textFromFirebase.map(recommendation => (
+                <FeedSuggestionBox
+                  key={recommendation.filmID}
+                  name="Carmine"
+                  filmTitle={recommendation.filmTitle}
+                  filmPoster={recommendation.filmPoster}
+                  filmID={recommendation.filmID}
+                  mediaType="movie"
+                  navigation={this.props.navigation}
+                />
+              ))}
+
               <FeedSuggestionBox
                 name="Stefano"
-                filmTitle={this.state.textFromFirebase}
+                filmTitle="Temp"
                 navigation={this.props.navigation}
               />
               <FeedSuggestionBox
