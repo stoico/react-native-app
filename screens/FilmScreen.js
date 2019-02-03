@@ -27,6 +27,7 @@ export default class FilmScreen extends React.Component {
     };
 
     const filmID = this.props.navigation.getParam("filmID");
+    // mediaType is either 'movie' or 'tv'
     const mediaType = this.props.navigation.getParam("mediaType");
 
     // Check whether it's a film or tv series
