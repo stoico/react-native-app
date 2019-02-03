@@ -27,10 +27,15 @@ export default class FeedSuggestionBox extends React.Component {
 
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
+    const filmID = this.props.filmID;
 
-    if (!this.state.fontLoaded) {
+    const pathTMDB = "https://image.tmdb.org/t/p/w154" + this.props.filmPoster;
+
+    // Render boxes only if fonts and posters have loaded
+    if (!this.state.fontLoaded || !this.props.filmPoster) {
       return <AppLoading />;
     } else {
+      console.log(pathTMDB);
       return (
         <View style={styles.feedSuggestionBox}>
           <View style={styles.feedUserSuggests}>
@@ -45,15 +50,14 @@ export default class FeedSuggestionBox extends React.Component {
           <TouchableWithoutFeedback
             onPress={() =>
               this.props.navigation.navigate("Film", {
-                filmTitle: filmTitle
+                filmID: filmID,
+                filmTitle: filmTitle,
+                mediaType: this.props.mediaType
               })
             }
           >
             <View style={styles.filmSuggestedBox}>
-              <Image
-                source={require("../assets/cover3.png")}
-                style={styles.filmCoverImage}
-              />
+              <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
               <Text style={styles.filmTitle}>{filmTitle}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -112,7 +116,11 @@ const styles = StyleSheet.create({
   },
   filmCoverImage: {
     flex: 0.2,
-    backgroundColor: "#8CD2FD"
+    // width set to a percentage, height to undefined, and aspectRatio
+    // allow to display an image at the right aspect ratio
+    height: undefined,
+    aspectRatio: 0.7,
+    backgroundColor: "#2D93FB"
   },
   filmTitle: {
     flex: 0.8,
