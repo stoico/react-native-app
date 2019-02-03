@@ -12,7 +12,7 @@ import { LinearGradient, Font, AppLoading } from "expo";
 export default class HeaderSection extends Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontLoaded: false, isBackButtonVisible: false };
   }
 
   async componentDidMount() {
@@ -37,6 +37,7 @@ export default class HeaderSection extends Component {
     ];
 
     if (!routesWithoutBackButton.includes(routeName)) {
+      this.setState({ isBackButtonVisible: true });
       return (
         <TouchableWithoutFeedback
           onPress={() => this.props.navigation.goBack()}
@@ -73,20 +74,25 @@ export default class HeaderSection extends Component {
               >
                 {this.renderBackButton()}
 
+                {this.props.navigation.state.routeName === "MyProfile" ? (
+                  <View />
+                ) : null}
+
                 <Text style={styles.headerTitle}>{this.props.pageTitle}</Text>
                 {/* <View>Icon on the right </View> */}
 
                 <View />
-
-                {/* <TouchableWithoutFeedback
-                  onPress={() => this.props.navigation.goBack()}
-                  style={styles.backButtonArea}
-                >
-                  <Image
-                    source={require("../../assets/back-button.png")}
-                    style={styles.forGigglesButton}
-                  />
-                </TouchableWithoutFeedback> */}
+                {this.props.navigation.state.routeName === "MyProfile" ? (
+                  <TouchableWithoutFeedback
+                    onPress={() => this.props.navigation.goBack()}
+                    style={styles.backButtonArea}
+                  >
+                    <Image
+                      source={require("../../assets/settings-icon.png")}
+                      style={styles.rightSideButton}
+                    />
+                  </TouchableWithoutFeedback>
+                ) : null}
               </ImageBackground>
             </LinearGradient>
           </View>
@@ -139,11 +145,10 @@ const styles = StyleSheet.create({
     width: 15,
     height: 22
   },
-  forGigglesButton: {
-    marginTop: 7,
-    width: 15,
-    height: 22,
-    transform: [{ rotate: "180deg" }]
+  rightSideButton: {
+    marginTop: 9,
+    width: 20,
+    height: 20
   },
   headerTitle: {
     flex: 0.6,
