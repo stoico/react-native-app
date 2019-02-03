@@ -82,19 +82,17 @@ export default class HomeScreen extends React.Component {
 
   renderFeedSuggestionBox() {
     if (this.state.textFromFirebase) {
-      console.log("Trigger render");
-      this.state.textFromFirebase.map(value => {
-        return (
-          <FeedSuggestionBox
-            name="Carmine"
-            filmTitle={value.name}
-            filmID={value.filmID}
-            filmPoster={value.filmPoster}
-            mediaType="movie"
-            navigation={this.props.navigation}
-          />
-        );
-      });
+      return this.state.textFromFirebase.map(recommendation => (
+        <FeedSuggestionBox
+          key={recommendation.filmID}
+          name="Carmine"
+          filmTitle={recommendation.filmTitle}
+          filmPoster={recommendation.filmPoster}
+          filmID={recommendation.filmID}
+          mediaType="movie"
+          navigation={this.props.navigation}
+        />
+      ));
     }
   }
 
@@ -108,41 +106,8 @@ export default class HomeScreen extends React.Component {
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.feedContainer}>
-              {this.state.textFromFirebase.map(recommendation => (
-                <FeedSuggestionBox
-                  key={recommendation.filmID}
-                  name="Carmine"
-                  filmTitle={recommendation.filmTitle}
-                  filmPoster={recommendation.filmPoster}
-                  filmID={recommendation.filmID}
-                  mediaType="movie"
-                  navigation={this.props.navigation}
-                />
-              ))}
+              {this.renderFeedSuggestionBox()}
 
-              <FeedSuggestionBox
-                name="Stefano"
-                filmTitle="Temp"
-                navigation={this.props.navigation}
-              />
-              <FeedSuggestionBox
-                name="Carmine"
-                filmTitle="Game Of Thrones"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Martina"
-                filmTitle="Black Mirrors"
-                {...this.props}
-              />
-              <FeedSuggestionBox
-                name="Rocco"
-                filmTitle="Westworld"
-                {...this.props}
-              />
-              <FeedSuggestionBox name="Angelo" {...this.props} />
-              <FeedSuggestionBox name="Marco" {...this.props} />
-              <FeedSuggestionBox name="Raffaella" {...this.props} />
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
