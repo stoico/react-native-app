@@ -325,7 +325,7 @@ export default class SignupScreen extends React.Component {
                 : null
             }
             useNativeDriver={true}
-            iterationCount={3}
+            iterationCount={4}
             duration={800}
           >
             <TouchableOpacity
@@ -409,7 +409,7 @@ export default class SignupScreen extends React.Component {
           </View>
           <Animatable.View
             animation={this.state.isCodeValid ? "pulse" : null}
-            iterationCount={3}
+            iterationCount={4}
             duration={800}
             useNativeDriver={true}
           >
