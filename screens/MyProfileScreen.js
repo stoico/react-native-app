@@ -19,10 +19,12 @@ import SuggestedBox from "../components/SuggestedBox";
 export default class MyProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false, recommendations: null };
-
-    this.getChosenName();
-    this.getUserRecommendations();
+    this.state = {
+      fontLoaded: false,
+      chosenName: "",
+      recommendationsDataHasLoaded: false,
+      recommendations: null
+    };
   }
 
   async componentDidMount() {
@@ -31,6 +33,11 @@ export default class MyProfileScreen extends React.Component {
       "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
     });
     this.setState({ fontLoaded: true, chosenName: "" });
+  }
+
+  componentWillMount() {
+    this.getChosenName();
+    this.getUserRecommendations();
   }
 
   onSignOut = async () => {
@@ -62,14 +69,33 @@ export default class MyProfileScreen extends React.Component {
       .ref("/recommendations/" + userId)
       .once("value")
       .then(snapshot => {
-        const didReadFromDatabase = Object.values(snapshot.val());
-        for (let obj of didReadFromDatabase) {
-          this.setState({
-            recommendations: { showID: obj.showID, showTitle: obj.showTitle }
-          });
-          console.log(this.state.recommendations);
-        }
+        this.setState({ recommendations: Object.values(snapshot.val()) });
+        this.setState({ recommendationsDataHasLoaded: true });
       });
+  }
+
+  // Needs async
+  renderSuggestedBox() {
+    console.log("renderSuggested: " + this.state.recommendations);
+    console.log(
+      "recommendationsDataHasLoaded: " + this.state.recommendationsDataHasLoaded
+    );
+    let suggestedBoxToRender = null;
+    if (this.state.recommendationsDataHasLoaded) {
+      this.state.recommendations.map(value => {
+        console.log("value.showTitle: " + value.showTitle);
+        suggestedBoxToRender += (
+          <SuggestedBox
+            filmTitle={value.showID}
+            filmPoster={value.showTitle}
+            filmID={value.showPosterPath}
+          />
+        );
+      });
+    }
+
+    console.log("suggestedBoxToRender" + suggestedBoxToRender);
+    return suggestedBoxToRender;
   }
 
   render() {
@@ -148,8 +174,8 @@ export default class MyProfileScreen extends React.Component {
                 <View style={styles.categoryNameRounded}>
                   <Text style={styles.categoryNameText}>Ho consigliato</Text>
                 </View>
-                <SuggestedBox filmTitle="Game of Thrones" />
-                <SuggestedBox filmTitle="Westworld" />
+
+                {this.renderSuggestedBox()}
               </View>
               <View style={styles.bottomSpacing} />
             </View>
