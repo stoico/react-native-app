@@ -160,7 +160,7 @@ export default class HomeScreen extends React.Component {
   }
 }
 
-const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
+const greyGradient = ["rgba(224, 224, 224, 0)", "rgba(224, 224, 224, 0)"];
 const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
 
 const styles = StyleSheet.create({
