@@ -61,8 +61,7 @@ export default class HomeScreen extends React.Component {
   renderFirebaseShit() {
     database
       .ref("/recommendations/2whqtiH4MNU4fMtlmtHwvjvq9ji2/")
-      .once("value")
-      .then(snapshot => {
+      .on("value", snapshot => {
         const didReadFromDatabase = Object.values(snapshot.val());
         for (let obj of didReadFromDatabase) {
           const newRecommendation = {
