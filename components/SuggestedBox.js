@@ -46,11 +46,10 @@ export default class SuggestedBox extends React.Component {
   }
 
   render() {
-    const filmTitle = this.props.filmTitle || "The Titled Film";
-    const filmPosterPath = this.props.filmPosterPath;
+    const filmTitle = this.props.filmTitle || "";
     const filmID = this.props.filmID;
 
-    let pathTMDB = "https://image.tmdb.org/t/p/w154" + filmPosterPath;
+    let pathTMDB = "https://image.tmdb.org/t/p/w154" + this.props.filmPoster;
     // const randomNumber = Math.floor(Math.random() * 3);
     // const coverPath = "../assets/cover2.png";
 
@@ -82,7 +81,11 @@ const styles = StyleSheet.create({
   },
   filmCoverImage: {
     flex: 0.2,
-    backgroundColor: "#8CD2FD"
+    // width set to a percentage, height to undefined, and aspectRatio
+    // allow to display an image at the right aspect ratio
+    height: undefined,
+    aspectRatio: 0.7,
+    backgroundColor: "#2D93FB"
   },
   filmTitle: {
     flex: 0.8,

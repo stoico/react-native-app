@@ -76,26 +76,16 @@ export default class MyProfileScreen extends React.Component {
 
   // Needs async
   renderSuggestedBox() {
-    console.log("renderSuggested: " + this.state.recommendations);
-    console.log(
-      "recommendationsDataHasLoaded: " + this.state.recommendationsDataHasLoaded
-    );
-    let suggestedBoxToRender = null;
     if (this.state.recommendationsDataHasLoaded) {
-      this.state.recommendations.map(value => {
-        console.log("value.showTitle: " + value.showTitle);
-        suggestedBoxToRender += (
-          <SuggestedBox
-            filmTitle={value.showID}
-            filmPoster={value.showTitle}
-            filmID={value.showPosterPath}
-          />
-        );
-      });
+      return this.state.recommendations.map(recommendation => (
+        <SuggestedBox
+          filmTitle={recommendation.showTitle}
+          filmID={recommendation.showID}
+          filmPoster={recommendation.showPosterPath}
+          key={recommendation.showID}
+        />
+      ));
     }
-
-    console.log("suggestedBoxToRender" + suggestedBoxToRender);
-    return suggestedBoxToRender;
   }
 
   render() {
@@ -195,13 +185,13 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 650
+    minHeight: 650
   },
   profileContainer: {
     flex: 1,
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
-    height: 148,
+    minHeight: 148,
     padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
