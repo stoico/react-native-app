@@ -170,7 +170,7 @@ export default class OnboardScreen extends React.Component {
             <View style={styles.outmostContainer}>
               <View style={styles.secondaryContainer}>
                 <Image
-                  source={require("../assets/onboarding-illustration.png")}
+                  source={require("../assets/illustration-v8.png")}
                   style={styles.illustration}
                 />
                 <Text style={styles.subHeading}>
