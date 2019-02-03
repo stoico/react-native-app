@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+  Alert
+} from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -45,6 +52,30 @@ export default class SuggestedBox extends React.Component {
     }
   }
 
+  // removeRecommendationDatabase() {
+  //   //Get the current userID
+  //   var userId = firebase.auth().currentUser.uid;
+
+  //   database
+  //     .ref("/recommendations/" + userId)
+  //     .child()
+  //     .remove();
+  // }
+
+  removeRecommendationAlert(filmTitle) {
+    const deleteMessageTitle = "Rimuovere " + filmTitle + "?";
+    const deleteMessage = "Cancellarlo dalla tua lista dei consigliati?";
+
+    Alert.alert(deleteMessageTitle, deleteMessage, [
+      {
+        text: "Annulla",
+        onPress: () => console.log("NO Pressed"),
+        style: "cancel"
+      },
+      { text: "Rimuovi", onPress: () => console.log("YES Pressed") }
+    ]);
+  }
+
   render() {
     const filmTitle = this.props.filmTitle || "";
     const filmID = this.props.filmID;
@@ -59,11 +90,15 @@ export default class SuggestedBox extends React.Component {
       return <AppLoading />;
     } else {
       return (
-        <View style={styles.filmSuggestedBox}>
-          <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
-          <Text style={styles.filmTitle}>{filmTitle}</Text>
-          {this.displayDeviceIcon()}
-        </View>
+        <TouchableWithoutFeedback
+          onPress={() => this.removeRecommendation(filmTitle)}
+        >
+          <View style={styles.filmSuggestedBox}>
+            <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
+            <Text style={styles.filmTitle}>{filmTitle}</Text>
+            {this.displayDeviceIcon()}
+          </View>
+        </TouchableWithoutFeedback>
       );
     }
   }
