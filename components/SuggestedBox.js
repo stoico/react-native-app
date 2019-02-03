@@ -47,6 +47,10 @@ export default class SuggestedBox extends React.Component {
 
   render() {
     const filmTitle = this.props.filmTitle || "The Titled Film";
+    const filmPosterPath = this.props.filmPosterPath;
+    const filmID = this.props.filmID;
+
+    let pathTMDB = "https://image.tmdb.org/t/p/w154" + filmPosterPath;
     // const randomNumber = Math.floor(Math.random() * 3);
     // const coverPath = "../assets/cover2.png";
 
@@ -57,10 +61,7 @@ export default class SuggestedBox extends React.Component {
     } else {
       return (
         <View style={styles.filmSuggestedBox}>
-          <Image
-            source={require("../assets/cover2.png")}
-            style={styles.filmCoverImage}
-          />
+          <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
           <Text style={styles.filmTitle}>{filmTitle}</Text>
           {this.displayDeviceIcon()}
         </View>
