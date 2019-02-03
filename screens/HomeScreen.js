@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   gradientBehindButton: {
-    height: 85,
+    height: 78,
     justifyContent: "center",
     alignContent: "center",
     paddingTop: 7,
-    paddingRight: 36,
-    paddingLeft: 36,
+    paddingRight: 54,
+    paddingLeft: 54,
     paddingBottom: 18
   },
   gradientBehindHeader: {

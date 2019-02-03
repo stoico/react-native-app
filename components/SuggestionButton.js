@@ -46,7 +46,6 @@ export default class SuggestionButton extends React.Component {
 const styles = StyleSheet.create({
   blueSuggestionButton: {
     flex: 1,
-    height: 60,
     borderRadius: 35,
     justifyContent: "center",
     alignContent: "center",
@@ -64,6 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     color: "#F8F8F8",
-    fontSize: 20
+    fontSize: 18
   }
 });
