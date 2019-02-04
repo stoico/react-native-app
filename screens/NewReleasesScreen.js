@@ -10,7 +10,17 @@ export default class NewReleasesScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { fontHasLoaded: false, dataHasLoaded: false };
+  }
 
+  async componentDidMount() {
+    await Font.loadAsync({
+      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
+    });
+    this.setState({ fontHasLoaded: true });
+  }
+
+  componentWillMount = () => {
     let uriAPI =
       "https://api.themoviedb.org/3/trending/all/day?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&page=1";
 
@@ -23,15 +33,7 @@ export default class NewReleasesScreen extends React.Component {
       .catch(error => {
         console.error(error);
       });
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf")
-    });
-    this.setState({ fontHasLoaded: true });
-  }
+  };
 
   renderResponseData() {
     let boxes;
