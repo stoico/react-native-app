@@ -25,11 +25,26 @@ export default class FilmScreen extends React.Component {
       dataHasLoaded: false,
       plotCollapsed: true
     };
+  }
 
+  async componentDidMount() {
+    await Font.loadAsync({
+      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
+      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
+      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf"),
+      "Gilroy Medium": require("../assets/fonts/gilroy-medium.ttf")
+    });
+    this.setState({ fontHasLoaded: true });
+  }
+
+  componentWillMount = () => {
+    this.fetchData();
+  };
+
+  fetchData() {
     const filmID = this.props.navigation.getParam("filmID");
     // mediaType is either 'movie' or 'tv'
     const mediaType = this.props.navigation.getParam("mediaType");
-
     // Check whether it's a film or tv series
     let uriAPI =
       "https://api.themoviedb.org/3/" +
@@ -52,20 +67,11 @@ export default class FilmScreen extends React.Component {
       });
   }
 
-  async componentDidMount() {
-    await Font.loadAsync({
-      "Gilroy Light": require("../assets/fonts/gilroy-light.otf"),
-      "Gilroy Extrabold": require("../assets/fonts/gilroy-extrabold.otf"),
-      "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf"),
-      "Gilroy Medium": require("../assets/fonts/gilroy-medium.ttf")
-    });
-    this.setState({ fontHasLoaded: true });
-  }
-
   render() {
     const { navigation } = this.props;
     const filmTitle = navigation.getParam("filmTitle", "Temp film");
     const filmID = navigation.getParam("filmID");
+    const mediaType = navigation.getParam("mediaType");
 
     if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
       return <AppLoading />;
@@ -79,7 +85,12 @@ export default class FilmScreen extends React.Component {
       );
       return (
         <View style={{ flex: 1 }}>
-          <Header pageTitle="Show" navigation={this.props.navigation} />
+          {mediaType === "movie" ? (
+            <Header pageTitle="Film" navigation={this.props.navigation} />
+          ) : null}
+          {mediaType === "tv" ? (
+            <Header pageTitle="Serie TV" navigation={this.props.navigation} />
+          ) : null}
           <ScrollView style={styles.screenContainer}>
             <View style={styles.primaryContainer}>
               <View style={styles.secondaryContainer}>
@@ -208,6 +219,7 @@ export default class FilmScreen extends React.Component {
                 filmID={filmID}
                 filmTitle={filmTitle}
                 posterPath={filmPosterPath}
+                mediaType={mediaType}
               />
             </LinearGradient>
           </View>
