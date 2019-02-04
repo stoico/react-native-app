@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     height: "37%",
-    flex: 0.1,
+    flex: 0.18,
     alignItems: "center",
     justifyContent: "center"
     // backgroundColor: "pink"
