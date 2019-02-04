@@ -22,7 +22,8 @@ export default class RecommendFilmButton extends React.Component {
         this.state.user.uid,
         this.props.filmID,
         this.props.filmTitle,
-        this.props.posterPath
+        this.props.posterPath,
+        this.props.mediaType
       );
     }
   };
@@ -35,9 +36,10 @@ export default class RecommendFilmButton extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  saveRecommendation(userID, filmID, title, posterPath) {
+  saveRecommendation(userID, filmID, title, posterPath, mediaType) {
     const thisDateTime = Date.now();
     let isAlreadyInDatabase = false;
+    console.log("mediaType: " + mediaType);
 
     firebase
       .database()
@@ -56,7 +58,7 @@ export default class RecommendFilmButton extends React.Component {
       });
 
     console.log(isAlreadyInDatabase);
-
+    // Need to add mediaType to the database
     if (!isAlreadyInDatabase) {
       firebase
         .database()
@@ -66,7 +68,8 @@ export default class RecommendFilmButton extends React.Component {
           date: thisDateTime,
           showID: filmID,
           showTitle: title,
-          showPosterPath: posterPath
+          showPosterPath: posterPath,
+          mediaType: mediaType
         });
     }
   }
