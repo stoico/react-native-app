@@ -12,7 +12,7 @@ import { LinearGradient, Font, AppLoading } from "expo";
 export default class HeaderSection extends Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false, isBackButtonVisible: false };
+    this.state = { fontLoaded: false };
   }
 
   async componentDidMount() {
@@ -37,20 +37,20 @@ export default class HeaderSection extends Component {
     ];
 
     if (!routesWithoutBackButton.includes(routeName)) {
-      this.setState({ isBackButtonVisible: true });
       return (
         <TouchableWithoutFeedback
           onPress={() => this.props.navigation.goBack()}
-          style={styles.backButtonArea}
         >
-          <Image
-            source={require("../../assets/back-button.png")}
-            style={styles.backButton}
-          />
+          <View style={styles.buttonArea}>
+            <Image
+              source={require("../../assets/back-button.png")}
+              style={styles.backButton}
+            />
+          </View>
         </TouchableWithoutFeedback>
       );
     } else {
-      return <View />;
+      return <View style={styles.buttonArea} />;
     }
   }
 
@@ -74,25 +74,23 @@ export default class HeaderSection extends Component {
               >
                 {this.renderBackButton()}
 
-                {this.props.navigation.state.routeName === "MyProfile" ? (
-                  <View />
-                ) : null}
-
                 <Text style={styles.headerTitle}>{this.props.pageTitle}</Text>
                 {/* <View>Icon on the right </View> */}
 
-                <View />
                 {this.props.navigation.state.routeName === "MyProfile" ? (
                   <TouchableWithoutFeedback
                     onPress={() => this.props.navigation.goBack()}
-                    style={styles.backButtonArea}
                   >
-                    <Image
-                      source={require("../../assets/settings-icon.png")}
-                      style={styles.rightSideButton}
-                    />
+                    <View style={styles.buttonArea}>
+                      <Image
+                        source={require("../../assets/settings-icon.png")}
+                        style={styles.rightSideButton}
+                      />
+                    </View>
                   </TouchableWithoutFeedback>
-                ) : null}
+                ) : (
+                  <View style={styles.buttonArea} />
+                )}
               </ImageBackground>
             </LinearGradient>
           </View>
@@ -128,35 +126,38 @@ const styles = StyleSheet.create({
     flex: 0.1,
     width: "100%",
     height: 50,
-    marginTop: 40,
+    marginTop: 42,
     alignSelf: "center",
     alignItems: "flex-start",
     justifyContent: "space-around",
     flexDirection: "row"
+    // backgroundColor: "yellow"
   },
-  backButtonArea: {
-    flex: 0.2,
-    height: 20,
-    alignSelf: "flex-start"
+  buttonArea: {
+    height: "37%",
+    flex: 0.1,
+    alignItems: "center",
+    justifyContent: "center"
+    // backgroundColor: "pink"
   },
   backButton: {
     // marginTop: 2,
-    marginTop: 7,
     width: 15,
     height: 22
+    // backgroundColor: "red"
   },
   rightSideButton: {
-    marginTop: 9,
     width: 20,
     height: 20
+    // backgroundColor: "purple"
   },
   headerTitle: {
-    flex: 0.6,
-    marginTop: 2,
+    flex: 0.65,
     color: "white",
     fontFamily: "Gilroy Extrabold",
     fontSize: 23,
     textAlign: "center"
+    // backgroundColor: "green"
     // marginTop: 6
   }
 });
