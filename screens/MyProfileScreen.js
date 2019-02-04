@@ -65,13 +65,10 @@ export default class MyProfileScreen extends React.Component {
     //Get the current userID
     var userId = firebase.auth().currentUser.uid;
 
-    database
-      .ref("/recommendations/" + userId)
-      .once("value")
-      .then(snapshot => {
-        this.setState({ recommendations: Object.values(snapshot.val()) });
-        this.setState({ recommendationsDataHasLoaded: true });
-      });
+    database.ref("/recommendations/" + userId).on("value", snapshot => {
+      this.setState({ recommendations: Object.values(snapshot.val()) });
+      this.setState({ recommendationsDataHasLoaded: true });
+    });
   }
 
   // Needs async
