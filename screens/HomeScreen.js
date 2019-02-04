@@ -67,7 +67,8 @@ export default class HomeScreen extends React.Component {
           const newRecommendation = {
             filmTitle: obj.showTitle,
             filmID: obj.showID,
-            filmPoster: obj.showPosterPath
+            filmPoster: obj.showPosterPath,
+            filmType: obj.mediaType
           };
           this.setState({
             textFromFirebase: [
@@ -88,7 +89,7 @@ export default class HomeScreen extends React.Component {
           filmTitle={recommendation.filmTitle}
           filmPoster={recommendation.filmPoster}
           filmID={recommendation.filmID}
-          mediaType="movie"
+          mediaType={recommendation.filmType}
           navigation={this.props.navigation}
         />
       ));
