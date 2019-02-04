@@ -12,6 +12,7 @@ import {
 import { database } from "../config/Firebase";
 import firebase from "firebase";
 import { Font, AppLoading } from "expo";
+import * as Animatable from "react-native-animatable";
 
 import Header from "../components/Header/Header";
 import SuggestedBox from "../components/SuggestedBox";
@@ -74,13 +75,22 @@ export default class MyProfileScreen extends React.Component {
   // Needs async
   renderSuggestedBox() {
     if (this.state.recommendationsDataHasLoaded) {
-      return this.state.recommendations.map(recommendation => (
-        <SuggestedBox
-          filmTitle={recommendation.showTitle}
-          filmID={recommendation.showID}
-          filmPoster={recommendation.showPosterPath}
+      return this.state.recommendations.map((recommendation, index) => (
+        <Animatable.View
+          duration={250}
+          animation="fadeInUp"
+          // each child of an iterator needs a unique key
           key={recommendation.showID}
-        />
+          useNativeDriver={true}
+          delay={80 * index}
+        >
+          <SuggestedBox
+            filmTitle={recommendation.showTitle}
+            filmID={recommendation.showID}
+            filmPoster={recommendation.showPosterPath}
+            key={recommendation.showID}
+          />
+        </Animatable.View>
       ));
     }
   }
