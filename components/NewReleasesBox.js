@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 }
   },
   filmCoverImage: {
-    backgroundColor: "#8CD2FD",
+    backgroundColor: "#2D93FB",
     width: 65,
     height: 90
   },
