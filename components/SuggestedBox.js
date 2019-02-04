@@ -91,7 +91,7 @@ export default class SuggestedBox extends React.Component {
     } else {
       return (
         <TouchableWithoutFeedback
-          onPress={() => this.removeRecommendation(filmTitle)}
+          onPress={() => this.removeRecommendationAlert(filmTitle)}
         >
           <View style={styles.filmSuggestedBox}>
             <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
