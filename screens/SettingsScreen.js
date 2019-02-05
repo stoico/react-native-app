@@ -7,12 +7,14 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableWithoutFeedback,
-  Button
+  Button,
+  Alert
 } from "react-native";
 import { database } from "../config/Firebase";
 import firebase from "firebase";
 import { Font, AppLoading } from "expo";
 import * as Animatable from "react-native-animatable";
+import SettingsList from "react-native-settings-list";
 
 import Header from "../components/Header/Header";
 import SuggestedBox from "../components/SuggestedBox";
@@ -23,8 +25,7 @@ export default class SettingsScreen extends React.Component {
     this.state = {
       fontLoaded: false,
       chosenName: "",
-      recommendationsDataHasLoaded: false,
-      recommendations: null
+      switchValue: false
     };
   }
 
@@ -38,7 +39,6 @@ export default class SettingsScreen extends React.Component {
 
   componentWillMount() {
     this.getChosenName();
-    this.getUserRecommendations();
   }
 
   onSignOut = async () => {
@@ -62,29 +62,19 @@ export default class SettingsScreen extends React.Component {
       });
   }
 
-  getUserRecommendations() {
-    //Get the current userID
-    var userId = firebase.auth().currentUser.uid;
-
-    database.ref("/recommendations/" + userId).on("value", snapshot => {
-      this.setState({ recommendations: Object.values(snapshot.val()) });
-      this.setState({ recommendationsDataHasLoaded: true });
-    });
-  }
-
   render() {
     const { navigation } = this.props;
     const filmTitle = navigation.getParam("filmTitle", "?");
+    let longBio =
+      "This is an extrmeely long and boring bio with information and bullshit and braga about myself. Let's be real. Paradise.";
+    longBio = longBio.substring(0, 25) + "...";
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Header
-            pageTitle="Profilo personale"
-            navigation={this.props.navigation}
-          />
+          <Header pageTitle="Impostazioni" navigation={this.props.navigation} />
 
           <ScrollView style={styles.screenContainer}>
             <View style={styles.outmostContainer}>
@@ -93,6 +83,60 @@ export default class SettingsScreen extends React.Component {
                 <View style={styles.categoryNameRounded}>
                   <Text style={styles.categoryNameText}>Modifica</Text>
                 </View>
+                {/* START */}
+                <SettingsList
+                  backgroundColor="#FFF"
+                  borderColor="#E0E0E0"
+                  defaultItemSize={50}
+                >
+                  <SettingsList.Header headerStyle={{ marginTop: 0 }} />
+                  <SettingsList.Item
+                    titleInfo={this.state.chosenName}
+                    title="Nome"
+                  />
+                  <SettingsList.Item
+                    title="Bio"
+                    titleInfo={longBio}
+                    onPress={() => Alert.alert("Route to Wifi Page")}
+                  />
+                  <SettingsList.Item
+                    title="Blutooth"
+                    titleInfo="Off"
+                    titleInfoStyle={styles.titleInfoStyle}
+                    onPress={() => Alert.alert("Route to Blutooth Page")}
+                  />
+                  <SettingsList.Item
+                    title="Cellular"
+                    onPress={() => Alert.alert("Route To Cellular Page")}
+                  />
+                  <SettingsList.Header headerStyle={{ marginTop: 10 }} />
+
+                  <SettingsList.Item
+                    title="Personal Hotspot"
+                    titleInfo="Off"
+                    titleInfoStyle={styles.titleInfoStyle}
+                    onPress={() => Alert.alert("Route To Hotspot Page")}
+                  />
+                  <SettingsList.Item
+                    hasNavArrow={false}
+                    switchState={this.state.switchValue}
+                    switchOnValueChange={() =>
+                      this.setState({
+                        switchValue: !this.state.switchValue
+                      })
+                    }
+                    hasSwitch={true}
+                    title="Notifiche"
+                  />
+                  <SettingsList.Header headerStyle={{ marginTop: 0 }} />
+                  <SettingsList.Item
+                    title="Sign out"
+                    hasNavArrow={false}
+                    titleStyle={styles.signOut}
+                    onPress={() => Alert.alert("Sign out")}
+                  />
+                </SettingsList>
+                {/* END */}
               </View>
               <View style={styles.bottomSpacing} />
             </View>
@@ -119,7 +163,6 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
     minHeight: 148,
-    padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
     shadowColor: "#D7D7D7",
@@ -134,13 +177,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    marginBottom: 8
+    alignSelf: "center"
   },
   categoryNameText: {
     color: "rgba(80, 80, 80, 0.5)",
     fontFamily: "Gilroy Extrabold",
     fontSize: 14,
     textTransform: "uppercase"
+  },
+  signOut: {
+    marginLeft: -15,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(245,218,51, 0.4)",
+    height: "100%",
+    fontSize: 14
   }
 });
