@@ -5,9 +5,11 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Dimensions
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
+import { isIphoneX } from "../../constants/Platform";
 
 export default class HeaderSection extends Component {
   constructor(props) {
@@ -127,6 +129,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     marginTop: 42,
+    alignSelf: "center",
+    alignItems: "flex-start",
+    justifyContent: "space-around",
+    flexDirection: "row"
+    // backgroundColor: "yellow"
+  },
+  headerPatternBackgroundForSmalleriPhones: {
+    flex: 0.1,
+    width: "100%",
+    height: 50,
+    marginTop: 36,
     alignSelf: "center",
     alignItems: "flex-start",
     justifyContent: "space-around",
