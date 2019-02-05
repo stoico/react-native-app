@@ -91,7 +91,7 @@ export default class SettingsScreen extends React.Component {
               <View style={styles.profileContainer}>
                 <Button onPress={this.onSignOut} title="Sign out" />
                 <View style={styles.categoryNameRounded}>
-                  <Text style={styles.categoryNameText}>Ho consigliato</Text>
+                  <Text style={styles.categoryNameText}>Modifica</Text>
                 </View>
               </View>
               <View style={styles.bottomSpacing} />
