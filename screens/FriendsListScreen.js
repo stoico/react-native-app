@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   feedContainer: {
     marginTop: 82,
     padding: 8,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "#F7F7F7",
     borderRadius: 30
   },
   floatingPositionForButton: {
