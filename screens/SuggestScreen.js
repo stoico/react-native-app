@@ -215,6 +215,7 @@ export default class FriendScreen extends React.Component {
 
                         // color: "#E0E0E0",
                       }
+                      autoFocus={true}
                       placeholder="Film o serie TV" // placeholderTextColor="rgba(80, 80, 80, 0.8)"
                       onChangeText={this.onTextChange}
                       value={this.state.text}
