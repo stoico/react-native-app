@@ -20,6 +20,7 @@ import FriendScreen from "./screens/FriendScreen";
 import SuggestScreen from "./screens/SuggestScreen";
 import SuggestedScreen from "./screens/SuggestedScreen";
 import NewReleasesScreen from "./screens/NewReleasesScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 // const AppNavigator = createStackNavigator(
 //   {
@@ -153,6 +154,12 @@ const ProfileStack = createStackNavigator({
   },
   FriendsList: {
     screen: FriendsListScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Settings: {
+    screen: SettingsScreen,
     navigationOptions: {
       header: null
     }

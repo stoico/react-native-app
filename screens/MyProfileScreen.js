@@ -41,12 +41,8 @@ export default class MyProfileScreen extends React.Component {
     this.getUserRecommendations();
   }
 
-  onSignOut = async () => {
-    try {
-      await firebase.auth().signOut();
-    } catch (e) {
-      console.warn(e);
-    }
+  onButtonClick = () => {
+    this.props.navigation.navigate("Settings");
   };
 
   getChosenName() {
@@ -169,7 +165,7 @@ export default class MyProfileScreen extends React.Component {
                     </View>
                   </View>
                 </View>
-                <Button onPress={this.onSignOut} title="Sign out" />
+                <Button onPress={this.onButtonClick} title="Settings" />
                 <View style={styles.categoryNameRounded}>
                   <Text style={styles.categoryNameText}>Ho consigliato</Text>
                 </View>
