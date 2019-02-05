@@ -145,6 +145,12 @@ const ProfileStack = createStackNavigator({
       header: null
     }
   },
+  Film: {
+    screen: FilmScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   FriendsList: {
     screen: FriendsListScreen,
     navigationOptions: {
