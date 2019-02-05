@@ -75,6 +75,8 @@ export default class MyProfileScreen extends React.Component {
   // Needs async
   renderSuggestedBox() {
     if (this.state.recommendationsDataHasLoaded) {
+      console.log("MyProfileScreen this.props:");
+      console.log(this.props);
       return this.state.recommendations.map((recommendation, index) => (
         <Animatable.View
           duration={250}
@@ -88,7 +90,9 @@ export default class MyProfileScreen extends React.Component {
             filmTitle={recommendation.showTitle}
             filmID={recommendation.showID}
             filmPoster={recommendation.showPosterPath}
-            key={recommendation.showID}
+            // Temporarily hard code Movie for testing
+            filmType={recommendation.mediaType || "movie"}
+            navigation={this.props.navigation}
           />
         </Animatable.View>
       ));
@@ -97,7 +101,7 @@ export default class MyProfileScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const filmTitle = navigation.getParam("filmTitle", "Temp film");
+    const filmTitle = navigation.getParam("filmTitle", "?");
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
