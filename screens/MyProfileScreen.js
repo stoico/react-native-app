@@ -62,34 +62,39 @@ export default class MyProfileScreen extends React.Component {
     //Get the current userID
     var userId = firebase.auth().currentUser.uid;
 
-    database.ref("/recommendations/" + userId).on("value", snapshot => {
-      this.setState({ recommendations: Object.values(snapshot.val()) });
-      this.setState({ recommendationsDataHasLoaded: true });
-    });
+    database
+      .ref("/recommendations/" + userId)
+      .limitToLast(8)
+      .on("value", snapshot => {
+        this.setState({ recommendations: Object.values(snapshot.val()) });
+        this.setState({ recommendationsDataHasLoaded: true });
+      });
   }
 
   // Needs async
   renderSuggestedBox() {
     if (this.state.recommendationsDataHasLoaded) {
-      return this.state.recommendations.map((recommendation, index) => (
-        <Animatable.View
-          duration={250}
-          animation="fadeInUp"
-          // each child of an iterator needs a unique key
-          key={recommendation.showID}
-          useNativeDriver={true}
-          delay={80 * index}
-        >
-          <SuggestedBox
-            filmTitle={recommendation.showTitle}
-            filmID={recommendation.showID}
-            filmPoster={recommendation.showPosterPath}
-            // Temporarily hard code Movie for testing
-            filmType={recommendation.mediaType || "movie"}
-            navigation={this.props.navigation}
-          />
-        </Animatable.View>
-      ));
+      return this.state.recommendations
+        .reverse()
+        .map((recommendation, index) => (
+          <Animatable.View
+            duration={250}
+            animation="fadeInUp"
+            // each child of an iterator needs a unique key
+            key={recommendation.showID}
+            useNativeDriver={true}
+            delay={80 * index}
+          >
+            <SuggestedBox
+              filmTitle={recommendation.showTitle}
+              filmID={recommendation.showID}
+              filmPoster={recommendation.showPosterPath}
+              // Temporarily hard code Movie for testing
+              filmType={recommendation.mediaType || "movie"}
+              navigation={this.props.navigation}
+            />
+          </Animatable.View>
+        ));
     }
   }
 
@@ -119,7 +124,7 @@ export default class MyProfileScreen extends React.Component {
                           width: "100%",
                           height: "100%",
                           overflow: "hidden",
-                          borderRadius: "100%"
+                          borderRadius: 50
                         }}
                       />
                     </View>
@@ -229,7 +234,7 @@ const styles = StyleSheet.create({
   userAvatarFloating: {
     width: 105,
     height: 105,
-    borderRadius: 105 / 2,
+    borderRadius: 52.5, // 105 /2
     marginLeft: -64,
     backgroundColor: "#2EA6FF",
     borderColor: "#2EA6FF",
