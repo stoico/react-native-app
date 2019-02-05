@@ -75,8 +75,6 @@ export default class MyProfileScreen extends React.Component {
   // Needs async
   renderSuggestedBox() {
     if (this.state.recommendationsDataHasLoaded) {
-      console.log("MyProfileScreen this.props:");
-      console.log(this.props);
       return this.state.recommendations.map((recommendation, index) => (
         <Animatable.View
           duration={250}
