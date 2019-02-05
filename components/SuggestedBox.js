@@ -78,7 +78,6 @@ export default class SuggestedBox extends React.Component {
 
   render() {
     const filmTitle = this.props.filmTitle || "";
-    const filmID = this.props.filmID;
 
     let pathTMDB = "https://image.tmdb.org/t/p/w154" + this.props.filmPoster;
     // const randomNumber = Math.floor(Math.random() * 3);
@@ -89,14 +88,26 @@ export default class SuggestedBox extends React.Component {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
+      console.log("SuggestedBox this.props:");
+      console.log(this.props);
       return (
         <TouchableWithoutFeedback
-          onPress={() => this.removeRecommendationAlert(filmTitle)}
+          onPress={() =>
+            this.props.navigation.navigate("Film", {
+              filmTitle: filmTitle,
+              filmID: this.props.filmID,
+              mediaType: this.props.filmType
+            })
+          }
         >
           <View style={styles.filmSuggestedBox}>
             <Image source={{ uri: pathTMDB }} style={styles.filmCoverImage} />
             <Text style={styles.filmTitle}>{filmTitle}</Text>
-            {this.displayDeviceIcon()}
+            <TouchableWithoutFeedback
+              onPress={() => this.removeRecommendationAlert(filmTitle)}
+            >
+              {this.displayDeviceIcon()}
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       );
