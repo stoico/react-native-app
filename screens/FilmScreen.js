@@ -69,8 +69,8 @@ export default class FilmScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const filmTitle = navigation.getParam("filmTitle", "Temp film");
-    const filmID = navigation.getParam("filmID");
+    const filmTitle = navigation.getParam("filmTitle", " ");
+    const filmID = navigation.getParam("filmID", " ");
     const mediaType = navigation.getParam("mediaType");
 
     if (!this.state.fontHasLoaded || !this.state.dataHasLoaded) {
@@ -80,9 +80,13 @@ export default class FilmScreen extends React.Component {
       const filmPosterPath = filmData.poster_path;
       dayjs.locale("it-italian", it);
 
-      const formattedReleaseDate = dayjs(filmData.release_date).format(
-        "MMM YYYY"
-      );
+      const filmRelease = filmData.release_date || filmData.first_air_date;
+      const formattedReleaseDate = dayjs(filmRelease).format("MMM YYYY");
+      console.log("filmRelease " + filmRelease);
+      const lastAirDate = filmData.last_air_date;
+      console.log("lastAirDate: " + lastAirDate);
+      const formattedlastAirDate = dayjs(lastAirDate).format("MMM YYYY");
+
       return (
         <View style={{ flex: 1 }}>
           {mediaType === "movie" ? (
@@ -116,7 +120,7 @@ export default class FilmScreen extends React.Component {
                     <Text style={styles.userNameText}>Stefano</Text>
                   </View>
 
-                  {filmData.overview && filmData.overview.length !== 0 && (
+                  {filmData.overview && filmData.overview.length !== 0 ? (
                     <React.Fragment>
                       <View style={styles.centerCategoryNameRounded}>
                         <Text style={styles.categoryNameText}>Storia</Text>
@@ -152,7 +156,7 @@ export default class FilmScreen extends React.Component {
                         {this.state.plotCollapsed ? "..." : null}
                       </Text>
                     </React.Fragment>
-                  )}
+                  ) : null}
 
                   <View style={styles.multipleCategoryContainer}>
                     <View style={styles.multipleCategoryRounded}>
@@ -175,7 +179,9 @@ export default class FilmScreen extends React.Component {
                     </View>
                     <View style={styles.multipleCategoryInfo}>
                       <Text style={styles.categoryInfoText}>
-                        {filmData.runtime}
+                        {mediaType === "movie"
+                          ? filmData.runtime
+                          : filmData.episode_run_time[0]}
                         <Text style={{ fontSize: 13 }}>min</Text>
                       </Text>
                     </View>
@@ -188,22 +194,63 @@ export default class FilmScreen extends React.Component {
                     </View>
                   </View>
 
-                  <View style={styles.centerCategoryNameRounded}>
-                    <Text style={styles.categoryNameText}>Trailer</Text>
-                  </View>
                   {filmData.videos && filmData.videos.results[0] && (
-                    <WebView
-                      style={styles.videoTrailer}
-                      javaScriptEnabled={true}
-                      scrollEnabled={false}
-                      source={{
-                        uri:
-                          "https://www.youtube.com/embed/" +
-                          filmData.videos.results[0].key +
-                          "?rel=0&autoplay=0&showinfo=0&controls=0"
-                      }}
-                    />
+                    <React.Fragment>
+                      <View style={styles.centerCategoryNameRounded}>
+                        <Text style={styles.categoryNameText}>Trailer</Text>
+                      </View>
+                      <WebView
+                        style={styles.videoTrailer}
+                        javaScriptEnabled={true}
+                        scrollEnabled={false}
+                        source={{
+                          uri:
+                            "https://www.youtube.com/embed/" +
+                            filmData.videos.results[0].key +
+                            "?rel=0&autoplay=0&showinfo=0&controls=0"
+                        }}
+                      />
+                    </React.Fragment>
                   )}
+
+                  {/* If it's a TV series show more information */}
+                  {mediaType === "tv" ? (
+                    <React.Fragment>
+                      <View style={styles.multipleCategoryContainer}>
+                        <View style={styles.multipleCategoryRounded}>
+                          <Text style={styles.categoryNameText}>Stagioni</Text>
+                        </View>
+                        <View style={styles.multipleCategoryRounded}>
+                          <Text style={styles.categoryNameText}>
+                            Episodi Tot.
+                          </Text>
+                        </View>
+                        <View style={styles.multipleCategoryRounded}>
+                          <Text style={styles.categoryNameText}>Ultimo il</Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.multipleCategoryContainer}>
+                        <View style={styles.multipleCategoryInfo}>
+                          <Text style={styles.categoryInfoText}>
+                            {filmData.number_of_seasons}
+                          </Text>
+                        </View>
+                        <View style={styles.multipleCategoryInfo}>
+                          <Text style={styles.categoryInfoText}>
+                            {filmData.number_of_episodes}
+                          </Text>
+                        </View>
+                        <View style={styles.multipleCategoryInfo}>
+                          <Text style={styles.categoryInfoText}>
+                            <Text style={{ fontSize: 14 }}>
+                              {lastAirDate ? formattedlastAirDate : "-"}
+                            </Text>
+                          </Text>
+                        </View>
+                      </View>
+                    </React.Fragment>
+                  ) : null}
                 </View>
               </View>
               <View style={styles.bottomSpacing} />
@@ -378,8 +425,10 @@ const styles = StyleSheet.create({
   backdropImage: {
     flex: 1,
     borderRadius: 26,
-    width: 339,
-    height: 180
+    // width set to a percentage, height to undefined, and aspectRatio
+    // allow to display an image at the right aspect ratio
+    height: undefined,
+    aspectRatio: 1.78
   },
   plotParagraph: {
     color: "#505050",
