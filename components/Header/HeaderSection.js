@@ -5,8 +5,7 @@ import {
   Text,
   ImageBackground,
   Image,
-  TouchableWithoutFeedback,
-  Dimensions
+  TouchableWithoutFeedback
 } from "react-native";
 import { LinearGradient, Font, AppLoading } from "expo";
 import { isIphoneX } from "../../constants/Platform";
