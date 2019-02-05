@@ -82,17 +82,19 @@ export default class HomeScreen extends React.Component {
 
   renderFeedSuggestionBox() {
     if (this.state.textFromFirebase) {
-      return this.state.textFromFirebase.map(recommendation => (
-        <FeedSuggestionBox
-          key={recommendation.filmID}
-          name="Carmine"
-          filmTitle={recommendation.filmTitle}
-          filmPoster={recommendation.filmPoster}
-          filmID={recommendation.filmID}
-          mediaType={recommendation.filmType}
-          navigation={this.props.navigation}
-        />
-      ));
+      return this.state.textFromFirebase
+        .reverse()
+        .map(recommendation => (
+          <FeedSuggestionBox
+            key={recommendation.filmID}
+            name="Carmine"
+            filmTitle={recommendation.filmTitle}
+            filmPoster={recommendation.filmPoster}
+            filmID={recommendation.filmID}
+            mediaType={recommendation.filmType}
+            navigation={this.props.navigation}
+          />
+        ));
     }
   }
 
