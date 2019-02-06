@@ -31,7 +31,8 @@ export default class HomeScreen extends React.Component {
       user: undefined,
       phone: "",
       confirmationResult: undefined,
-      code: ""
+      code: "",
+      endAtNumber: 2
     };
 
     firebase.auth().useDeviceLanguage();
@@ -54,28 +55,32 @@ export default class HomeScreen extends React.Component {
   };
 
   componentWillMount() {
+    this.getFirebaseData(this.state.endAtNumber);
     // database.ref("/recommendation").push({ name: "Game of Thrones" });
-    this.renderFirebaseShit();
   }
 
-  renderFirebaseShit() {
+  getFirebaseData(endAtNumber) {
     database
       .ref("/recommendations/2whqtiH4MNU4fMtlmtHwvjvq9ji2/")
+      .endAt(endAtNumber)
+      .limitToLast(4)
       .on("value", snapshot => {
-        const didReadFromDatabase = Object.values(snapshot.val());
-        for (let obj of didReadFromDatabase) {
-          const newRecommendation = {
-            filmTitle: obj.showTitle,
-            filmID: obj.showID,
-            filmPoster: obj.showPosterPath,
-            filmType: obj.mediaType
-          };
-          this.setState({
-            textFromFirebase: [
-              ...this.state.textFromFirebase,
-              newRecommendation
-            ]
-          });
+        if (snapshot.val()) {
+          const didReadFromDatabase = Object.values(snapshot.val());
+          for (let obj of didReadFromDatabase) {
+            const newRecommendation = {
+              filmTitle: obj.showTitle,
+              filmID: obj.showID,
+              filmPoster: obj.showPosterPath,
+              filmType: obj.mediaType
+            };
+            this.setState({
+              textFromFirebase: [
+                ...this.state.textFromFirebase,
+                newRecommendation
+              ]
+            });
+          }
         }
       });
   }
@@ -117,6 +122,20 @@ export default class HomeScreen extends React.Component {
             <View style={styles.feedContainer}>
               {this.renderFeedSuggestionBox()}
 
+              <Button
+                title="Load more"
+                onPress={() => {
+                  this.setState({
+                    endAtNumber: this.state.endAtNumber + 3
+                  });
+                  console.log("Results");
+                  console.log("____________");
+                  console.log(this.state.endAtNumber);
+                  console.log("____________");
+                  console.log("Recommendations state:");
+                  console.log(this.state.textFromFirebase);
+                }}
+              />
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
