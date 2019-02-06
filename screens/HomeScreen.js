@@ -95,6 +95,13 @@ export default class HomeScreen extends React.Component {
             navigation={this.props.navigation}
           />
         ));
+    } else {
+      console.log("No friends' recommendations found.");
+      return (
+        <Text>
+          Qui appariranno i consigli dei tuoi amici. Al momento non ce ne sono.
+        </Text>
+      );
     }
   }
 
