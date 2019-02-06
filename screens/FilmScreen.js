@@ -140,6 +140,7 @@ export default class FilmScreen extends React.Component {
                               : { height: "auto" }
                           ]}
                         >
+                          {/* Can use substring() to avoid setting a fixed height */}
                           {filmData.overview}
                         </Text>
                       </TouchableWithoutFeedback>
@@ -194,25 +195,6 @@ export default class FilmScreen extends React.Component {
                     </View>
                   </View>
 
-                  {filmData.videos && filmData.videos.results[0] && (
-                    <React.Fragment>
-                      <View style={styles.centerCategoryNameRounded}>
-                        <Text style={styles.categoryNameText}>Trailer</Text>
-                      </View>
-                      <WebView
-                        style={styles.videoTrailer}
-                        javaScriptEnabled={true}
-                        scrollEnabled={false}
-                        source={{
-                          uri:
-                            "https://www.youtube.com/embed/" +
-                            filmData.videos.results[0].key +
-                            "?rel=0&autoplay=0&showinfo=0&controls=0"
-                        }}
-                      />
-                    </React.Fragment>
-                  )}
-
                   {/* If it's a TV series show more information */}
                   {mediaType === "tv" ? (
                     <React.Fragment>
@@ -251,6 +233,26 @@ export default class FilmScreen extends React.Component {
                       </View>
                     </React.Fragment>
                   ) : null}
+
+                  {/* Video trailer */}
+                  {filmData.videos && filmData.videos.results[0] && (
+                    <React.Fragment>
+                      <View style={styles.centerCategoryNameRounded}>
+                        <Text style={styles.categoryNameText}>Trailer</Text>
+                      </View>
+                      <WebView
+                        style={styles.videoTrailer}
+                        javaScriptEnabled={true}
+                        scrollEnabled={false}
+                        source={{
+                          uri:
+                            "https://www.youtube.com/embed/" +
+                            filmData.videos.results[0].key +
+                            "?rel=0&autoplay=0&showinfo=0&controls=0"
+                        }}
+                      />
+                    </React.Fragment>
+                  )}
                 </View>
               </View>
               <View style={styles.bottomSpacing} />
