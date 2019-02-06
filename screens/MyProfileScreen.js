@@ -23,7 +23,6 @@ export default class MyProfileScreen extends React.Component {
     this.state = {
       fontLoaded: false,
       chosenName: "",
-      recommendationsDataHasLoaded: false,
       recommendations: null
     };
   }
@@ -47,7 +46,7 @@ export default class MyProfileScreen extends React.Component {
 
   getChosenName() {
     //Get the current userID
-    var userId = firebase.auth().currentUser.uid;
+    const userId = firebase.auth().currentUser.uid;
     //Get the user data
     return firebase
       .database()
@@ -60,20 +59,31 @@ export default class MyProfileScreen extends React.Component {
 
   getUserRecommendations() {
     //Get the current userID
-    var userId = firebase.auth().currentUser.uid;
+    const userId = firebase.auth().currentUser.uid;
 
     database
       .ref("/recommendations/" + userId)
-      .limitToLast(8)
+      // .limitToLast(8)
       .on("value", snapshot => {
-        this.setState({ recommendations: Object.values(snapshot.val()) });
-        this.setState({ recommendationsDataHasLoaded: true });
+        console.log("snapshot.val: " + snapshot.val());
+        // Object.values() requires parameter not be null
+        if (snapshot.val()) {
+          this.setState({
+            recommendations: Object.values(snapshot.val()) || null
+          });
+        } else {
+          this.setState({
+            recommendations: null
+          });
+        }
       });
   }
 
   // Needs async
   renderSuggestedBox() {
-    if (this.state.recommendationsDataHasLoaded) {
+    console.log("this.state.recommendations:");
+    console.log(this.state.recommendations);
+    if (this.state.recommendations) {
       return this.state.recommendations
         .reverse()
         .map((recommendation, index) => (
@@ -95,6 +105,11 @@ export default class MyProfileScreen extends React.Component {
             />
           </Animatable.View>
         ));
+    } else {
+      console.log("No recommendations found.");
+      return (
+        <Text>Qui appariranno i tuoi consigli. Al momento non ce ne sono.</Text>
+      );
     }
   }
 

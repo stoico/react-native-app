@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 
 import { isiOS, isAndroid } from "../constants/Platform";
 
@@ -62,6 +64,23 @@ export default class SuggestedBox extends React.Component {
   //     .remove();
   // }
 
+  removeRecommendationDatabase() {
+    const userId = firebase.auth().currentUser.uid;
+
+    database
+      .ref("/recommendations/" + userId)
+      .orderByChild("showID")
+      .equalTo(this.props.filmID)
+      .once("value")
+      .then(snapshot => {
+        console.log(snapshot.val());
+        snapshot.forEach(function(child) {
+          child.ref.remove();
+        });
+        console.log("Removed: " + this.props.filmID);
+      });
+  }
+
   removeRecommendationAlert(filmTitle) {
     const deleteMessageTitle = "Rimuovere " + filmTitle + "?";
     const deleteMessage = "Cancellarlo dalla tua lista dei consigliati?";
@@ -72,7 +91,13 @@ export default class SuggestedBox extends React.Component {
         onPress: () => console.log("NO Pressed"),
         style: "cancel"
       },
-      { text: "Rimuovi", onPress: () => console.log("YES Pressed") }
+      {
+        text: "Rimuovi",
+        onPress: () => {
+          console.log("YES Pressed");
+          this.removeRecommendationDatabase();
+        }
+      }
     ]);
   }
 
@@ -88,8 +113,6 @@ export default class SuggestedBox extends React.Component {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     } else {
-      console.log("SuggestedBox this.props:");
-      console.log(this.props);
       return (
         <TouchableWithoutFeedback
           onPress={() =>
