@@ -35,7 +35,6 @@ export default class FeedSuggestionBox extends React.Component {
     if (!this.state.fontLoaded || !this.props.filmPoster) {
       return <AppLoading />;
     } else {
-      console.log(pathTMDB);
       return (
         <View style={styles.feedSuggestionBox}>
           <View style={styles.feedUserSuggests}>
