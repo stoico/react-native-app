@@ -80,7 +80,7 @@ export default class HeaderSection extends Component {
 
                 {this.props.navigation.state.routeName === "MyProfile" ? (
                   <TouchableWithoutFeedback
-                    onPress={() => this.props.navigation.goBack()}
+                    onPress={() => this.props.navigation.navigate("Settings")}
                   >
                     <View style={styles.buttonArea}>
                       <Image
