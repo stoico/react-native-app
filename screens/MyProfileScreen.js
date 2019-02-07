@@ -101,6 +101,7 @@ export default class MyProfileScreen extends React.Component {
               filmPoster={recommendation.showPosterPath}
               // Temporarily hard code Movie for testing
               filmType={recommendation.mediaType || "movie"}
+              isFriend={false}
               navigation={this.props.navigation}
             />
           </Animatable.View>
