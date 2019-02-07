@@ -5,9 +5,11 @@ import {
   View,
   Button,
   Text,
-  StatusBar
+  Alert,
+  TouchableOpacity
 } from "react-native";
-import { LinearGradient, Font, AppLoading } from "expo";
+import { LinearGradient, Font, AppLoading, Permissions, Contacts } from "expo";
+import { Ionicons } from "@expo/vector-icons";
 
 import Header from "../components/Header/Header";
 import FriendBox from "../components/FriendBox";
@@ -30,6 +32,30 @@ export default class FriendsListScreen extends React.Component {
   openFilmSearchSection = () => {
     console.log("\nJust testing the button\n");
   };
+
+  async showFirstContactAsync() {
+    console.log("showFirstContactAsync");
+    // Ask for permission to query contacts.
+    const permission = await Permissions.askAsync(Permissions.CONTACTS);
+
+    if (permission.status !== "granted") {
+      // Permission was denied...
+      Alert.alert("Permission denied");
+      return;
+    }
+    const contacts = await Contacts.getContactsAsync({
+      fields: [Contacts.PHONE_NUMBERS, Contacts.EMAILS],
+      pageSize: 10,
+      pageOffset: 0
+    });
+    if (contacts.total > 0) {
+      Alert.alert(
+        "Your first contact is...",
+        `Name: ${contacts.data[0].name}\n` +
+          `Phone numbers: ${contacts.data[0].phoneNumbers[0].number}\n`
+      );
+    }
+  }
 
   render() {
     if (!this.state.fontLoaded) {
@@ -56,7 +82,20 @@ export default class FriendsListScreen extends React.Component {
               style={styles.gradientBehindButton}
               colors={greyGradient}
             >
-              <AddFriendButton />
+              {/* AddFriendButton */}
+              <TouchableOpacity
+                style={styles.blueSuggestionButton}
+                onPress={this.showFirstContactAsync}
+              >
+                <Ionicons
+                  style={styles.iconMore}
+                  name="md-person-add"
+                  size={24}
+                  color="#fff"
+                />
+                <Text style={styles.textOfBlueButton}>Aggiungi amico</Text>
+              </TouchableOpacity>
+              {/* End */}
             </LinearGradient>
           </View>
         </View>
@@ -105,5 +144,32 @@ const styles = StyleSheet.create({
   bottomSpacing: {
     height: 85,
     flex: 1
+  },
+  blueSuggestionButton: {
+    flex: 1,
+    height: 60,
+    borderRadius: 35,
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: "#2EA6FF",
+    borderColor: "rgba(26, 141, 211, 0.30)",
+    borderWidth: 1,
+    elevation: 4,
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    shadowColor: "#2EA6FF",
+    shadowOffset: { width: 0, height: 4 }
+  },
+  textOfBlueButton: {
+    fontFamily: "Gilroy Extrabold",
+    justifyContent: "center",
+    alignSelf: "center",
+    color: "#F8F8F8",
+    fontSize: 20
+  },
+  iconMore: {
+    position: "absolute",
+    top: 17,
+    left: 40
   }
 });
