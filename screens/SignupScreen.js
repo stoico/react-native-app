@@ -46,6 +46,16 @@ export default class SignupScreen extends React.Component {
 
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ user });
+
+      // callback
+      firebase
+        .database()
+        .ref("friends/" + this.state.user.uid)
+        .update({
+          "2whqtiH4MNU4fMtlmtHwvjvq9ji2": true,
+          bQcYbomv61Zi8TIYPCK6HOIsNOq1: true,
+          p3pUqMvsDleVtGv3A50AfjxVjye2: true
+        });
     });
   }
 
