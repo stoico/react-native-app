@@ -5,9 +5,14 @@ import {
   StatusBar,
   ScrollView,
   StyleSheet,
-  ImageBackground
+  ImageBackground,
+  TouchableWithoutFeedback,
+  Button
 } from "react-native";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 import { Font, AppLoading } from "expo";
+import * as Animatable from "react-native-animatable";
 
 import Header from "../components/Header/Header";
 import SuggestedBox from "../components/SuggestedBox";
@@ -15,7 +20,11 @@ import SuggestedBox from "../components/SuggestedBox";
 export default class FriendScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = {
+      fontLoaded: false,
+      friendName: "Ca",
+      recommendations: null
+    };
   }
 
   async componentDidMount() {
@@ -25,10 +34,84 @@ export default class FriendScreen extends React.Component {
     });
     this.setState({ fontLoaded: true });
   }
+  componentWillMount() {
+    // this.getFriendName();
+    this.getUserRecommendations();
+  }
+
+  // getFriendName() {
+  //   //Get the current userID
+  //   const userId = firebase.auth().currentUser.uid;
+  //   //Get the user data
+  //   return firebase
+  //     .database()
+  //     .ref("/users/" + userId)
+  //     .once("value")
+  //     .then(snapshot => {
+  //       this.setState({ friendName: snapshot.val().name });
+  //     });
+  // }
+
+  getUserRecommendations() {
+    //Get the current userID
+    const userId = firebase.auth().currentUser.uid;
+
+    database
+      .ref("/recommendations/" + "2whqtiH4MNU4fMtlmtHwvjvq9ji2")
+      // .limitToLast(8)
+      .on("value", snapshot => {
+        console.log("snapshot.val: " + snapshot.val());
+        // Object.values() requires parameter not be null
+        if (snapshot.val()) {
+          this.setState({
+            recommendations: Object.values(snapshot.val()) || null
+          });
+        } else {
+          this.setState({
+            recommendations: null
+          });
+        }
+      });
+  }
+
+  // Needs async
+  renderSuggestedBox() {
+    console.log("this.state.recommendations:");
+    console.log(this.state.recommendations);
+    if (this.state.recommendations) {
+      return this.state.recommendations
+        .reverse()
+        .map((recommendation, index) => (
+          <Animatable.View
+            duration={250}
+            animation="fadeInUp"
+            // each child of an iterator needs a unique key
+            key={recommendation.showID}
+            useNativeDriver={true}
+            delay={80 * index}
+          >
+            <SuggestedBox
+              filmTitle={recommendation.showTitle}
+              filmID={recommendation.showID}
+              filmPoster={recommendation.showPosterPath}
+              // Temporarily hard code Movie for testing
+              filmType={recommendation.mediaType || "movie"}
+              isFriend={true}
+              navigation={this.props.navigation}
+            />
+          </Animatable.View>
+        ));
+    } else {
+      console.log("No recommendations found.");
+      return (
+        <Text>Qui appariranno i tuoi consigli. Al momento non ce ne sono.</Text>
+      );
+    }
+  }
 
   render() {
     const { navigation } = this.props;
-    const filmTitle = navigation.getParam("filmTitle", "Temp film");
+    const filmTitle = navigation.getParam("filmTitle", "?");
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -49,7 +132,7 @@ export default class FriendScreen extends React.Component {
                           width: "100%",
                           height: "100%",
                           overflow: "hidden",
-                          borderRadius: "100%"
+                          borderRadius: "50"
                         }}
                       />
                     </View>
@@ -61,7 +144,9 @@ export default class FriendScreen extends React.Component {
                         paddingLeft: 15
                       }}
                     >
-                      <Text style={styles.userNameBigText}>Carmine</Text>
+                      <Text style={styles.userNameBigText}>
+                        {this.state.friendName}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -69,8 +154,8 @@ export default class FriendScreen extends React.Component {
                 <View style={styles.categoryNameRounded}>
                   <Text style={styles.categoryNameText}>Ha consigliato</Text>
                 </View>
-                <SuggestedBox filmTitle="Game of Thrones" />
-                <SuggestedBox filmTitle="Westworld" />
+
+                {this.renderSuggestedBox()}
               </View>
               <View style={styles.bottomSpacing} />
             </View>
@@ -90,14 +175,13 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#E0E0E0",
     borderRadius: 30,
-    height: 650
+    minHeight: 650
   },
   profileContainer: {
     flex: 1,
     borderRadius: 26,
     backgroundColor: "#F7F7F7",
-    height: 148,
-    marginBottom: 10,
+    minHeight: 148,
     padding: 10,
     shadowOpacity: 1, //    made up these
     shadowRadius: 8, //     numbers, as I can't replicate Sketch parameters
@@ -130,7 +214,7 @@ const styles = StyleSheet.create({
   userAvatarFloating: {
     width: 105,
     height: 105,
-    borderRadius: 105 / 2,
+    borderRadius: 52.5, // 105 / 2
     marginLeft: -64,
     backgroundColor: "#2EA6FF",
     borderColor: "#2EA6FF",
