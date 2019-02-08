@@ -54,10 +54,11 @@ export default class FriendScreen extends React.Component {
 
   getUserRecommendations() {
     //Get the current userID
-    const userId = firebase.auth().currentUser.uid;
+    const friendID = this.props.navigation.getParam("friendID");
 
     database
-      .ref("/recommendations/" + "2whqtiH4MNU4fMtlmtHwvjvq9ji2")
+      .ref("/recommendations/")
+      .child(friendID)
       // .limitToLast(8)
       .on("value", snapshot => {
         console.log("snapshot.val: " + snapshot.val());
@@ -111,7 +112,8 @@ export default class FriendScreen extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const filmTitle = navigation.getParam("filmTitle", "?");
+    const friendName = navigation.getParam("friendName", " ");
+    const friendID = navigation.getParam("friendID", " ");
 
     if (!this.state.fontLoaded) {
       return <AppLoading />;
@@ -144,9 +146,7 @@ export default class FriendScreen extends React.Component {
                         paddingLeft: 15
                       }}
                     >
-                      <Text style={styles.userNameBigText}>
-                        {this.state.friendName}
-                      </Text>
+                      <Text style={styles.userNameBigText}>{friendName}</Text>
                     </View>
                   </View>
                 </View>
