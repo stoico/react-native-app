@@ -6,10 +6,13 @@ import {
   Button,
   Text,
   Alert,
+  TouchableWithoutFeedback,
   TouchableOpacity
 } from "react-native";
 import { LinearGradient, Font, AppLoading, Permissions, Contacts } from "expo";
 import { Ionicons } from "@expo/vector-icons";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 
 import Header from "../components/Header/Header";
 import FriendBox from "../components/FriendBox";
@@ -18,7 +21,45 @@ import AddFriendButton from "../components/AddFriendButton";
 export default class FriendsListScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { fontLoaded: false };
+    this.state = { fontLoaded: false, user: null, friends: [] };
+
+    const userRef = firebase.database().ref("users/");
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user });
+
+      // CallBack
+
+      firebase
+        .database()
+        .ref("friends/" + this.state.user.uid)
+        .on("value", snapshot => {
+          // if (snapshot.val()) {
+          //   this.setState({ friends: Object.keys(snapshot.val()) });
+          // }
+          const friendsArray = Object.keys(snapshot.val());
+          friendsArray.forEach(friendID => {
+            console.log(friendID);
+            userRef
+              .child(friendID)
+              .child("name")
+              .once("value", friendName => {
+                console.log(friendName.val());
+                const newFriendIDName = {
+                  id: friendID,
+                  name: friendName.val()
+                };
+                console.log(newFriendIDName);
+                this.setState({
+                  friends: [...this.state.friends, newFriendIDName]
+                });
+                console.log("this.state.friends");
+                console.log("__________________");
+                console.log(this.state.friends);
+              });
+          });
+        });
+    });
   }
 
   async componentDidMount() {
@@ -48,12 +89,40 @@ export default class FriendsListScreen extends React.Component {
       pageSize: 10,
       pageOffset: 0
     });
+    console.log(contacts);
+
     if (contacts.total > 0) {
       Alert.alert(
         "Your first contact is...",
         `Name: ${contacts.data[0].name}\n` +
           `Phone numbers: ${contacts.data[0].phoneNumbers[0].number}\n`
       );
+    }
+  }
+
+  renderFriendsList() {
+    if (this.state.friends) {
+      return this.state.friends.map(value => {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              console.log("Pressed." + " Friend name: " + value.name);
+              console.log(
+                "Props.Navigation: " + Object.keys(this.props.navigation)
+              );
+              this.props.navigation.navigate("Friend", {
+                friendName: value.name,
+                friendID: value.id
+              });
+            }}
+            key={value.name + value.id.toString()}
+          >
+            <FriendBox name={value.name} id={value.id} />
+          </TouchableOpacity>
+        );
+      });
+    } else {
+      return <Text>Nothing</Text>;
     }
   }
 
@@ -66,15 +135,11 @@ export default class FriendsListScreen extends React.Component {
           <Header pageTitle="Amici" navigation={this.props.navigation} />
 
           <ScrollView style={styles.screenContainer}>
-            <View style={styles.feedContainer}>
-              <FriendBox name="Stefano" />
-              <FriendBox name="Carmine" />
-              <FriendBox name="Martina" />
-              <FriendBox name="Rocco" />
-              <FriendBox name="Angelo" />
-              <FriendBox name="Marco" />
-              <FriendBox name="Raffaella" />
-              <View style={styles.bottomSpacing} />
+            <View style={styles.outmostContainer}>
+              <View style={styles.feedContainer}>
+                {this.renderFriendsList()}
+                <View style={styles.bottomSpacing} />
+              </View>
             </View>
           </ScrollView>
           <View style={styles.floatingPositionForButton}>
@@ -105,13 +170,19 @@ export default class FriendsListScreen extends React.Component {
 }
 
 const greyGradient = ["rgba(224, 224, 224, 0)", "#E0E0E0"];
-const temporaryGradient = ["black", "blue"]; // Used for testing as more visible
 
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1
   },
-  feedContainer: {
+  outmostContainer: {
+    marginTop: 82,
+    padding: 8,
+    backgroundColor: "#F7F7F7",
+    borderRadius: 30,
+    minHeight: 650
+  },
+  friendContainer: {
     marginTop: 82,
     padding: 8,
     backgroundColor: "#F7F7F7",
