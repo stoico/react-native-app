@@ -121,6 +121,12 @@ const HomeStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  Friend: {
+    screen: FriendScreen,
+    navigationOptions: {
+      header: null
+    }
   }
 });
 
@@ -154,6 +160,12 @@ const ProfileStack = createStackNavigator({
   },
   FriendsList: {
     screen: FriendsListScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Friend: {
+    screen: FriendScreen,
     navigationOptions: {
       header: null
     }
