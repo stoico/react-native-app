@@ -5,7 +5,6 @@ import {
   View,
   Button,
   Text,
-  TextInput,
   Alert
 } from "react-native";
 import { database } from "../config/Firebase";
@@ -55,17 +54,17 @@ export default class HomeScreen extends React.Component {
   };
 
   componentWillMount() {
-    this.getFirebaseData(this.state.endAtNumber);
+    this.getFirebaseData();
     // database.ref("/recommendation").push({ name: "Game of Thrones" });
   }
 
-  getFirebaseData(endAtNumber) {
+  getFirebaseData() {
     database
       .ref("/recommendations/2whqtiH4MNU4fMtlmtHwvjvq9ji2/")
-      .endAt(endAtNumber)
-      .limitToLast(4)
+      .limitToLast(8)
       .on("value", snapshot => {
         if (snapshot.val()) {
+          // TO DO: Aggregate all of my friend's recommendations
           const didReadFromDatabase = Object.values(snapshot.val());
           for (let obj of didReadFromDatabase) {
             const newRecommendation = {
@@ -122,7 +121,7 @@ export default class HomeScreen extends React.Component {
             <View style={styles.feedContainer}>
               {this.renderFeedSuggestionBox()}
 
-              <Button
+              {/* <Button
                 title="Load more"
                 onPress={() => {
                   this.setState({
@@ -135,7 +134,7 @@ export default class HomeScreen extends React.Component {
                   console.log("Recommendations state:");
                   console.log(this.state.textFromFirebase);
                 }}
-              />
+              /> */}
               <View style={styles.bottomSpacing} />
             </View>
           </ScrollView>
