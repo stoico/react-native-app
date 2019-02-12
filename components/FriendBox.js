@@ -4,11 +4,14 @@ import {
   Text,
   View,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Alert
 } from "react-native";
 import { Font, AppLoading } from "expo";
 import { Ionicons } from "@expo/vector-icons";
 import { isiOS } from "../constants/Platform";
+import { database } from "../config/Firebase";
+import firebase from "firebase";
 
 export default class FriendBox extends React.Component {
   constructor(props) {
@@ -25,6 +28,41 @@ export default class FriendBox extends React.Component {
       "Gilroy Bold": require("../assets/fonts/gilroy-bold.ttf")
     });
     this.setState({ fontLoaded: true });
+
+    console.log("this.props.name");
+    console.log(this.props.name);
+    console.log("this.props.id");
+    console.log(this.props.id);
+  }
+
+  removeFriendDatabase() {
+    const userId = firebase.auth().currentUser.uid;
+
+    database
+      .ref("/friends/" + userId)
+      .child(this.props.id)
+      .once("value")
+      .set(null);
+  }
+
+  removeFriendAlert() {
+    const deleteMessageTitle = "Rimuovere " + this.props.name + "?";
+    const deleteMessage = "Cancellarlo dalla tua lista dei consigliati?";
+
+    Alert.alert(deleteMessageTitle, deleteMessage, [
+      {
+        text: "Annulla",
+        onPress: () => console.log("NO Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "Rimuovi",
+        onPress: () => {
+          console.log("YES Pressed");
+          this.removeFriendDatabase();
+        }
+      }
+    ]);
   }
 
   // Determine which icon to display depending on whether the app
@@ -64,7 +102,9 @@ export default class FriendBox extends React.Component {
               style={styles.userAvatar}
             />
             <Text style={styles.userNameText}>{this.props.name}</Text>
-            {this.displayDeviceIcon()}
+            <TouchableWithoutFeedback onPress={() => this.removeFriendAlert()}>
+              {this.displayDeviceIcon()}
+            </TouchableWithoutFeedback>
           </View>
         </View>
       );

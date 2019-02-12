@@ -107,9 +107,6 @@ export default class FriendsListScreen extends React.Component {
           <TouchableOpacity
             onPress={() => {
               console.log("Pressed." + " Friend name: " + value.name);
-              console.log(
-                "Props.Navigation: " + Object.keys(this.props.navigation)
-              );
               this.props.navigation.navigate("Friend", {
                 friendName: value.name,
                 friendID: value.id
