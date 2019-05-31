@@ -1,7 +1,8 @@
 import * as firebase from "firebase";
+import FirebaseSecretAPI from "../apis/keys";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAzz9zugXLtDjPcD2Fi0UdnU1xClGAfy1g",
+  apiKey: FirebaseSecretAPI,
   authDomain: "native-recommendation-app.firebaseapp.com",
   databaseURL: "https://native-recommendation-app.firebaseio.com",
   projectId: "native-recommendation-app",

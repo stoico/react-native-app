@@ -1,3 +1,5 @@
+import TheMovieSecretAPI from "../apis/keys";
+
 import React from "react";
 import {
   View,
@@ -38,7 +40,9 @@ export default class FriendScreen extends React.Component {
     this.setState({ text });
 
     let uriAPI =
-      "https://api.themoviedb.org/3/search/multi?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&page=1&query=" +
+      "https://api.themoviedb.org/3/search/multi?api_key=" +
+      TheMovieSecretAPI +
+      "&language=it&region=IT&page=1&query=" +
       text;
 
     if (text.length >= 2) {

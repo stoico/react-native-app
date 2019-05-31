@@ -1,3 +1,5 @@
+import TheMovieSecretAPI from "../apis/keys";
+
 import React from "react";
 import {
   View,
@@ -51,7 +53,9 @@ export default class FilmScreen extends React.Component {
       mediaType +
       "/" +
       filmID +
-      "?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&append_to_response=videos";
+      "?api_key=" +
+      TheMovieSecretAPI +
+      "&language=it&region=IT&append_to_response=videos";
 
     console.log(uriAPI);
 

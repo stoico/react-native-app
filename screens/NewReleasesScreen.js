@@ -1,3 +1,5 @@
+import TheMovieSecretAPI from "../apis/keys";
+
 import React from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
 import { Font, AppLoading } from "expo";
@@ -22,7 +24,9 @@ export default class NewReleasesScreen extends React.Component {
 
   componentWillMount = () => {
     let uriAPI =
-      "https://api.themoviedb.org/3/trending/all/day?api_key=f521cf48d44225747ebbec6f1b76573a&language=it&region=IT&page=1";
+      "https://api.themoviedb.org/3/trending/all/day?api_key=" +
+      TheMovieSecretAPI +
+      "&language=it&region=IT&page=1";
 
     fetch(uriAPI)
       .then(response => response.json())
