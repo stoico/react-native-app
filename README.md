@@ -4,4 +4,4 @@
 
 ![](assets/demo.gif)
 
-Working prototype.
+Working prototype. Powered by The Movie Database API and Firebase.
