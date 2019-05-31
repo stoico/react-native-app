@@ -2,8 +2,8 @@
 
 ## Demo
 
-<div style="margin:auto">
-    ![](assets/demo.gif)
-</div>
+<p text-align="center">
+  <img src="assets/demo.gif"/>
+</p>
 
 Working prototype. Powered by The Movie Database API and Firebase.
