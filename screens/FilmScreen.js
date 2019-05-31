@@ -1,4 +1,4 @@
-import TheMovieSecretAPI from "../apis/keys";
+import { TheMovieSecretAPI } from "../apis/keys";
 
 import React from "react";
 import {

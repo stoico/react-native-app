@@ -1,5 +1,5 @@
 import * as firebase from "firebase";
-import FirebaseSecretAPI from "../apis/keys";
+import { FirebaseSecretAPI } from "../apis/keys";
 
 const firebaseConfig = {
   apiKey: FirebaseSecretAPI,

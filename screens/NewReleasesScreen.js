@@ -1,4 +1,4 @@
-import TheMovieSecretAPI from "../apis/keys";
+import { TheMovieSecretAPI } from "../apis/keys";
 
 import React from "react";
 import { StyleSheet, ScrollView, View, Text } from "react-native";
