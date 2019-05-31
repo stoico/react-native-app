@@ -2,6 +2,6 @@
 
 ## Demo
 
-[![alt text](assets/demo.gif)]
+[![alt text](assets/demo.gif "Working prototype")]
 
 Working prototype.
